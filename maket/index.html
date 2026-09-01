@@ -113,12 +113,13 @@ nav{position:absolute;top:0;left:0;right:0;z-index:10}
 
 /* ── герой: фото в край, текст поверх ───────── */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
-  background:var(--raised);overflow:hidden}
-.hero .shot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:40px}
+  padding-top:118px;background:var(--raised);overflow:hidden}
+@media (max-width:760px){.hero{padding-top:92px}}
+.hero .shot{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;
+  text-align:center;padding:118px 40px 40px}
 .hero .shot p{font-size:13.5px;color:#5E5E5A;max-width:44ch;line-height:1.55}
 .hero .scrim{position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 34%,rgba(0,0,0,.82) 100%)}
+  background:linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 40%,rgba(0,0,0,.88) 100%)}
 .hero-in{position:relative;z-index:2;width:100%;padding-bottom:64px}
 .hero .label{margin-bottom:20px;color:var(--rule)}
 .hero .display{margin-bottom:22px;max-width:17ch}
