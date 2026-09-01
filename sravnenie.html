@@ -51,12 +51,12 @@ tr.key td:first-child{color:var(--mute);font-weight:400}
 .zoom:hover{color:var(--fg);border-color:var(--mute)}
 .zoom:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
 .zoom[aria-pressed="true"]{color:var(--fg);border-color:var(--fg)}
-.stage{width:1440px;height:820px;transform-origin:top left;position:relative}
+.stage{width:1440px;height:820px;overflow:hidden;transform-origin:top left;position:relative}
 
 /* ═══════════ ПОЛОСА ═══════════ */
 .pl{--ink:#0B0B0B;--paper:#F2F0EB;--chalk:#FFFFFF;--graphite:#6E6E68;
     --rule-dark:#262624;--glove:#CDFF47;
-    background:var(--ink);color:var(--chalk);height:100%;
+    background:var(--ink);color:var(--chalk);
     display:flex;flex-direction:column;font-family:"Manrope",sans-serif}
 .pl .nav{display:flex;align-items:center;justify-content:space-between;
   padding:28px 48px;font-size:13px;color:var(--chalk)}
@@ -83,7 +83,7 @@ tr.key td:first-child{color:var(--mute);font-weight:400}
 
 /* ═══════════ НОЧНАЯ МОНОГРАФИЯ ═══════════ */
 .nm{--void:#08090A;--stage2:#131517;--bone:#EDE9E0;--dust:#8B8A85;--rule2:#2E3134;--ice:#86B4D1;
-    background:var(--void);color:var(--bone);height:100%;
+    background:var(--void);color:var(--bone);
     display:flex;flex-direction:column;font-family:"Golos Text",sans-serif}
 .nm .nav{display:flex;align-items:center;justify-content:space-between;
   padding:30px 56px;font-size:13px}
