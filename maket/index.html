@@ -184,6 +184,26 @@ section{padding-block:calc(var(--gap)/2)}
 .end{background:var(--raised);text-align:center}
 .end .display{margin:0 auto 20px;max-width:16ch}
 .end .lead{margin:0 auto 28px;text-align:center}
+/* ── форма заявки ─────────────────────────── */
+.lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;text-align:left}
+@media (max-width:860px){.lead-grid{grid-template-columns:1fr;gap:30px}}
+.end .lead-grid .display{margin:0 0 18px;max-width:14ch}
+.end .lead-grid .lead{margin:0;text-align:left}
+.form{display:flex;flex-direction:column;gap:14px}
+.f-row{display:flex;flex-direction:column;gap:7px}
+.f-row label{font-family:"Golos Text",sans-serif;font-weight:500;font-size:13px;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+.form input,.form textarea{
+  font:inherit;font-size:16.5px;color:var(--text);background:transparent;
+  border:0;border-bottom:1px solid rgba(214,213,208,.28);border-radius:0;
+  padding:9px 0;transition:border-color .18s ease}
+.form textarea{resize:none;min-height:60px;line-height:1.5;overflow:hidden}
+.form input::placeholder,.form textarea::placeholder{color:#5F6360}
+.form input:focus,.form textarea:focus{outline:none;border-bottom-color:var(--text)}
+.form button{align-self:flex-start;margin-top:6px;border:0;cursor:pointer;font:inherit}
+.f-note{font-size:13.5px;line-height:1.5;color:var(--dim);margin-top:2px}
+.f-note b{color:var(--text);font-weight:500}
+
 footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
   font-size:14px;color:var(--dim);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </style>
@@ -346,12 +366,31 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
 <!-- КОНТАКТ -->
 <section id="kontakt" class="end">
   <div class="w">
-    <span class="label" style="display:block;margin-bottom:20px">Запись</span>
-    <h2 class="display">Напишите, подберём формат</h2>
-    <p class="lead">Расскажите про вратаря: возраст, где играет и что не получается. Отвечу и предложу, с чего начать.</p>
-    <a class="cta" href="#">Написать в Telegram
-      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
+    <div class="lead-grid">
+      <div>
+        <span class="label" style="display:block;margin-bottom:18px">Запись</span>
+        <h2 class="display">Напишите, подберём формат</h2>
+        <p class="lead">Три строки — и сообщение соберётся само. Останется только отправить.</p>
+      </div>
+      <form class="form" id="leadForm" novalidate>
+        <div class="f-row">
+          <label for="f-age">Возраст вратаря</label>
+          <input id="f-age" type="text" inputmode="numeric" autocomplete="off" placeholder="например, 11">
+        </div>
+        <div class="f-row">
+          <label for="f-club">Где сейчас играет</label>
+          <input id="f-club" type="text" autocomplete="off" placeholder="школа, секция или пока нигде">
+        </div>
+        <div class="f-row">
+          <label for="f-pain">Что не получается</label>
+          <textarea id="f-pain" rows="2" placeholder="боится выходить на верховые, пропускает между ног…"></textarea>
+        </div>
+        <button class="cta" type="submit">Отправить в Telegram
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="f-note" id="fNote">Ничего не отправляется автоматически: сообщение откроется у вас в Telegram, вы прочитаете и нажмёте отправить сами.</p>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -362,5 +401,53 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
   </footer>
 </div>
 
+<script>
+(function(){
+  "use strict";
+  // Ник появится здесь, когда Никола его назовёт. Пока пусто — сообщение копируется в буфер.
+  var TELEGRAM = "";
+
+  var f = document.getElementById('leadForm');
+  if (!f) return;
+  var note = document.getElementById('fNote');
+  var ta = f.querySelector('textarea');
+
+  ta.addEventListener('input', function(){
+    ta.style.height = 'auto';
+    ta.style.height = Math.max(60, ta.scrollHeight) + 'px';
+  });
+
+  function compose(){
+    var age  = document.getElementById('f-age').value.trim();
+    var club = document.getElementById('f-club').value.trim();
+    var pain = document.getElementById('f-pain').value.trim();
+    var L = ['Здравствуйте! Пишу по поводу тренировок вратаря.'];
+    if (age)  L.push('Возраст: ' + age);
+    if (club) L.push('Где играет: ' + club);
+    if (pain) L.push('Что не получается: ' + pain);
+    if (!age && !club && !pain) L.push('Расскажите, пожалуйста, как записаться.');
+    return L.join('\n');
+  }
+
+  function say(msg){ note.innerHTML = msg; }
+
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text = compose();
+    if (TELEGRAM){
+      window.open('https://t.me/' + TELEGRAM + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+      return;
+    }
+    function fallback(){
+      say('Скопируйте сообщение вручную:<br><b>' + text.replace(/\n/g,'<br>') + '</b>');
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        say('<b>Сообщение скопировано.</b> Откройте Telegram и вставьте его в переписку.');
+      }, fallback);
+    } else fallback();
+  });
+})();
+</script>
 </body>
 </html>
