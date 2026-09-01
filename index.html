@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Анкета для сайта: карьера, методика, форматы и цены.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#EDF0EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A110D" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Анкета тренера вратарей">
+<meta property="og:description" content="Анкета для сайта: карьера, методика, форматы и цены.">
+<meta property="og:type" content="website">
+<title>Анкета тренера вратарей</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700&family=Golos+Text:wght@400;500;600;700&family=Martian+Mono:wght@400;600&display=swap">
+
+<style>
+:root{
+  --ground:#EDF0EA;
+  --surface:#FFFFFF;
+  --surface-2:#F5F8F3;
+  --ink:#111A14;
+  --ink-2:#3C4A42;
+  --muted:#6B776F;
+  --line:#D5DDD4;
+  --line-soft:#E6EBE4;
+  --accent:#0F5C34;
+  --accent-soft:#E1EFE6;
+  --accent-ink:#FFFFFF;
+  --amber:#A8571A;
+  --shadow:0 1px 2px rgba(17,26,20,.05), 0 12px 32px -18px rgba(17,26,20,.28);
+  --radius:14px;
+  --maxw:720px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0A110D;
+    --surface:#121B15;
+    --surface-2:#17221B;
+    --ink:#E8EFE9;
+    --ink-2:#B4C1B8;
+    --muted:#8A968E;
+    --line:#25332A;
+    --line-soft:#1C2820;
+    --accent:#54D18C;
+    --accent-soft:#14271C;
+    --accent-ink:#06170E;
+    --amber:#DFA268;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0A110D;
+  --surface:#121B15;
+  --surface-2:#17221B;
+  --ink:#E8EFE9;
+  --ink-2:#B4C1B8;
+  --muted:#8A968E;
+  --line:#25332A;
+  --line-soft:#1C2820;
+  --accent:#54D18C;
+  --accent-soft:#14271C;
+  --accent-ink:#06170E;
+  --amber:#DFA268;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Golos Text","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:96px;
+}
+h1,h2,h3{font-family:"Unbounded","Golos Text",Arial,sans-serif;font-weight:500;text-wrap:balance;margin:0}
+p{margin:0}
+.num{font-family:"Martian Mono","SF Mono",monospace;font-variant-numeric:tabular-nums}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ── Chalk-line progress bar: the signature ─────────────── */
+.bar{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line-soft);
+}
+.bar-in{max-width:var(--maxw);margin:0 auto;padding:11px 20px 13px;display:flex;align-items:center;gap:14px}
+.bar-label{font-size:12.5px;color:var(--muted);letter-spacing:.02em;white-space:nowrap}
+.bar-label b{color:var(--ink);font-weight:600}
+.track{flex:1;height:2px;background:var(--line);position:relative;overflow:hidden;border-radius:2px}
+.fill{position:absolute;inset:0 auto 0 0;width:0%;background:var(--accent);border-radius:2px;transition:width .45s cubic-bezier(.22,.61,.36,1)}
+@media (prefers-reduced-motion: reduce){.fill{transition:none}}
+
+/* ── Header ─────────────────────────────────────────────── */
+header{padding:56px 0 40px}
+.eyebrow{
+  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:18px;
+}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.12;letter-spacing:-.02em;margin-bottom:20px}
+.lede{color:var(--ink-2);font-size:17px;max-width:60ch}
+.lede + .lede{margin-top:14px}
+.lede b{color:var(--ink);font-weight:600}
+
+.meta{
+  margin-top:28px;display:flex;flex-wrap:wrap;gap:8px;
+}
+.chip{
+  font-size:12.5px;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);color:var(--ink-2);background:var(--surface);
+}
+.chip.req::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-right:7px;vertical-align:1px}
+
+/* ── Sections ───────────────────────────────────────────── */
+.sect{
+  background:var(--surface);
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius);
+  margin-bottom:14px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.sect-head{
+  width:100%;display:flex;align-items:center;gap:16px;
+  padding:20px 22px;background:none;border:0;cursor:pointer;
+  text-align:left;color:inherit;font:inherit;
+}
+.sect-head:hover{background:var(--surface-2)}
+.sect-num{
+  font-family:"Martian Mono","SF Mono",monospace;font-size:12px;font-weight:600;
+  color:var(--accent);flex:none;width:26px;
+}
+.sect-title{flex:1;min-width:0}
+.sect-title strong{
+  display:block;font-family:"Unbounded","Golos Text",sans-serif;
+  font-size:16px;font-weight:500;letter-spacing:-.01em;line-height:1.3;
+}
+.sect-title span{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.sect-count{
+  font-family:"Martian Mono","SF Mono",monospace;font-size:11.5px;
+  font-variant-numeric:tabular-nums;color:var(--muted);flex:none;
+  padding:4px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line-soft);
+}
+.sect-count.done{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+.caret{flex:none;width:16px;height:16px;color:var(--muted);transition:transform .25s ease}
+.sect.open .caret{transform:rotate(90deg)}
+@media (prefers-reduced-motion: reduce){.caret{transition:none}}
+.sect-body{display:none;padding:4px 22px 26px;border-top:1px solid var(--line-soft)}
+.sect.open .sect-body{display:block}
+
+/* ── Fields ─────────────────────────────────────────────── */
+.q{padding:22px 0;border-bottom:1px solid var(--line-soft)}
+.q:last-child{border-bottom:0;padding-bottom:4px}
+.q-label{display:block;font-size:15.5px;font-weight:500;line-height:1.4;margin-bottom:4px}
+.q-label .star{color:var(--amber);margin-left:5px;font-weight:600}
+.q-hint{font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.q-hint:last-of-type{margin-bottom:12px}
+
+input[type="text"],textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);
+  background:var(--surface-2);
+  border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;resize:none;
+  transition:border-color .15s ease, background .15s ease;
+}
+textarea{min-height:76px;line-height:1.5;overflow:hidden}
+input[type="text"]::placeholder,textarea::placeholder{color:var(--muted);opacity:.75}
+input[type="text"]:focus,textarea:focus{
+  outline:none;border-color:var(--accent);background:var(--surface);
+  box-shadow:0 0 0 3px var(--accent-soft);
+}
+input[type="text"]:focus-visible,textarea:focus-visible{outline:none}
+
+.opts{display:flex;flex-direction:column;gap:2px}
+.opt{
+  display:flex;align-items:flex-start;gap:11px;
+  padding:9px 12px;border-radius:9px;cursor:pointer;
+  border:1px solid transparent;
+  transition:background .13s ease;
+}
+.opt:hover{background:var(--surface-2)}
+.opt input{
+  flex:none;margin:3px 0 0;width:17px;height:17px;
+  accent-color:var(--accent);cursor:pointer;
+}
+.opt input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.opt span{font-size:15px;line-height:1.4}
+.opt.on{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 26%,transparent)}
+
+/* ── Footer actions ─────────────────────────────────────── */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:color-mix(in srgb, var(--ground) 90%, transparent);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  padding:12px 20px calc(12px + env(safe-area-inset-bottom));
+}
+.dock-in{max-width:var(--maxw);margin:0 auto;display:flex;gap:10px;align-items:center}
+button.btn{
+  font:inherit;font-weight:600;font-size:15px;cursor:pointer;
+  border-radius:10px;padding:13px 18px;border:1px solid transparent;
+  transition:transform .12s ease, opacity .15s ease;
+}
+button.btn:active{transform:translateY(1px)}
+@media (prefers-reduced-motion: reduce){button.btn:active{transform:none}}
+.btn-primary{flex:1;background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn-primary:hover{opacity:.9}
+.btn-ghost{background:var(--surface);color:var(--ink-2);border-color:var(--line)}
+.btn-ghost:hover{color:var(--ink);border-color:var(--muted)}
+button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.saved{font-size:12.5px;color:var(--muted);text-align:center;padding:24px 0 8px}
+.saved b{color:var(--accent);font-weight:600}
+
+/* ── Modal ──────────────────────────────────────────────── */
+.modal{
+  position:fixed;inset:0;z-index:80;display:none;
+  background:color-mix(in srgb,#050A07 62%,transparent);
+  padding:20px;overflow-y:auto;
+}
+.modal.on{display:flex;align-items:flex-start;justify-content:center}
+.modal-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  max-width:var(--maxw);width:100%;margin:auto;padding:22px;box-shadow:var(--shadow);
+}
+.modal-card h3{font-size:17px;margin-bottom:8px}
+.modal-card p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.modal-card textarea{
+  min-height:340px;font-family:"Martian Mono","SF Mono",monospace;
+  font-size:12px;line-height:1.6;overflow:auto;white-space:pre;
+}
+.modal-actions{display:flex;gap:10px;margin-top:14px}
+.modal-actions .btn{flex:1}
+
+.toast{
+  position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(10px);
+  background:var(--ink);color:var(--ground);
+  padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;
+  z-index:90;opacity:0;pointer-events:none;transition:opacity .22s ease, transform .22s ease;
+  box-shadow:0 8px 24px -10px rgba(0,0,0,.5);
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion: reduce){.toast{transition:none}}
+
+@media (max-width:520px){
+  header{padding:40px 0 30px}
+  .sect-head{padding:17px 16px;gap:12px}
+  .sect-body{padding:4px 16px 22px}
+  .sect-title span{display:none}
+}
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <span class="bar-label"><b id="pDone">0</b> из <b id="pTotal">0</b> обязательных</span>
+    <div class="track"><div class="fill" id="pFill"></div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Анкета для сайта</div>
+    <h1>Расскажи о себе так, чтобы не пришлось выдумывать</h1>
+    <p class="lede">Мы делаем тебе сайт. Главное правило: <b>на сайте не будет ни одной цифры и ни одного факта, которых ты не подтвердил.</b> Никаких «15 лет опыта» и «500 учеников» — только то, что ты напишешь здесь.</p>
+    <p class="lede">Отвечай как есть — коротко, своими словами. Не знаешь ответ или он тебе не подходит — пропусти. Пустые разделы мы просто не сделаем.</p>
+    <div class="meta">
+      <span class="chip req">Отмеченное — обязательно</span>
+      <span class="chip">Ответы сохраняются сами</span>
+      <span class="chip">Можно закрыть и вернуться</span>
+    </div>
+  </header>
+
+  <main id="form"></main>
+
+  <p class="saved" id="savedNote">Черновик хранится в этом браузере. Когда закончишь — нажми <b>«Собрать ответы»</b> внизу и отправь получившийся текст.</p>
+</div>
+
+<div class="dock">
+  <div class="dock-in">
+    <button class="btn btn-ghost" id="btnReset" type="button">Очистить</button>
+    <button class="btn btn-primary" id="btnCollect" type="button">Собрать ответы</button>
+  </div>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <h3 id="modalTitle">Ответы готовы</h3>
+    <p>Скопируй этот текст и отправь его в мессенджер. Если кнопка не сработает — выдели вручную и скопируй.</p>
+    <textarea id="out" readonly spellcheck="false"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btnClose" type="button">Закрыть</button>
+      <button class="btn btn-ghost" id="btnFile" type="button" hidden>Скачать файлом</button>
+      <button class="btn btn-primary" id="btnCopy" type="button">Скопировать</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+var SECTIONS = [
+ {id:"about", title:"О себе", note:"Кто ты и откуда", qs:[
+  {id:"name",  t:"text", req:1, l:"Имя и фамилия — как писать на сайте", ph:"Никола ..."},
+  {id:"city",  t:"text", req:1, l:"Город, где ты тренируешь", ph:"Москва"},
+  {id:"spots", t:"area", req:1, l:"Где именно проходят тренировки", h:"Названия манежей, полей, залов. Если площадка зависит от сезона — напиши как есть.", ph:"Зимой — манеж «...», летом — поле на ..."},
+  {id:"career",t:"area", req:1, l:"Игровая карьера: клубы и годы", h:"Если профессионально не играл — так и напиши. Это нормально и лучше, чем недосказанность.", ph:"2011–2016 — ФК «...», вторая лига ..."},
+  {id:"coach", t:"area", req:1, l:"Тренерская работа: где и с какого года", ph:"С 2019 — школа «...», вратари 2010–2014 г.р. ..."},
+  {id:"lic",   t:"area", req:1, l:"Лицензии и образование", h:"Категория УЕФА, физкультурное образование, курсы, стажировки. Если ничего формального нет — напиши «нет», мы построим доказательство на другом.", ph:"УЕФА C, 2021 · ..."}
+ ]},
+
+ {id:"product", title:"Тренировки", note:"Что именно ты продаёшь", qs:[
+  {id:"formats", t:"check", req:1, l:"Какие форматы проводишь", o:["Индивидуальная","Мини-группа, 2–4 вратаря","Группа, 5 и больше","Работа с командой клуба","Сборы и кэмпы","Онлайн-разбор видео"]},
+  {id:"dur",  t:"text", req:1, l:"Сколько длится занятие", ph:"60–90 минут"},
+  {id:"agemin",t:"text",req:1, l:"С какого возраста берёшь", ph:"с 7 лет"},
+  {id:"ages", t:"check", l:"С какими возрастами работаешь", o:["6–9 лет","10–13 лет","14–17 лет","Взрослые любители","Молодые профессионалы"]},
+  {id:"price",t:"area", req:1, l:"Цены по форматам", h:"Пиши как есть, даже если сложно. Решение публиковать или нет — следующий вопрос.", ph:"Индивидуальная — ... ₽\nМини-группа — ... ₽ с человека"},
+  {id:"pricepub",t:"radio",req:1,l:"Показывать цены на сайте?",h:"Открытая цена сильно поднимает доверие и отсеивает не твоих клиентов. Но решаешь ты.",o:["Да, все цены","Только «от ... ₽»","Нет, обсуждаю лично"]},
+  {id:"trial",t:"area", l:"Пробное занятие — есть? На каких условиях", ph:"Первое занятие ... "},
+  {id:"pass", t:"area", l:"Абонементы и пакеты", ph:"8 занятий — ..."},
+  {id:"extra",t:"area", l:"Что входит помимо самой тренировки", h:"Разбор видео, план на межсезонье, отчёт родителям, связь между занятиями, подбор перчаток.", ph:""}
+ ]},
+
+ {id:"method", title:"Методика", note:"Самый важный раздел", qs:[
+  {id:"struct",t:"area", req:1, l:"Из чего состоит тренировка — по этапам", h:"От момента, когда вратарь пришёл, до конца. Это ляжет на сайт почти дословно: именно этот блок показывает, что ты профессионал, а не «покидать мячи».", ph:"1. Разминка и подготовка кистей — ...\n2. ...\n3. ..."},
+  {id:"spec",  t:"check",req:1, l:"На чём ты специализируешься", o:["Игра на выходах","Игра ногами и начало атаки","Реакция и рефлексы","Позиционирование и выбор места","Игра один в один","Верховые мячи и навесы","Психология и работа с ошибкой","Физподготовка вратаря"]},
+  {id:"diff",  t:"area", req:1, l:"Чем твоя тренировка отличается от «просто покидать мячи в ворота»", h:"Ответ на этот вопрос — главный аргумент всего сайта. Не торопись.", ph:""},
+  {id:"progress",t:"area",req:1,l:"Как ты понимаешь, что ученик прогрессирует", h:"Что конкретно ты измеряешь или замечаешь. Чем конкретнее, тем сильнее.", ph:""},
+  {id:"pain",  t:"area", l:"С какой самой частой проблемой к тебе приходят", ph:"«Боится выходить на верховые», «пропускает между ног» ..."},
+  {id:"parent",t:"area", l:"Что получает родитель после занятия", ph:""}
+ ]},
+
+ {id:"proof", title:"Доказательства", note:"Видео, отзывы, фото", qs:[
+  {id:"students",t:"area", l:"Ученики, которыми гордишься", h:"Куда выросли, что изменилось. Только если они не против публикации.", ph:""},
+  {id:"revhave",t:"radio", l:"Реальные отзывы есть?", o:["Да, письменные","Да, голосовые или видео","И те и другие","Пока нет"]},
+  {id:"revpub", t:"radio", l:"Можно публиковать отзывы с именами?", o:["Да, с именем и фамилией","Только имя","Нет"]},
+  {id:"vidwhere",t:"check",req:1,l:"Где сейчас лежит видео твоих тренировок", h:"От этого зависит, какой плеер будет на сайте и как ты будешь добавлять новые ролики.", o:["VK Видео","YouTube","Instagram","Telegram-канал","Облако (Google Drive, Яндекс.Диск)","Только на телефоне"]},
+  {id:"links", t:"area", req:1, l:"Ссылки на твои каналы и соцсети", ph:"vk.com/...\nyoutube.com/@...\nt.me/..."},
+  {id:"vidcount",t:"text", l:"Сколько примерно роликов уже снято", ph:"около 40"},
+  {id:"vidcut",t:"radio", l:"Ролики смонтированы или сырые?", o:["Смонтированы","Сырые, как снял","По-разному"]},
+  {id:"photo", t:"radio", l:"Профессиональные фото есть?", o:["Да, есть съёмка","Нет, только кадры из видео","Нет вообще"]},
+  {id:"logo",  t:"radio", l:"Логотип или фирменный стиль", o:["Есть, нравится","Есть, но не нравится","Нет"]}
+ ]},
+
+ {id:"ops", title:"Как ты работаешь", note:"Заявки, расписание, правила", qs:[
+  {id:"channel",t:"check",req:1,l:"Куда удобнее принимать заявки", o:["Telegram","WhatsApp","Звонок","Почта"]},
+  {id:"contact",t:"text", req:1, l:"Контакт для сайта", h:"Номер и/или ник. Именно он будет на кнопке.", ph:"+7 ... · @nickname"},
+  {id:"sched", t:"area", req:1, l:"Расписание: когда у тебя есть окна", ph:"Пн, ср, пт — вечер\nСб — утро"},
+  {id:"bring", t:"area", l:"Что взять с собой на первую тренировку", ph:"Перчатки, форма, бутылка воды ..."},
+  {id:"cancel",t:"area", l:"Правила отмены и переноса", ph:""},
+  {id:"weather",t:"area", l:"Что делаете, если дождь или мороз", ph:""},
+  {id:"domain",t:"radio", l:"Домен для сайта", o:["Уже куплен","Нет, но есть идея названия","Нет, придумайте вы"]},
+  {id:"domainv",t:"text", l:"Если домен есть или есть идея — напиши", ph:"nikola-gk.ru"},
+  {id:"status",t:"radio", l:"Налоговый статус", h:"Нужно для политики обработки данных и оферты — это требование закона, если на сайте есть форма.", o:["Самозанятый","ИП","Физлицо","Пока не оформлен"]}
+ ]},
+
+ {id:"pos", title:"Как хочешь выглядеть", note:"Тон и ощущение", qs:[
+  {id:"three",t:"text", req:1, l:"Три слова о себе как о тренере", ph:"требовательный, спокойный, конкретный"},
+  {id:"one",  t:"area", req:1, l:"Одна фраза: кто ты и для кого", h:"Она станет первым, что человек прочитает на сайте. Напиши как сказал бы вживую.", ph:""},
+  {id:"like", t:"area", l:"Сайты и бренды, которые тебе нравятся", h:"Любые, не обязательно спортивные. Ссылки помогут больше всего.", ph:""},
+  {id:"hate", t:"area", l:"Что тебя раздражает в сайтах тренеров и спортшкол", ph:""},
+  {id:"want", t:"area", l:"Какого ученика ты хочешь получать чаще", ph:""},
+  {id:"else", t:"area", l:"Что важное мы не спросили", ph:""}
+ ]}
+];
+
+var KEY = "gk-anketa-v1";
+var state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ state = {}; }
+
+var REQ = [];
+SECTIONS.forEach(function(s){ s.qs.forEach(function(q){ if(q.req) REQ.push(s.id+"."+q.id); }); });
+
+function key(s,q){ return s.id + "." + q.id; }
+function filled(k){
+  var v = state[k];
+  if (Array.isArray(v)) return v.length > 0;
+  return typeof v === "string" && v.trim() !== "";
+}
+function save(){
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+}
+
+var CARET = '<svg class="caret" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function el(tag, cls, txt){
+  var n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (txt != null) n.textContent = txt;
+  return n;
+}
+
+function autogrow(ta){
+  ta.style.height = "auto";
+  ta.style.height = Math.max(76, ta.scrollHeight + 2) + "px";
+}
+
+function build(){
+  var form = document.getElementById("form");
+  SECTIONS.forEach(function(s, si){
+    var sect = el("section", "sect");
+    sect.dataset.sid = s.id;
+
+    var head = el("button", "sect-head");
+    head.type = "button";
+    head.setAttribute("aria-expanded", si === 0 ? "true" : "false");
+    head.innerHTML =
+      '<span class="sect-num">' + String(si+1).padStart(2,"0") + '</span>' +
+      '<span class="sect-title"><strong></strong><span></span></span>' +
+      '<span class="sect-count"></span>' + CARET;
+    head.querySelector("strong").textContent = s.title;
+    head.querySelector(".sect-title span").textContent = s.note;
+    sect.appendChild(head);
+
+    var body = el("div", "sect-body");
+
+    s.qs.forEach(function(q){
+      var k = key(s,q);
+      var wrap = el("div", "q");
+
+      var lab = el("label", "q-label");
+      lab.textContent = q.l;
+      if (q.req){ var st = el("span","star","*"); st.title = "Обязательно"; lab.appendChild(st); }
+      lab.setAttribute("for", k);
+      wrap.appendChild(lab);
+
+      if (q.h) wrap.appendChild(el("p", "q-hint", q.h));
+
+      if (q.t === "text" || q.t === "area"){
+        var inp = q.t === "text" ? document.createElement("input") : document.createElement("textarea");
+        if (q.t === "text") inp.type = "text";
+        inp.id = k; inp.value = state[k] || "";
+        if (q.ph) inp.placeholder = q.ph;
+        inp.addEventListener("input", function(){
+          state[k] = inp.value;
+          if (q.t === "area") autogrow(inp);
+          save(); refresh();
+        });
+        wrap.appendChild(inp);
+        if (q.t === "area") requestAnimationFrame(function(){ autogrow(inp); });
+
+      } else {
+        var box = el("div", "opts");
+        var multi = q.t === "check";
+        if (multi && !Array.isArray(state[k])) state[k] = state[k] ? [state[k]] : [];
+
+        q.o.forEach(function(o, oi){
+          var row = el("label", "opt");
+          var i = document.createElement("input");
+          i.type = multi ? "checkbox" : "radio";
+          i.name = k;
+          i.value = o;
+          i.id = k + "-" + oi;
+          i.checked = multi ? (state[k] || []).indexOf(o) > -1 : state[k] === o;
+          if (i.checked) row.classList.add("on");
+          i.addEventListener("change", function(){
+            if (multi){
+              var arr = state[k] || [];
+              if (i.checked){ if (arr.indexOf(o) < 0) arr.push(o); }
+              else { arr = arr.filter(function(x){ return x !== o; }); }
+              state[k] = arr;
+            } else {
+              state[k] = i.checked ? o : "";
+              box.querySelectorAll(".opt").forEach(function(r){ r.classList.remove("on"); });
+            }
+            row.classList.toggle("on", i.checked);
+            save(); refresh();
+          });
+          row.appendChild(i);
+          row.appendChild(el("span", null, o));
+          box.appendChild(row);
+        });
+        wrap.appendChild(box);
+      }
+
+      body.appendChild(wrap);
+    });
+
+    sect.appendChild(body);
+    if (si === 0) sect.classList.add("open");
+
+    head.addEventListener("click", function(){
+      var open = sect.classList.toggle("open");
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    form.appendChild(sect);
+  });
+}
+
+function refresh(){
+  var done = REQ.filter(filled).length;
+  document.getElementById("pDone").textContent = done;
+  document.getElementById("pTotal").textContent = REQ.length;
+  document.getElementById("pFill").style.width = (done / REQ.length * 100) + "%";
+
+  SECTIONS.forEach(function(s){
+    var req = s.qs.filter(function(q){ return q.req; });
+    var d = req.filter(function(q){ return filled(key(s,q)); }).length;
+    var node = document.querySelector('.sect[data-sid="' + s.id + '"] .sect-count');
+    if (!node) return;
+    if (req.length === 0){
+      var any = s.qs.filter(function(q){ return filled(key(s,q)); }).length;
+      node.textContent = any + " / " + s.qs.length;
+      node.classList.toggle("done", any === s.qs.length);
+    } else {
+      node.textContent = d + " / " + req.length;
+      node.classList.toggle("done", d === req.length);
+    }
+  });
+}
+
+function collect(){
+  var L = [];
+  var done = REQ.filter(filled).length;
+  L.push("АНКЕТА ТРЕНЕРА ВРАТАРЕЙ — ДЛЯ САЙТА");
+  L.push("Обязательных заполнено: " + done + " из " + REQ.length);
+  L.push("");
+
+  SECTIONS.forEach(function(s, si){
+    var rows = [];
+    s.qs.forEach(function(q){
+      var k = key(s,q);
+      if (!filled(k)) return;
+      var v = state[k];
+      v = Array.isArray(v) ? v.join(", ") : String(v).trim();
+      rows.push("• " + q.l);
+      v.split("\n").forEach(function(line){ rows.push("  " + line); });
+      rows.push("");
+    });
+    if (!rows.length) return;
+    L.push("———— " + String(si+1).padStart(2,"0") + ". " + s.title.toUpperCase() + " ————");
+    L.push("");
+    L = L.concat(rows);
+  });
+
+  var missing = [];
+  SECTIONS.forEach(function(s){
+    s.qs.forEach(function(q){
+      if (q.req && !filled(key(s,q))) missing.push(s.title + " → " + q.l);
+    });
+  });
+  if (missing.length){
+    L.push("———— НЕ ЗАПОЛНЕНО (обязательное) ————");
+    L.push("");
+    missing.forEach(function(m){ L.push("• " + m); });
+    L.push("");
+  }
+  return L.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+var toastT;
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ t.classList.remove("on"); }, 2400);
+}
+
+var modal = document.getElementById("modal");
+function openModal(){
+  document.getElementById("out").value = collect();
+  modal.classList.add("on");
+  document.body.style.overflow = "hidden";
+  document.getElementById("btnCopy").focus();
+}
+function closeModal(){
+  modal.classList.remove("on");
+  document.body.style.overflow = "";
+  document.getElementById("btnCollect").focus();
+}
+
+document.getElementById("btnCollect").addEventListener("click", openModal);
+document.getElementById("btnClose").addEventListener("click", closeModal);
+modal.addEventListener("click", function(e){ if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape" && modal.classList.contains("on")) closeModal(); });
+
+document.getElementById("btnCopy").addEventListener("click", function(){
+  var ta = document.getElementById("out");
+  var text = ta.value;
+  function fallback(){
+    ta.removeAttribute("readonly");
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch(e){}
+    ta.setAttribute("readonly", "");
+    toast(ok ? "Скопировано" : "Выдели текст и скопируй вручную");
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ toast("Скопировано — вставляй в мессенджер"); }, fallback);
+  } else fallback();
+});
+
+document.getElementById("btnReset").addEventListener("click", function(){
+  if (!confirm("Стереть все ответы? Отменить это будет нельзя.")) return;
+  state = {};
+  try { localStorage.removeItem(KEY); } catch(e){}
+  location.reload();
+});
+
+build();
+refresh();
+
+/* Скачивание файлом — появляется только если платформа это разрешает */
+if (window.claude && typeof window.claude.use === "function"){
+  window.claude.use("downloads").then(function(dl){
+    if (!dl) return;
+    var b = document.getElementById("btnFile");
+    b.hidden = false;
+    b.addEventListener("click", function(){
+      dl.save({ filename: "anketa-trenera.txt", data: collect() })
+        .then(function(){ toast("Файл сохранён"); })
+        .catch(function(){ toast("Сохранение отменено"); });
+    });
+  }).catch(function(){});
+}
+})();
+</script>
+
+</body>
+</html>

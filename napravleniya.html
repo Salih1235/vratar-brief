@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Три визуальных направления сайта на выбор.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B0D0C" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0D0C" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Три направления сайта вратаря">
+<meta property="og:description" content="Три визуальных направления сайта на выбор.">
+<meta property="og:type" content="website">
+<title>Три направления сайта вратаря</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Geologica:wght@300;400;600;700&family=Unbounded:wght@500;700;900&family=Golos+Text:wght@400;500;600;700&family=Onest:wght@400;500;600&display=swap">
+
+<style>
+/* ═══════════════ CHROME ═══════════════ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:#0B0D0C;color:#E7EAE7;
+  font-family:"Golos Text",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.chrome{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(11,13,12,.82);backdrop-filter:blur(16px) saturate(1.2);
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+.chrome-in{
+  max-width:1180px;margin:0 auto;padding:9px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.tabs{display:flex;gap:4px;background:rgba(255,255,255,.06);padding:3px;border-radius:11px;flex:1;min-width:0}
+.tab{
+  flex:1;font:inherit;font-size:13px;font-weight:600;cursor:pointer;
+  border:0;background:none;color:rgba(231,234,231,.62);
+  padding:8px 4px;border-radius:8px;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  transition:background .18s ease,color .18s ease;
+}
+.tab:hover{color:#E7EAE7}
+.tab[aria-selected="true"]{background:#E7EAE7;color:#0B0D0C}
+.tab:focus-visible{outline:2px solid #7FE0A6;outline-offset:2px}
+
+.hint{
+  max-width:1180px;margin:0 auto;padding:0 14px 9px;
+  font-size:12px;color:rgba(231,234,231,.5);line-height:1.45;
+}
+@media (max-width:640px){.hint{display:none}}
+
+/* Сноска-пояснение внутри концепта */
+.note{
+  display:flex;gap:9px;align-items:flex-start;
+  font-family:"Golos Text",Arial,sans-serif;
+  font-size:12.5px;line-height:1.5;font-weight:400;
+  padding:10px 13px;border-radius:9px;
+  border:1px dashed currentColor;opacity:.62;
+  max-width:62ch;
+}
+.note::before{content:"→";flex:none;font-weight:600}
+
+.slot{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:26px 20px;
+  font-family:"Golos Text",Arial,sans-serif;font-size:12.5px;line-height:1.5;
+  letter-spacing:.02em;
+}
+.slot span{max-width:26ch;opacity:.72}
+
+.dir{display:none}
+.dir.on{display:block}
+
+/* Нижняя панель выбора */
+.pick{
+  position:fixed;left:0;right:0;bottom:0;z-index:100;
+  background:rgba(11,13,12,.9);backdrop-filter:blur(16px);
+  border-top:1px solid rgba(255,255,255,.09);
+  padding:11px 14px calc(11px + env(safe-area-inset-bottom));
+}
+.pick-in{max-width:1180px;margin:0 auto;display:flex;gap:9px;align-items:center}
+.pick-txt{flex:1;font-size:12.5px;color:rgba(231,234,231,.6);line-height:1.4;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pick-btn{
+  font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  background:#E7EAE7;color:#0B0D0C;border:0;border-radius:9px;padding:11px 18px;
+  transition:opacity .15s ease;white-space:nowrap;
+}
+.pick-btn:hover{opacity:.86}
+.pick-btn:focus-visible{outline:2px solid #7FE0A6;outline-offset:3px}
+.toast{
+  position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(8px);
+  background:#E7EAE7;color:#0B0D0C;padding:10px 17px;border-radius:999px;
+  font-size:13.5px;font-weight:600;z-index:110;opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+
+.pad{height:62px}
+@media (min-width:641px){.pad{height:88px}}
+
+/* ═══════════════ A · НОЧНОЙ СТАДИОН ═══════════════ */
+#a{
+  --ink:#F4EFE6; --dim:#9CA39B; --ground:#070A09; --panel:#0D1211;
+  --lamp:#FFB35C; --line:rgba(244,239,230,.13);
+  background:var(--ground);color:var(--ink);
+}
+#a .grain{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.5;mix-blend-mode:overlay}
+#a .lamp{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(120% 68% at 50% -14%, rgba(255,179,92,.30) 0%, rgba(255,179,92,.10) 34%, transparent 66%),
+    radial-gradient(70% 44% at 12% 8%, rgba(255,214,160,.14) 0%, transparent 60%);
+}
+#a .ah{position:relative;min-height:88vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 40px;overflow:hidden}
+#a .aw{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 22px;width:100%}
+#a .eyebrow{
+  font-family:"Oswald",sans-serif;font-size:12px;font-weight:500;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--lamp);margin:0 0 20px;
+}
+#a h1{
+  font-family:"Oswald",sans-serif;font-weight:500;text-transform:uppercase;
+  font-size:clamp(40px,10.5vw,116px);line-height:.92;letter-spacing:-.005em;
+  margin:0 0 22px;text-wrap:balance;
+}
+#a h1 em{font-style:normal;color:var(--lamp)}
+#a .sub{font-size:clamp(15px,2.2vw,19px);line-height:1.5;color:var(--dim);max-width:44ch;margin:0 0 30px}
+#a .cta{
+  display:inline-flex;align-items:center;gap:11px;
+  font-family:"Oswald",sans-serif;font-size:15px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--lamp);color:#1A0F03;border:0;border-radius:2px;padding:15px 26px;
+  text-decoration:none;transition:transform .16s ease;
+}
+#a .cta:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){#a .cta:hover{transform:none}}
+#a .sec{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:70px 22px;border-top:1px solid var(--line)}
+#a h2{
+  font-family:"Oswald",sans-serif;font-weight:500;text-transform:uppercase;
+  font-size:clamp(26px,5vw,48px);line-height:1.02;margin:0 0 12px;letter-spacing:.005em;
+}
+#a .lead{color:var(--dim);font-size:15.5px;line-height:1.6;max-width:52ch;margin:0 0 32px}
+#a .steps{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none;counter-reset:s}
+#a .steps li{
+  counter-increment:s;display:grid;grid-template-columns:56px 1fr;gap:18px;
+  padding:20px 0;border-bottom:1px solid var(--line);align-items:baseline;
+}
+#a .steps li::before{
+  content:counter(s,decimal-leading-zero);
+  font-family:"Oswald",sans-serif;font-size:13px;font-weight:500;letter-spacing:.1em;color:var(--lamp);
+}
+#a .steps strong{font-family:"Oswald",sans-serif;font-weight:500;font-size:20px;text-transform:uppercase;letter-spacing:.01em;display:block;margin-bottom:5px}
+#a .steps span{color:var(--dim);font-size:14.5px;line-height:1.55}
+#a .reel{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:8px}
+#a .slot{
+  aspect-ratio:16/10;background:var(--panel);
+  border:1px solid var(--line);border-radius:3px;color:var(--dim);
+  box-shadow:inset 0 0 80px -30px rgba(255,179,92,.35);
+}
+#a .note{color:var(--lamp);margin-top:26px}
+#a .wide{aspect-ratio:21/9;margin-top:34px}
+
+/* ═══════════════ B · РАЗМЕТКА ═══════════════ */
+#b{
+  --chalk:#F1F3ED; --ink:#0A2B1C; --ink-2:#3E5A4C; --dim:#7D9187;
+  --field:#0E3B27; --line:rgba(10,43,28,.16);
+  background:var(--chalk);color:var(--ink);
+}
+#b .bw{max-width:1180px;margin:0 auto;padding:0 22px}
+#b .bh{padding-block:52px 8px}
+#b .eyebrow{
+  font-family:"Geologica",sans-serif;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--field);margin:0 0 18px;
+}
+#b h1{
+  font-family:"Geologica",sans-serif;font-weight:600;
+  font-size:clamp(29px,5.6vw,62px);line-height:1.04;letter-spacing:-.028em;
+  margin:0 0 20px;text-wrap:balance;max-width:17ch;
+}
+#b h1 em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--field);}
+#b .sub{font-family:"Onest",sans-serif;font-size:clamp(15px,2vw,18px);line-height:1.55;color:var(--ink-2);max-width:48ch;margin:0 0 26px}
+#b .cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:"Geologica",sans-serif;font-size:14.5px;font-weight:600;
+  background:var(--field);color:var(--chalk);border-radius:7px;padding:13px 22px;
+  text-decoration:none;transition:transform .16s ease;
+}
+#b .cta:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){#b .cta:hover{transform:none}}
+#b .pitch{margin:36px 0 0;background:var(--field);border-radius:10px;padding:22px 20px 16px;overflow:hidden}
+#b .pitch svg{display:block;width:100%;height:auto}
+#b .pitch figcaption{
+  font-family:"Geologica",sans-serif;font-size:11.5px;font-weight:400;
+  color:rgba(241,243,237,.6);margin-top:12px;line-height:1.5;font-variant-numeric:tabular-nums;
+}
+#b .sec{padding:58px 0;border-top:1px solid var(--line);margin-top:52px}
+#b h2{font-family:"Geologica",sans-serif;font-weight:600;font-size:clamp(23px,4vw,38px);line-height:1.1;letter-spacing:-.022em;margin:0 0 10px}
+#b .lead{font-family:"Onest",sans-serif;color:var(--ink-2);font-size:15.5px;line-height:1.6;max-width:54ch;margin:0 0 30px}
+#b .steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+#b .steps li{
+  display:grid;grid-template-columns:76px 1fr;gap:20px;align-items:start;
+  padding:18px 0;border-top:1px solid var(--line);
+}
+#b .steps li:last-child{border-bottom:1px solid var(--line)}
+#b .steps .m{
+  font-family:"Geologica",sans-serif;font-size:11.5px;font-weight:600;color:var(--field);
+  font-variant-numeric:tabular-nums;letter-spacing:.04em;padding-top:3px;
+}
+#b .steps strong{font-family:"Geologica",sans-serif;font-weight:600;font-size:17.5px;letter-spacing:-.012em;display:block;margin-bottom:4px}
+#b .steps span{font-family:"Onest",sans-serif;color:var(--ink-2);font-size:14.5px;line-height:1.55}
+#b .reel{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:11px}
+#b .slot{aspect-ratio:16/10;background:#E4E8DF;border:1px solid var(--line);border-radius:8px;color:var(--dim)}
+#b .note{color:var(--field);margin-top:24px}
+
+/* ═══════════════ C · НОМЕР ОДИН ═══════════════ */
+#c{
+  --paper:#E8E9E3; --ink:#131410; --ink-2:#4A4C43; --dim:#7E8177;
+  --fluo:#FF5B14; --line:rgba(19,20,16,.15);
+  background:var(--paper);color:var(--ink);
+}
+#c .cw{max-width:1180px;margin:0 auto;padding:0 22px}
+#c .ch{background:var(--fluo);color:#150800;padding:44px 0 0;overflow:hidden;position:relative}
+#c .ch .cw{position:relative;z-index:2}
+#c .bignum{
+  position:absolute;right:-4vw;bottom:-9vw;z-index:1;
+  font-family:"Unbounded",sans-serif;font-weight:900;
+  font-size:52vw;line-height:.7;color:rgba(21,8,0,.13);
+  pointer-events:none;user-select:none;
+}
+#c .eyebrow{
+  font-family:"Unbounded",sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;margin:0 0 20px;
+}
+#c h1{
+  font-family:"Unbounded",sans-serif;font-weight:700;
+  font-size:clamp(27px,7.8vw,96px);line-height:.98;letter-spacing:-.038em;
+  margin:0 0 22px;text-wrap:balance;max-width:13ch;overflow-wrap:break-word;
+}
+#c .sub{font-size:clamp(15px,2.1vw,19px);line-height:1.5;max-width:40ch;margin:0 0 30px;font-weight:500}
+#c .cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:"Unbounded",sans-serif;font-size:13.5px;font-weight:700;letter-spacing:-.01em;
+  background:var(--ink);color:var(--paper);border-radius:999px;padding:15px 28px;
+  text-decoration:none;transition:transform .16s ease;
+}
+#c .cta:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){#c .cta:hover{transform:none}}
+#c .strip{
+  margin-top:40px;border-top:1.5px solid rgba(21,8,0,.28);
+  display:flex;flex-wrap:wrap;gap:0 34px;padding:13px 0 15px;
+  font-family:"Unbounded",sans-serif;font-size:10.5px;font-weight:500;
+  letter-spacing:.15em;text-transform:uppercase;
+}
+#c .sec{padding:60px 0;border-bottom:1px solid var(--line)}
+#c h2{
+  font-family:"Unbounded",sans-serif;font-weight:700;
+  font-size:clamp(24px,4.6vw,46px);line-height:1.02;letter-spacing:-.034em;margin:0 0 12px;
+}
+#c .lead{color:var(--ink-2);font-size:16px;line-height:1.6;max-width:50ch;margin:0 0 34px}
+#c .steps{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+#c .steps li{background:var(--paper);padding:22px 20px;display:grid;grid-template-columns:38px 1fr;gap:16px;align-items:start}
+#c .steps .n{
+  font-family:"Unbounded",sans-serif;font-weight:700;font-size:15px;color:var(--fluo);line-height:1.1;
+}
+#c .steps strong{font-family:"Unbounded",sans-serif;font-weight:500;font-size:16.5px;letter-spacing:-.02em;display:block;margin-bottom:5px;line-height:1.25}
+#c .steps span{color:var(--ink-2);font-size:14.5px;line-height:1.55}
+#c .reel{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+#c .slot{aspect-ratio:16/10;background:#DBDCD5;border:1px solid var(--line);border-radius:2px;color:var(--dim)}
+#c .note{color:var(--fluo);margin-top:26px}
+@media (min-width:760px){#c .steps{grid-template-columns:1fr 1fr}}
+
+@media (max-width:420px){
+  #a .steps li{grid-template-columns:34px 1fr;gap:12px}
+  #b .steps li{grid-template-columns:58px 1fr;gap:14px}
+  #c .steps li{grid-template-columns:30px 1fr;gap:12px;padding:18px 16px}
+}
+</style>
+
+<div class="chrome">
+  <div class="chrome-in">
+    <div class="tabs" role="tablist" aria-label="Направления">
+      <button class="tab" role="tab" id="t-a" aria-controls="a" aria-selected="true">Стадион</button>
+      <button class="tab" role="tab" id="t-b" aria-controls="b" aria-selected="false">Разметка</button>
+      <button class="tab" role="tab" id="t-c" aria-controls="c" aria-selected="false">Номер 1</button>
+    </div>
+  </div>
+  <p class="hint">Три разных характера одного сайта. Тексты и фото пока условные — важно ощущение. Пунктиром отмечено, что встанет на место из твоей анкеты.</p>
+</div>
+
+<div class="pad"></div>
+
+<!-- ══════════ A ══════════ -->
+<section class="dir on" id="a" role="tabpanel" aria-labelledby="t-a">
+  <canvas class="grain" id="grain" aria-hidden="true"></canvas>
+
+  <div class="ah">
+    <div class="lamp" aria-hidden="true"></div>
+    <div class="aw">
+      <p class="eyebrow">Тренер вратарей</p>
+      <h1>Вратарь<br>начинается<br>с <em>позиции</em></h1>
+      <p class="sub">Реакция спасает один мяч. Позиция снимает вопрос до того, как по воротам ударили. Индивидуальные тренировки для детей и взрослых.</p>
+      <a class="cta" href="#a">Написать в Telegram →</a>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="slot wide">
+      <span>Здесь — кадр твоей тренировки на весь экран. Вечер, свет прожекторов, работа в воротах.</span>
+    </div>
+    <p class="note">Атмосферное видео на 8–10 секунд без звука. Это и создаёт ощущение дорогой съёмки.</p>
+  </div>
+
+  <div class="sec">
+    <h2>Как проходит<br>тренировка</h2>
+    <p class="lead">Не «покидать мячи в ворота». Каждое занятие собрано в одной логике и заканчивается разбором.</p>
+    <ol class="steps">
+      <li><div><strong>Подготовка кистей</strong><span>Разогрев рук и суставов до того, как в них полетит мяч.</span></div></li>
+      <li><div><strong>Работа ног</strong><span>Перемещение в воротах: приставной шаг, скрестный, выход из ворот.</span></div></li>
+      <li><div><strong>Приём и фиксация</strong><span>Ловля, отбивание, выбор между ними в конкретной ситуации.</span></div></li>
+      <li><div><strong>Игровые эпизоды</strong><span>Один в один, верховая подача, добивание. Как в матче.</span></div></li>
+      <li><div><strong>Разбор</strong><span>Что получилось, что нет, над чем работать до следующего раза.</span></div></li>
+    </ol>
+    <p class="note">Этапы и формулировки заменим на твои — из раздела «Методика» в анкете.</p>
+  </div>
+
+  <div class="sec">
+    <h2>Видео</h2>
+    <p class="lead">Каждая тренировка снята. Смотри, как это выглядит, до того как записаться.</p>
+    <div class="reel">
+      <div class="slot"><span>Работа на выходах</span></div>
+      <div class="slot"><span>Игра ногами</span></div>
+      <div class="slot"><span>Один в один</span></div>
+    </div>
+    <p class="note">Ролики подтянутся сами с той площадки, куда ты их заливаешь.</p>
+  </div>
+  <div style="height:70px"></div>
+</section>
+
+<!-- ══════════ B ══════════ -->
+<section class="dir" id="b" role="tabpanel" aria-labelledby="t-b" hidden>
+  <div class="bw bh">
+    <p class="eyebrow">Тренер вратарей</p>
+    <h1><em>16,5</em> метра, за которые отвечает один человек</h1>
+    <p class="sub">Штрафная площадь — единственная зона поля, где работают руками. Индивидуальные тренировки вратарей: дети, подростки, взрослые.</p>
+    <a class="cta" href="#b">Написать в Telegram →</a>
+
+    <figure class="pitch">
+      <svg viewBox="-2.2 -3.3 44.72 24.4" role="img" aria-label="Схема штрафной площади с официальными размерами">
+        <g fill="none" stroke="#F1F3ED" stroke-width="0.16" vector-effect="non-scaling-stroke">
+          <!-- линия ворот -->
+          <line x1="-2.2" y1="0" x2="42.52" y2="0" stroke-width="0.22"/>
+          <!-- штрафная 40,32 × 16,5 -->
+          <path d="M0 0 V16.5 H40.32 V0"/>
+          <!-- вратарская 18,32 × 5,5 -->
+          <path d="M11 0 V5.5 H29.32 V0"/>
+          <!-- дуга r=9,15 от точки 11 м -->
+          <path d="M12.847 16.5 A 9.15 9.15 0 0 0 27.473 16.5"/>
+          <!-- ворота 7,32 -->
+          <line x1="16.5" y1="-1.15" x2="23.82" y2="-1.15" stroke-width="0.34"/>
+          <line x1="16.5" y1="0" x2="16.5" y2="-1.15" stroke-width="0.34"/>
+          <line x1="23.82" y1="0" x2="23.82" y2="-1.15" stroke-width="0.34"/>
+        </g>
+        <circle cx="20.16" cy="11" r="0.3" fill="#F1F3ED"/>
+        <g fill="rgba(241,243,237,.62)" font-family="Geologica, sans-serif" font-size="1.5" font-weight="400">
+          <text x="20.16" y="-1.95" text-anchor="middle">7,32 м</text>
+          <text x="20.16" y="4.35" text-anchor="middle">5,5 м</text>
+          <text x="20.16" y="10.05" text-anchor="middle">11 м</text>
+          <text x="20.16" y="15.6" text-anchor="middle">16,5 м</text>
+          <text x="20.16" y="19.35" text-anchor="middle">9,15 м</text>
+        </g>
+      </svg>
+      <figcaption>Размеры настоящие — правила игры, а не оформление. Ворота 7,32 × 2,44 м · вратарская 5,5 м · точка 11 м · дуга 9,15 м.</figcaption>
+    </figure>
+  </div>
+
+  <div class="bw">
+    <div class="sec">
+      <h2>Как проходит тренировка</h2>
+      <p class="lead">Каждый этап привязан к своей зоне. Занятие идёт от ворот наружу — от техники рук до игровой ситуации.</p>
+      <ol class="steps">
+        <li><span class="m">0 м</span><div><strong>Подготовка кистей</strong><span>Разогрев рук и суставов до того, как в них полетит мяч.</span></div></li>
+        <li><span class="m">до 5,5 м</span><div><strong>Работа ног в воротах</strong><span>Перемещение вдоль линии, приставной и скрестный шаг.</span></div></li>
+        <li><span class="m">5,5 м</span><div><strong>Приём и фиксация</strong><span>Ловля или отбивание — и выбор между ними по ситуации.</span></div></li>
+        <li><span class="m">11 м</span><div><strong>Один в один</strong><span>Выход, сокращение угла, момент принятия решения.</span></div></li>
+        <li><span class="m">16,5 м</span><div><strong>Верховые и разбор</strong><span>Работа на выходах и итог занятия: что дальше.</span></div></li>
+      </ol>
+      <p class="note">Этапы и расстояния заменим на твои — из раздела «Методика» в анкете.</p>
+    </div>
+
+    <div class="sec" style="border-top:0;margin-top:0">
+      <h2>Видео</h2>
+      <p class="lead">Каждая тренировка снята. Смотри, как это выглядит, до того как записаться.</p>
+      <div class="reel">
+        <div class="slot"><span>Работа на выходах</span></div>
+        <div class="slot"><span>Игра ногами</span></div>
+        <div class="slot"><span>Один в один</span></div>
+      </div>
+      <p class="note">Ролики подтянутся сами с той площадки, куда ты их заливаешь.</p>
+    </div>
+  </div>
+  <div style="height:70px"></div>
+</section>
+
+<!-- ══════════ C ══════════ -->
+<section class="dir" id="c" role="tabpanel" aria-labelledby="t-c" hidden>
+  <div class="ch">
+    <div class="bignum" aria-hidden="true">1</div>
+    <div class="cw">
+      <p class="eyebrow">Тренер вратарей</p>
+      <h1>Единственный, кто одет иначе</h1>
+      <p class="sub">На поле одиннадцать. Руками играет один. Индивидуальные тренировки вратарей — детям, подросткам и взрослым.</p>
+      <a class="cta" href="#c">Написать в Telegram →</a>
+      <div class="strip">
+        <span>Дети</span><span>Подростки</span><span>Взрослые</span><span>Индивидуально</span><span>Мини-группа</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cw">
+    <div class="sec">
+      <div class="slot" style="aspect-ratio:21/9">
+        <span>Здесь — крупный портретный кадр в воротах. Один человек, пустое поле за спиной.</span>
+      </div>
+      <p class="note">Направление держится на сильной фотографии. Без хорошей съёмки оно не заработает.</p>
+    </div>
+
+    <div class="sec">
+      <h2>Как проходит тренировка</h2>
+      <p class="lead">Не «покидать мячи в ворота». Каждое занятие собрано в одной логике и заканчивается разбором.</p>
+      <ol class="steps">
+        <li><span class="n">01</span><div><strong>Подготовка кистей</strong><span>Разогрев рук и суставов до того, как в них полетит мяч.</span></div></li>
+        <li><span class="n">02</span><div><strong>Работа ног</strong><span>Перемещение в воротах: приставной шаг, скрестный, выход.</span></div></li>
+        <li><span class="n">03</span><div><strong>Приём и фиксация</strong><span>Ловля, отбивание, выбор между ними в конкретной ситуации.</span></div></li>
+        <li><span class="n">04</span><div><strong>Игровые эпизоды</strong><span>Один в один, верховая подача, добивание. Как в матче.</span></div></li>
+        <li><span class="n">05</span><div><strong>Разбор</strong><span>Что получилось, что нет, над чем работать дальше.</span></div></li>
+      </ol>
+      <p class="note">Этапы и формулировки заменим на твои — из раздела «Методика» в анкете.</p>
+    </div>
+
+    <div class="sec" style="border-bottom:0">
+      <h2>Видео</h2>
+      <p class="lead">Каждая тренировка снята. Смотри, как это выглядит, до того как записаться.</p>
+      <div class="reel">
+        <div class="slot"><span>Работа на выходах</span></div>
+        <div class="slot"><span>Игра ногами</span></div>
+        <div class="slot"><span>Один в один</span></div>
+      </div>
+      <p class="note">Ролики подтянутся сами с той площадки, куда ты их заливаешь.</p>
+    </div>
+  </div>
+  <div style="height:70px"></div>
+</section>
+
+<div class="pick">
+  <div class="pick-in">
+    <p class="pick-txt" id="pickTxt">Какой ближе? Открой каждый и пролистай.</p>
+    <button class="pick-btn" id="pickBtn" type="button">Выбрать этот</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var NAMES = {a:"Ночной стадион", b:"Разметка", c:"Номер один"};
+var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+var cur = "a";
+
+function show(id){
+  cur = id;
+  tabs.forEach(function(t){
+    var on = t.getAttribute("aria-controls") === id;
+    t.setAttribute("aria-selected", on ? "true" : "false");
+  });
+  ["a","b","c"].forEach(function(k){
+    var s = document.getElementById(k);
+    s.classList.toggle("on", k === id);
+    if (k === id) s.removeAttribute("hidden"); else s.setAttribute("hidden","");
+  });
+  document.getElementById("pickTxt").textContent = "Смотришь: " + NAMES[id];
+  window.scrollTo(0, 0);
+}
+
+tabs.forEach(function(t){
+  t.addEventListener("click", function(){ show(t.getAttribute("aria-controls")); });
+});
+document.addEventListener("keydown", function(e){
+  if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  var order = ["a","b","c"], i = order.indexOf(cur);
+  if (e.key === "ArrowRight") show(order[(i+1) % 3]);
+  if (e.key === "ArrowLeft")  show(order[(i+2) % 3]);
+});
+
+var toastT;
+document.getElementById("pickBtn").addEventListener("click", function(){
+  var msg = "Мне ближе вариант «" + NAMES[cur] + "»";
+  function done(ok){
+    var t = document.getElementById("toast");
+    t.textContent = ok ? "Скопировано — отправь это сообщение" : msg;
+    t.classList.add("on");
+    clearTimeout(toastT);
+    toastT = setTimeout(function(){ t.classList.remove("on"); }, 3000);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(function(){ done(true); }, function(){ done(false); });
+  } else done(false);
+});
+
+/* Плёночное зерно для «Ночного стадиона» — генерируем, а не тащим картинкой */
+(function grain(){
+  var c = document.getElementById("grain");
+  if (!c) return;
+  var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var tile = document.createElement("canvas");
+  tile.width = tile.height = 128;
+  var tx = tile.getContext("2d");
+  var img = tx.createImageData(128,128);
+  for (var i=0;i<img.data.length;i+=4){
+    var v = 128 + (Math.random()*70 - 35);
+    img.data[i] = img.data[i+1] = img.data[i+2] = v;
+    img.data[i+3] = 26;
+  }
+  tx.putImageData(img,0,0);
+  function paint(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    c.width = Math.ceil(c.clientWidth * dpr);
+    c.height = Math.ceil(c.clientHeight * dpr);
+    var ctx = c.getContext("2d");
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,c.clientWidth,c.clientHeight);
+    ctx.fillStyle = ctx.createPattern(tile,"repeat");
+    ctx.fillRect(0,0,c.clientWidth,c.clientHeight);
+  }
+  paint();
+  var rt;
+  window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(paint, 180); });
+  if (mq.matches) return;
+})();
+})();
+</script>
+
+</body>
+</html>
