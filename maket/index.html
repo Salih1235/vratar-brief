@@ -120,7 +120,7 @@ nav{position:absolute;top:0;left:0;right:0;z-index:10}
 @media (max-width:760px){.hero{padding-top:92px}}
 .hero .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 42%}
 .hero .scrim{position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 40%,rgba(0,0,0,.88) 100%)}
+  background:linear-gradient(180deg,rgba(0,0,0,.62) 0%,rgba(0,0,0,.10) 42%,rgba(0,0,0,.80) 100%)}
 .hero-in{position:relative;z-index:2;width:100%;padding-bottom:56px}
 .hero .label{margin-bottom:20px;color:var(--rule)}
 .hero .display{margin-bottom:22px;max-width:17ch}
@@ -136,9 +136,9 @@ section{padding-block:calc(var(--gap)/2)}
 .tiles li{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--raised)}
 .tiles img{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  filter:brightness(.62) saturate(.55);transition:filter .3s ease,transform .5s ease;
+  filter:brightness(.82);transition:filter .3s ease,transform .5s ease;
 }
-.tiles li:hover img{filter:brightness(.78) saturate(.7);transform:scale(1.03)}
+.tiles li:hover img{filter:brightness(.95);transform:scale(1.03)}
 @media (prefers-reduced-motion:reduce){.tiles img{transition:none}.tiles li:hover img{transform:none}}
 .tiles .cap{position:absolute;inset:auto 0 0 0;padding:22px 20px;
   background:linear-gradient(180deg,transparent,rgba(0,0,0,.72))}
@@ -278,13 +278,14 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
     </div>
   </div>
   <div class="w strip">
-    <figure class="shotbox" style="aspect-ratio:21/9">
-      <img src="img/hero.jpg" alt="Кадр тренировки: сейв в воротах" style="object-position:52% 38%">
+    <figure class="slot" style="aspect-ratio:21/9">
+      <span class="tag">Полоса 21:9 — снять</span>
+      <p>Телефон на штативе у стойки ворот, крупно. За ним, в расфокусе, идёт занятие.</p>
     </figure>
     <div class="grid3">
-      <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t1.jpg" alt="Сейв в нижний угол" style="object-position:40% 50%"></figure>
-      <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t2.jpg" alt="Приём мяча в перчатку" style="object-position:60% 50%"></figure>
-      <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t3.jpg" alt="Колено в грунте после падения" style="object-position:50% 50%"></figure>
+      <figure class="slot" style="aspect-ratio:16/10"><span class="tag">Ролик</span><p>Работа на выходах</p></figure>
+      <figure class="slot" style="aspect-ratio:16/10"><span class="tag">Ролик</span><p>Постановка кистей</p></figure>
+      <figure class="slot" style="aspect-ratio:16/10"><span class="tag">Ролик</span><p>Разбор записи</p></figure>
     </div>
   </div>
 </section>
@@ -293,8 +294,9 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
 <section id="trener">
   <div class="w">
     <div class="split">
-      <figure class="shotbox" style="aspect-ratio:3/4">
-        <img src="img/portrait.jpg" alt="Тренер на кромке поля вечером, смотрит на поле" style="object-position:38% 40%">
+      <figure class="slot" style="aspect-ratio:3/4">
+        <span class="tag">Портрет — снять</span>
+        <p>Никола по грудь, взгляд в камеру, за 30–40 минут до заката, свет сбоку. Портретный режим выключить.</p>
       </figure>
       <div>
         <div class="sec-head" style="margin-bottom:28px">
