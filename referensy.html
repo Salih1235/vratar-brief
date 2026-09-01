@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0B0C">
+<title>Референсы и два направления</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Oswald:wght@400;500;600&family=Martian+Mono:wght@400;600&display=swap">
+<style>
+*{box-sizing:border-box}
+:root{
+  --void:#0A0B0C; --stage:#131518; --card:#16191C;
+  --bone:#E9E6DF; --dust:#8C8F92; --rule:#24282C;
+  --acc:#CDFF47; --warm:#E0A45C;
+  --w:1180px;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--void);color:var(--bone);
+  font-family:"Golos Text",system-ui,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.w{max-width:var(--w);margin:0 auto;padding:0 22px}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
+p{margin:0}
+code{font-family:"Martian Mono",ui-monospace,monospace;font-size:.82em}
+
+header.top{padding:64px 0 30px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:"Martian Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--acc);margin-bottom:18px}
+h1{font-family:"Oswald",sans-serif;font-weight:500;text-transform:uppercase;
+  font-size:clamp(30px,6.5vw,60px);line-height:1;letter-spacing:.01em;margin-bottom:20px}
+.lede{color:var(--dust);font-size:17px;max-width:62ch}
+.lede+.lede{margin-top:12px}
+.lede b{color:var(--bone);font-weight:500}
+.src{margin-top:22px;font-size:13.5px;color:var(--dust)}
+.src a{color:var(--acc);text-decoration:none;border-bottom:1px solid rgba(205,255,71,.35)}
+.src a:hover{border-bottom-color:var(--acc)}
+
+h2.sec{font-family:"Oswald",sans-serif;font-weight:500;text-transform:uppercase;
+  font-size:clamp(22px,4vw,34px);letter-spacing:.01em;margin:58px 0 8px}
+.sub{color:var(--dust);font-size:15.5px;max-width:64ch;margin-bottom:26px}
+
+.refs{display:grid;gap:16px}
+.ref{background:var(--card);border:1px solid var(--rule);display:grid;
+  grid-template-columns:340px 1fr;overflow:hidden}
+@media (max-width:820px){.ref{grid-template-columns:1fr}}
+.shot{margin:0;background:#000;border-right:1px solid var(--rule);
+  aspect-ratio:16/10;overflow:hidden}
+@media (max-width:820px){.shot{border-right:0;border-bottom:1px solid var(--rule);aspect-ratio:16/9}}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.body{padding:20px 22px 22px;min-width:0}
+.ref header{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.score{font-family:"Martian Mono",monospace;font-size:13px;font-weight:600;
+  background:var(--bone);color:var(--void);padding:3px 9px;flex:none}
+.ref h3{font-family:"Oswald",sans-serif;font-weight:500;text-transform:uppercase;
+  font-size:20px;letter-spacing:.01em;flex:1;min-width:0}
+.pill{font-size:11.5px;padding:3px 10px;border:1px solid var(--rule);color:var(--dust);white-space:nowrap}
+.pill.safe{color:var(--acc);border-color:rgba(205,255,71,.4)}
+.pill.mid{color:var(--warm);border-color:rgba(224,164,92,.4)}
+.ns{color:var(--dust);font-size:14.5px;line-height:1.55;font-style:italic;margin-bottom:14px}
+.swatches{display:flex;gap:0;margin-bottom:14px;border:1px solid var(--rule);width:fit-content}
+.swatches i{width:30px;height:22px;display:block}
+.verdict{font-size:15px;line-height:1.55;margin-bottom:16px;
+  padding-left:14px;border-left:2px solid var(--acc)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:560px){.cols{grid-template-columns:1fr;gap:14px}}
+.cols h4{margin:0 0 7px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--acc);font-weight:600;font-family:"Martian Mono",monospace}
+.cols .no h4{color:var(--dust)}
+.cols ul{margin:0;padding-left:16px;font-size:13.5px;line-height:1.5;color:var(--dust)}
+.cols li+li{margin-top:5px}
+.cols .no li{color:#6E7174}
+
+.rejected{background:var(--stage);border:1px solid var(--rule);padding:22px 24px;margin-top:18px}
+.rejected h4{margin:0 0 12px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dust);font-family:"Martian Mono",monospace}
+.rejected ul{margin:0;padding-left:17px;font-size:14px;line-height:1.6;color:var(--dust)}
+.rejected li+li{margin-top:10px}
+.rejected b{color:var(--bone);font-weight:600}
+
+.dir{border-top:1px solid var(--rule);padding-top:44px;margin-top:52px}
+.dir-head{margin-bottom:28px}
+.idx{font-family:"Martian Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--acc)}
+.dir h2{font-family:"Oswald",sans-serif;font-weight:500;text-transform:uppercase;
+  font-size:clamp(26px,5.4vw,46px);line-height:1.02;margin:12px 0 14px}
+.thesis{font-size:17.5px;line-height:1.5;color:var(--bone);max-width:70ch}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+.block{background:var(--card);border:1px solid var(--rule);padding:20px 22px;min-width:0}
+.block.wide{grid-column:1/-1}
+.block h4{margin:0 0 12px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--acc);font-weight:600;font-family:"Martian Mono",monospace}
+.block p{font-size:14.5px;line-height:1.6;color:var(--dust)}
+.block.sig p,.block.risk p{color:var(--bone)}
+.block.risk h4{color:var(--warm)}
+ul.based{margin:0;padding-left:17px;font-size:13.5px;line-height:1.55;color:var(--dust)}
+ul.based li+li{margin-top:8px}
+
+.pal{display:grid;gap:9px}
+.tok{display:flex;gap:12px;align-items:flex-start}
+.tok i{width:34px;height:34px;flex:none;border:1px solid var(--rule);display:block}
+.tok code{display:block;color:var(--bone);font-size:12px}
+.tok b{display:block;font-family:"Martian Mono",monospace;font-size:11.5px;
+  color:var(--dust);font-weight:400;margin:1px 0 3px}
+.tok span{display:block;font-size:12.5px;line-height:1.45;color:var(--dust)}
+
+.ty{padding:12px 0;border-top:1px solid var(--rule)}
+.ty:first-of-type{border-top:0;padding-top:0}
+.ty-h{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;margin-bottom:5px}
+.ty-h b{font-size:13.5px;color:var(--bone)}
+.ty-h code{color:var(--acc)}
+.ty p{font-size:13px;line-height:1.5}
+.ty .fb{color:#65686B;font-size:12px;margin-top:3px}
+
+footer{border-top:1px solid var(--rule);margin-top:60px;padding:28px 0 60px;
+  color:var(--dust);font-size:14px}
+footer b{color:var(--bone);font-weight:500}
+</style>
+</head>
+<body>
+<div class="w">
+<header class="top">
+  <p class="eyebrow">Сайт вратарского тренера · подбор направления</p>
+  <h1>Десять референсов и два направления</h1>
+  <p class="lede">Это не придуманные концепты. Каждый сайт ниже — <b>реальная работающая дизайн-система</b>, разобранная по палитре, шрифтам и приёмам. Оценка слева — насколько система применима к сайту тренера вратарей.</p>
+  <p class="lede">Главный критерий отбора оказался не «красиво», а <b>зависимость от фотографии</b>. Профессиональной съёмки у Николы может не быть, поэтому наверх вышли системы, где вместо кадра работает типографический масштаб.</p>
+  <p class="src">Источник разбора: <a href="https://styles.refero.design" target="_blank" rel="noopener">styles.refero.design</a> — библиотека дизайн-систем реальных продуктов. Скриншоты принадлежат их владельцам и приведены как референс.</p>
+</header>
+
+<h2 class="sec">Шортлист</h2>
+<p class="sub">Отсортировано по применимости. Курсивом — формулировка направления самим сервисом, не моя.</p>
+<div class="refs">
+<article class="ref">
+  <figure class="shot"><img src="refs/raad-cycling.jpg" alt="Главная страница Raad Cycling" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">8</span>
+      <h3>Raad Cycling</h3>
+      <span class="pill hot">медиа: высокая</span>
+    </header>
+    <p class="ns">«Ink and ivory gallery runway» — монохромная редакционная галерея, где товар подан как носимая скульптура: только чистый чёрный и чистый белый, вся индивидуальность вынесена в типографику предельного масштаба, фотография работает как арт-принт во всю ширину экрана.</p>
+    <div class="swatches"><i style="background:#000000" title="Ink Black #000000"></i><i style="background:#ffffff" title="Ivory White #ffffff"></i><i style="background:#181818" title="Charcoal Edge #181818"></i><i style="background:#333333" title="Graphite #333333"></i><i style="background:#666666" title="Stone Gray #666666"></i></div>
+    <p class="verdict">Единственная система, где герой вообще без изображения — типографический масштаб работает вместо фото, что снимает главный риск проекта; плюс готовая архитектура длинного лендинга полосами и доказательство, что сайт без единой цифры-достижения читается дорого.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Первый экран как чистая типографика на чёрном, без фото и видео вообще: одна дисплейная строка на всю ширину + подпись 12px с трекингом. Это снимает главный риск проекта — отсутствие профессиональной фотографии на самом дорогом месте страницы. Богатство создаёт масштаб и воздух, а не кадр.</li><li>Полосовой ритм лендинга: чёрная полоса → белая → чёрная, жёсткая склейка без градиентов, 120px воздуха сверху и снизу каждой. Для длинного лендинга тренера это готовая архитектура: экран-манифест, экран-видео, экран-методика, экран-заявка.</li><li>Правило full-bleed без max-width, применённое к видео: у Raad фотография бежит в край без паддинга, радиуса и тени — тот же приём с видео тренировок мгновенно поднимает production value и прощает несовершенство исходника, потому что кадр перестаёт быть «картинкой в карточке» и становится поверхностью.</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Запрет на любую заливку у кнопок («ghost outlines are the only button pattern permitted»). Для лид-гена это прямой удар по конверсии: главный CTA в Telegram/WhatsApp обязан быть визуально тяжелее всего остального. Компромисс: вся мелкая интерактивность — ghost-контуры (как у Raad), но один-единственный залитый CTA-блок на экран. Он же станет опорной точкой иерархии.</li><li>Тотальная ахроматичность («the system is 0% colorful by design»). У Raad цвет приносит товар — джерси красного, оранжевого, маджента, электрик — поэтому UI может быть стерильным. У тренера вратарей товара нет, а тренировочный кадр часто серо-зелёно-хмурый. Полностью нулевой цвет даст не «дорого», а «пусто». Нужен один сдержанный ахроматический-плюс акцент (например, холодный сигнальный тон из экипировки — перчатки, манишка), а не золото.</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/champions4good.jpg" alt="Главная страница Champions4good" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">7</span>
+      <h3>Champions4good</h3>
+      <span class="pill safe">медиа: низкая</span>
+    </header>
+    <p class="ns">«Полуночный спортивный плакат» — винтажная клубная афиша, орущая со сливово-тёмной стены: тёмно-сливовый холст, один кричащий лавандовый акцент и ультра-узкий дисплейный шрифт, заполняющий экран от края до края. Сайт-источник: https://www.champions4good.club, тема — dark.</p>
+    <div class="swatches"><i style="background:#23002b" title="Deep Plum #23002b"></i><i style="background:#e894ff" title="Lavender Shock #e894ff"></i><i style="background:#93ffe4" title="Mint Signal #93ffe4"></i><i style="background:#ffac47" title="Amber Pulse #ffac47"></i><i style="background:#000000" title="Black #000000"></i><i style="background:#121212" title="Charcoal #121212"></i><i style="background:#291900" title="Espresso Brown #291900"></i><i style="background:#002629" title="Ink Teal #002629"></i></div>
+    <p class="verdict">Единственная система с низкой медиазависимостью: «фотографии нет, изображением работает шрифт», плюс три приёма, которых больше нет нигде: стопка слов-плакатов с line-height 0.78, служебные слова другим шрифтом внутри неё и разнонаправленный трекинг.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Каркас ритма: чередование тёмных и светлых полос как основной композиционный приём, section gap 64px. Для лендинга это готовый скелет — тёмный герой, светлый блок «как проходит тренировка», снова тёмный блок с видео, светлый прайс/форматы, тёмный футер с CTA</li><li>Дисплейная стопка слов в герое: одно-два коротких слова огромным узким шрифтом, line-height 0.78–0.85, выключка влево, упор в край экрана. По-русски это работает на коротких словах — «ВРАТАРЬ», «РЕАКЦИЯ», «РУКИ», имя тренера</li><li>Связки другим шрифтом внутри дисплейной стопки: служебные слова («и», «для», «в») набрать интерфейсным гротеском 48–58px 600 внутри крупной стопки — приём даёт живость без единого декоративного элемента</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Лавандовый #e894ff и сливовый #23002b — палитру брать нельзя. Розово-лавандовое на сливовом читается как клубный lifestyle и молодёжный фитнес, аудитория «родители детей-вратарей» прочтёт это как несерьёзно. Переносить нужно СТРУКТУРУ дуотона (один хроматический акцент на почти-чёрном), а сам акцент выбрать из вратарской фактуры: холодный свет прожекторов, зелень поля, цвет перчаток</li><li>Мятный #93ffe4 и янтарный #ffac47 как пара акцентов — это уже третий и четвёртый цвет, на лендинге тренера они мгновенно превратят строгость в афишу детского праздника. Максимум — один функциональный сигнальный цвет</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/athletics.jpg" alt="Главная страница Athletics" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">8</span>
+      <h3>Athletics</h3>
+      <span class="pill mid">медиа: средняя</span>
+    </header>
+    <p class="ns">Галерейная монография на чёрном бархате: тотально монохромный тёмный холст, на котором дышит огромный тонкий (300) антиквенный дисплей 72–116px, а весь функциональный текст уходит в тихий гротеск. Никакого цвета в интерфейсе — цвет живёт только внутри фотографии и знака.</p>
+    <div class="swatches"><i style="background:#000000" title="Obsidian #000000"></i><i style="background:#1d1d1d" title="Charcoal #1d1d1d"></i><i style="background:#d6d5d0" title="Ash #d6d5d0"></i><i style="background:#ffffff" title="Paper White #ffffff"></i></div>
+    <p class="verdict">Средняя медиазависимость и буквальная формулировка «премиально ≠ золото и цифры»: тонкая антиква весом 300 на 116px, индекс с буквенной аннотацией вместо карточек, две плоскости без теней — но CTA в системе отсутствует как класс.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Полную палитру как есть: #000000 холст, #1d1d1d приподнятые полосы, #ffffff текст, #d6d5d0 строго под линии и разделители. Четырёх цветов достаточно на весь сайт</li><li>Правило «тёплый off-white только под структуру, чистый белый только под текст». Дешёвая по себестоимости деталь, которая сразу читается как аккуратность</li><li>Вертикальный индекс с буквенной аннотацией под блок форматов тренировок: заголовки 72–82px тонкой антиквой, интерлиньяж 1.05, слева заглавная буква 16px гротеском. Даёт структуру без карточек и без иконок</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Дисплейную гарнитуру буквально. Feature Deck, GT Sectra Display Light, Canela, Domaine Display Thin — латиница без кириллицы. Нужна кириллическая тонкая антиква с реальным весом 300 (и обязательный тест на «Ж», «Щ», «Ы» — на тонких весах кириллица часто рассыпается)</li><li>Вес 300 на мобильном на кегле ниже ~40px. На чёрном фоне тонкая антиква на телефоне и на дешёвом OLED начинает мерцать и рваться; правило «только 300» надо ограничить крупными кеглями, для средних брать 400</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/whoop.jpg" alt="Главная страница WHOOP" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">8</span>
+      <h3>WHOOP</h3>
+      <span class="pill hot">медиа: высокая</span>
+    </header>
+    <p class="ns">«Лаборатория производительности в полночь»: клинически белые столы под чёрной театральной пустотой и один фиолетовый разряд электричества. Сайт построен на высококонтрастной системе split-canvas — полноширинные чёрные театральные блоки чередуются с клиническими белыми секциями, задавая ритм «нагрузка — восстановление».</p>
+    <div class="swatches"><i style="background:#4a53ff" title="Pulse Violet #4a53ff"></i><i style="background:#000000" title="Obsidian #000000"></i><i style="background:#191919" title="Carbon #191919"></i><i style="background:#808080" title="Fog Gray #808080"></i><i style="background:#999999" title="Ash #999999"></i><i style="background:#e5e7eb" title="Hairline #e5e7eb"></i><i style="background:#f3f5f9" title="Lab Mist #f3f5f9"></i><i style="background:#ffffff" title="Paper White #ffffff"></i></div>
+    <p class="verdict">Ближайший по духу спортивный референс — про работу тела, а не про товар; split-canvas ложится на структуру лендинга тренера, но pricing-карточки, announcement-бар и оверлей-метрики с процентами выбрасываются целиком.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Split-canvas как каркас страницы: чередование full-bleed чёрных (#000000) и белых (#ffffff) секций с разрывом 80–120px и без серых переходов. Это готовый скелет лендинга тренера — тёмное про эмоцию и кадр, светлое про факты и формат</li><li>Геро 100vh на чистом #000000 с одним огромным заголовком, выключенным влево на 8% отступа, подзаголовком 19px в #808080 и max-width 520px, и белой pill-кнопкой. Под видео тренировки это работает без единой цифры</li><li>Дисплейный заголовок с отрицательным трекингом -0.04em и line-height 0.71–0.80 — главный носитель «дорого». Для кириллицы взять указанную на странице замену: Montserrat, Nunito Sans или DM Sans (Proxima Nova кириллицу не покрывает нормально), и обязательно проверить, что отрицательный трекинг не слепляет «ж», «щ», «ы» — на кириллице безопаснее -0.02…-0.03em</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Pricing-карточки тарифов (Membership Pricing Card: цена 50px, список фич, фиолетовая кнопка у выбранного тарифа) — это механика подписки. Сайт тренера ведёт в мессенджер, а не продаёт SKU; таблица тарифов сразу превращает премиальный лендинг в прайс-лист</li><li>Announcement Bar — фиолетовая промо-полоса сверху со ссылкой. Это розничный приём («скидка», «акция»), он дешевит и противоречит задаче</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/peloton.jpg" alt="Главная страница Peloton" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">8</span>
+      <h3>Peloton</h3>
+      <span class="pill hot">медиа: высокая</span>
+    </header>
+    <p class="ns">«Красный маяк на угольной полосе»: кинематографичные тёмные полосы-сцены (#181a1d) чередуются со светлыми каталожными секциями, и единственный хроматический акцент — красный — режет эту почти ахроматическую систему только там, где нужно действие.</p>
+    <div class="swatches"><i style="background:#df1c2f" title="Peloton Red #df1c2f"></i><i style="background:#181a1d" title="Carbon Black #181a1d"></i><i style="background:#000000" title="Graphite #000000"></i><i style="background:#ffffff" title="Pure White #ffffff"></i><i style="background:#f7f7f7" title="Mist Gray #f7f7f7"></i><i style="background:#e4e6e7" title="Silver Lining #e4e6e7"></i><i style="background:#65666a" title="Slate #65666a"></i><i style="background:#888b93" title="Steel #888b93"></i></div>
+    <p class="verdict">Лучшая формулировка отказа от спортивного болда (дисплей весом 300 с отрицательным трекингом) и правило «на тёмной сцене только текст и CTA»; минус — половина системы обслуживает каталог, а красный тянет ассоциацию распродажи.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Каркас страницы как чередование full-bleed тёмных полос #181a1d и светлых секций #f7f7f7 в контейнере 1200px, где смена фона сама работает разделителем — без линий, без градиентных переходов</li><li>Правило «тёмная полоса = только текст и CTA». Наш hero с видео тренировки и одной кнопкой в мессенджер ложится в него один в один; никаких плашек с достижениями поверх кадра</li><li>Дисплейный заголовок Inter 300 в 48px с трекингом −0.384px как фирменный ход. Для русского это редкий и очень выигрышный приём: спортивный сайт, набранный лайтом, мгновенно читается дороже соседей на болде</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Сам #df1c2f. Это насыщенный e-commerce-красный, он тянет за собой ассоциацию распродажи и опасности. Если берём акцент — то его роль, а не оттенок: холодный лёд-голубой, кислотный «мяч-жёлтый» или, наоборот, тёплый костяной — что-то, выведенное из реальных кадров клиента, а не с сайта велотренажёров</li><li>Товарную половину системы: карточки товаров, промо-теги, корзину, иконки аккаунта, навигационные мега-дропдауны. У нас нет каталога, и имитация магазина сделает лендинг фальшивым</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/nike-com.jpg" alt="Главная страница Nike.com" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">7</span>
+      <h3>Nike.com</h3>
+      <span class="pill hot">медиа: высокая</span>
+    </header>
+    <p class="ns">«Монохромная галерея атлетической производительности — белые стены, продукт как искусство, интерфейс растворён в фоне» (northStar со страницы). UI намеренно почти невидим: весь цвет и вся эмоция приходят из фотографии, а не из хрома интерфейса. Тема на странице помечена как mixed — страница ритмично чередует чисто белые товарные полосы и полноэкранные тёмные редакционные блоки.</p>
+    <div class="swatches"><i style="background:#111111" title="Obsidian #111111"></i><i style="background:#ffffff" title="Paper White #ffffff"></i><i style="background:#e5e5e5" title="Concrete Gray #e5e5e5"></i><i style="background:#f5f5f5" title="Soft Mist #f5f5f5"></i><i style="background:#707072" title="Steel #707072"></i><i style="background:#9e9ea0" title="Faint Gray #9e9ea0"></i></div>
+    <p class="verdict">Даёт два железных правила — ноль акцентного цвета в интерфейсе и «изображение и есть дизайн, а не элемент в рамке»; но это каркас магазина с каталожной плотностью 12/8/48px и нулевым укрытием для слабого кадра.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Правило «ноль акцентного цвета в интерфейсе». Палитра сайта Николы — чёрный, белый, два-три серых, и ничего больше. Это автоматически закрывает запрет на золотые градиенты: их просто некуда вставить, если в системе нет ни одного хроматического токена</li><li>Полный запрет box-shadow. Глубину строим тремя способами Nike: резкая смена тёмной и светлой полосы, волосяная граница #e5e5e5 (для тёмной темы — её инверсия), воздух. Ни одной карточки с тенью на сайте</li><li>Один дисплейный момент на экран. Futura-подобный гротеск (подстановка с кириллицей), огромный кегль, line-height ровно 1.0, посадка в левый нижний угол тёмного героя, под ним строка 16px и одна кнопка. Для вратарской темы это работает лучше, чем у Nike: короткое слово в 76px+ на кадре с прыжком за мячом</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Весь e-commerce каркас: 3-колоночная товарная сетка с горизонтальным скроллом, карточки-товары с пилюлями-подписями, поле поиска в навигации, четырёхколоночный футер с блоками «Ресурсы / Помощь / Компания / Скидки». На лендинге с одной целью — заявка в мессенджер — это лишние узлы, которые размывают действие</li><li>Компактную плотность как есть. Паддинг карточки 12px и зазор элементов 8px — это плотность каталога, где на экране должно поместиться много товара. У Николы товар один — он сам. Шкалу отступов Nike надо брать, но со сдвигом вверх: разрыв секций от 96–120px вместо 48px, воздух вокруг блоков заметно больше. Иначе «дорого» превратится в «тесно»</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/ferrari.jpg" alt="Главная страница Ferrari" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">7</span>
+      <h3>Ferrari</h3>
+      <span class="pill hot">медиа: высокая</span>
+    </header>
+    <p class="ns">«Cavallino rampante на чёрном мраморе»: чёрные пустоты, прорезанные единственным красным сигналом, белая прописная типографика с широким трекингом и кинематографичная фотография во всю ширину экрана. Интерфейс сведён к геометрии — нулевые радиусы, волосяные линейки, плоские поверхности; сцену держат кадр и воздух, а не UI.</p>
+    <div class="swatches"><i style="background:#da291c" title="Rosso Corsa #da291c"></i><i style="background:#9d2211" title="Rosso Scuro #9d2211"></i><i style="background:#000000" title="Carbone Nero #000000"></i><i style="background:#181818" title="Notte Profonda #181818"></i><i style="background:#303030" title="Grafite #303030"></i><i style="background:#666666" title="Piombo #666666"></i><i style="background:#8f8f8f" title="Fumo #8f8f8f"></i><i style="background:#d2d2d2" title="Argento Chiaro #d2d2d2"></i></div>
+    <p class="verdict">Самая жёсткая дисциплина акцента (только hover/focus/active, никогда заливка, никогда декор) и волосяная линия вместо плашек; но 11–13px прописными с трекингом 0.09em на кириллице нечитаемы, а CTA-стрелка без кнопки провалит цель.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Тональный стек тёмных поверхностей вместо теней: #000000 для героя и кинематографичных секций, #181818 для футера и вторичных блоков, #303030 только как волосяная линия. Глубина строится тоном и пустотой — это ровно то «дорого», которое просит заказчик, и оно не требует ни одного лишнего пикселя декора.</li><li>Полный запрет теней, элевации и плавающих панелей. Все блоки лежат заподлицо на чёрном.</li><li>Нулевые радиусы на всём: кнопки, карточки, теги — 0px. Резкая геометрия мгновенно отличает сайт от шаблонного лендинга с rounded-2xl. Одно исключение-пилюля 9999px можно оставить под мелкие лейблы (возраст группы, формат тренировки).</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Кегли 11–13px и особенно 9px для основного текста. На кириллице это нечитаемо, а нашей аудитории (родители, часто с телефона) нужно реально прочитать программу, условия и расписание. Брать пропорцию нельзя — только приём. Интерфейсная копия у нас должна быть минимум 15–16px, основной текст 17–19px.</li><li>Тотальный uppercase для содержательных абзацев. Прописная кириллица с трекингом 0.09em разрушает узнавание слова и читается как крик, а не как шёпот. Прописные оставить исключительно для коротких лейблов и надписей-указателей длиной в 1–3 слова.</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/skillshare.jpg" alt="Главная страница Skillshare" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">6</span>
+      <h3>Skillshare</h3>
+      <span class="pill hot">медиа: высокая</span>
+    </header>
+    <p class="ns">«Poster studio on matte black — bold instructor faces, chalk-white type, single neon pulse»: студия афиш на матово-чёрном, где лица преподавателей идут в край кадра, типографика набрана мелом-белым, а цвет вспыхивает единственным неоновым импульсом. Тема помечена как mixed — сайт жёстко переключается между режимом «белое» и режимом «чёрное» без промежуточных серых.</p>
+    <div class="swatches"><i style="background:#000000" title="Studio Black #000000"></i><i style="background:#ffffff" title="Pure White #ffffff"></i><i style="background:#0b1215" title="Deep Ink #0b1215"></i><i style="background:#394649" title="Graphite Stroke #394649"></i><i style="background:#e0e0e0" title="Fog Border #e0e0e0"></i><i style="background:#757575" title="Ash Mid #757575"></i><i style="background:#232424" title="Charcoal Surface #232424"></i><i style="background:#55da9b" title="Skill Green #55da9b"></i></div>
+    <p class="verdict">Ценен одним приёмом, которого нет у остальных, — градиентным скримом transparent → rgba(0,0,0,0.7) на нижние 40% кадра, единственным честным решением для текста поверх любительского видео; остальное — витрина метрик и неон edtech.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Дуальность двух режимов как способ структурировать одностраничник: MODE BLACK для тренировочного видео, философии и метода, MODE WHITE для расписания, формата занятий и блока заявки. Переход между секциями — жёсткий стык цвета без градиента и разделительной линии. Это бесплатный ритм для лендинга, где секций много, а декора нет</li><li>Заголовки набором как афиша: вес 700, размер 46–48px на десктопе, line-height 0.90–0.96, три строки в стопку. Правило «плотный интерлиньяж только от 36px, ниже 18px не опускаться под 1.40» переносим дословно — оно спасает читаемость на русском, где строки длиннее</li><li>Трекинг 0.1em на капслочных метках 11–13px. Для нас это подписи вида «ВРАТАРСКАЯ ТЕХНИКА», «ИНДИВИДУАЛЬНО», «12–15 ЛЕТ» — разряженный капс мгновенно даёт третий типографический уровень без единой рамки и плашки</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Компонент Stat Counter Card целиком — четыре ячейки #232424 с цифрой 34–38px и капс-подписью #757575 (Members / Classes / Teachers / Rating). Это витрина метрик маркетплейса и ровно тот запрещённый паттерн «500+ учеников, 15 лет опыта». Ставить его с настоящими, но мелкими числами тоже плохо: форма кричит «нас много», а у персонального тренера ценность в обратном — в штучности</li><li>Палитру акцентов не переносим. #55da9b и особенно #00ff84 на чёрном — язык edtech и фитнес-трекеров; на сайте тренера неон читается как спортивное приложение и работает против «дорого». Механику «один микроакцент на ахроматическом поле» берём, конкретные hex — нет. Логика подбора у них описана честно (тёплый на чёрном, холодный на белом, без коннотаций опасности и успеха) — по этой логике и подбираем свой</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/strava.jpg" alt="Главная страница Strava" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">6</span>
+      <h3>Strava</h3>
+      <span class="pill hot">медиа: высокая</span>
+    </header>
+    <p class="ns">«Дневник атлета на тёплой бумаге — один оранжевый росчерк маркера поверх чёрно-белой печати» (athlete&#x27;s logbook on warm paper — a single orange highlighter mark against black-and-white print). Тема: light. Плоская, почти монашеская по сдержанности система, где всю эмоцию несёт полноширинная фотография спортсменов в движении, а интерфейс сознательно молчит.</p>
+    <div class="swatches"><i style="background:#fc5200" title="Strava Orange #fc5200"></i><i style="background:#0060d0" title="Link Blue #0060d0"></i><i style="background:#000000" title="Ink Black #000000"></i><i style="background:#21211f" title="Graphite #21211f"></i><i style="background:#43423f" title="Charcoal #43423f"></i><i style="background:#64635e" title="Pewter #64635e"></i><i style="background:#e0e0de" title="Bone #e0e0de"></i><i style="background:#f9f8f5" title="Warm Linen #f9f8f5"></i></div>
+    <p class="verdict">Правильная философия (один акцент, тёплые нейтрали, фильтр «не ссылка, не кнопка, не поле, не текст — убрать»), но потолок шкалы 32px означает отсутствие дисплейной типографики, а белая бумага массового лендинга не даёт запрошенного регистра.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Правило одного акцента в чистом виде: ровно одна хроматическая заливка на экран — кнопка «Написать в Telegram». Всё остальное — нейтрали. Это и есть готовая защита от «богато = много цвета»</li><li>Тёплые нейтрали вместо холодных. Даже если уходим в тёмное направление, серые должны быть тёплыми (по логике #43423f / #64635e), а не сине-серыми — тёплый оттенок читается дороже</li><li>Полный запрет теней и градиентов; глубина только сменой поверхности. У нас: два уровня поверхности вместо box-shadow — базовый холст и полоса на тон в стороне под футером и секцией заявки</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Сам оранжевый #fc5200. Это чужая брендовая константа с мгновенным узнаванием — на сайте тренера он прочитается как «фитнес-трекер», а не как премиальный персональный бренд. Брать нужно роль цвета, а не сам цвет</li><li>Светлую бумажную схему целиком (белый холст + льняная полоса). Она честная, но это регистр массового продуктового лендинга; заказчик просит «дорого и богато», а это ощущение белый Strava не даёт</li></ul></div>
+    </div>
+  </div>
+</article>
+<article class="ref">
+  <figure class="shot"><img src="refs/adanola.jpg" alt="Главная страница Adanola" loading="lazy"></figure>
+  <div class="body">
+    <header>
+      <span class="score">6</span>
+      <h3>Adanola</h3>
+      <span class="pill hot">медиа: высокая</span>
+    </header>
+    <p class="ns">«Editorial lookbook on white paper» — журнальный разворот на белой бумаге: чёрные чернила, один тонкий гротеск (Favorit) и фотография как единственный носитель цвета; интерфейс почти исчезает — ни теней, ни градиентов, только волосяные линии и воздух.</p>
+    <div class="swatches"><i style="background:#000000" title="Carbon Ink #000000"></i><i style="background:#ffffff" title="Paper White #ffffff"></i><i style="background:#e5e7eb" title="Soft Mist #e5e7eb"></i><i style="background:#f0efe7" title="Warm Fog #f0efe7"></i><i style="background:#f5ebd5" title="Blush Sand #f5ebd5"></i><i style="background:#333333" title="Smoke Charcoal #333333"></i><i style="background:#1d1d1d" title="Onyx #1d1d1d"></i><i style="background:#cccccc" title="Stone Gray #cccccc"></i></div>
+    <p class="verdict">Совпадают только запреты (ноль теней и градиентов, радиусы 0/4, герой весом 400 вместо 700); всё прикладное — светлый лукбук, каталожная шкала 14/30px и палитра, наполовину выдернутая автоэкстракцией из фотографий одежды.</p>
+    <div class="cols">
+      <div><h4>Берём</h4><ul><li>Запретить тени и градиенты на уровне системы, а не «по вкусу»: разделение блоков только воздухом, волосяной линией 1px и сменой поверхности. Это готовый технический ответ на запрет золотых градиентов</li><li>Дисциплина радиусов 0/4: все кадры, видеоблоки, обложки и теги — 0px (сырой кроп, как в печати), 4px только на кнопках и полях формы. Ничего больше 4px на сайте не появляется</li><li>Один шрифт на весь сайт, без серифного компаньона и без второй «акцидентной» гарнитуры. Для кириллицы взять гротеск того же характера (Inter, Suisse-подобный, Graphik-подобный) и зафиксировать трекинг как единый отпечаток</li></ul></div>
+      <div class="no"><h4>Не берём</h4><ul><li>Палитру целиком. Восемь из пятнадцати цветов (Slate, Olive Drab, Maroon Clay, Deep Iris, Pewter, Driftwood, Pale Tide, Blush Sand) прямо описаны как «поверхности для контекста предметной съёмки» — они выдернуты из фотографий одежды, а не спроектированы. Строить из них палитру нельзя, это мусор автоэкстракции</li><li>Белую бумагу как основу. Для вратарского тренера светлый fashion-лукбук читается как студия пилатеса; фактура задачи — вечерний свет, поле, мокрый мяч. Переносим схему «одни чернила + одна бумага», но инвертированную</li></ul></div>
+    </div>
+  </div>
+</article></div>
+
+<div class="rejected"><h4>Что не берём как систему</h4><ul><li><b>Adanola</b> — Светлая fashion-бумага плюс каталожная шкала (body 14px, дисплей 30px, шаг 1.125) — регистр лукбука пилатес-студии, а не вратарской работы. Восемь из пятнадцати цветов сама страница описывает как «поверхности для контекста предметной съёмки» — это мусор автоэкстракции из фотографий одежды, а не спроектированная палитра. Уникального приёма, которого нет у Raad или Athletics, здесь нет.</li><li><b>Strava</b> — Потолок шкалы 32px и шаг Minor Second 1.067 означают, что дисплейной типографики в системе нет вообще — а именно она несёт премиальность в нашей задаче. Белая бумага массового продуктового лендинга не даёт запрошенного регистра, вся несущая механика — регистрация с соцлогинами и бейджи магазинов приложений, а оранжевый #fc5200 — чужая брендовая константа с мгновенным узнаванием. Правило одного акцента взято у Ferrari, тёплые нейтрали — у Athletics.</li><li><b>Skillshare (как система)</b> — Опорный блок композиции — четырёхколоночный ряд Stat Counter Card (Members / Classes / Teachers / Rating), то есть ровно запрещённая заказчиком витрина цифр; убрав его, теряем несущий элемент. Связка #55da9b и #00ff84 на чёрном — язык edtech и фитнес-трекеров. Взят ровно один приём — градиентный скрим на нижние 40% кадра.</li><li><b>Ferrari (как система)</b> — Заимствованы только правила. Сама система не берётся: интерфейсная копия 11–13px прописными с трекингом до 0.091em на кириллице нечитаема; CTA как голая стрелка без кнопки провалит единственную цель сайта; правило «фотография занимает 70–90% каждой секции» безжалостно к любительскому кадру; красный на чёрном в спорте скатывается в эстетику энергетика.</li><li><b>Nike.com (как система)</b> — Взяты два правила — критерий «изображение и есть дизайн» и полный запрет теней. Сама система — каркас магазина с товарной сеткой, поиском в навигации и четырёхколоночным футером; каталожная плотность 12/8/48px на лендинге даст «тесно» вместо «дорого», а вся дороговизна держится на студийной съёмке с изоляцией объекта, которой у клиента нет.</li></ul></div>
+
+<h2 class="sec">Два направления</h2>
+<p class="sub">Каждое собрано из нескольких референсов с одним доминирующим — без усреднения в безопасную середину. Шрифты подобраны с обязательной кириллицей: у Druk, Bebas Neue, GT Sectra, Canela и Domaine её нет, поэтому названы реальные замены.</p>
+
+<section class="dir" id="dir1">
+  <div class="dir-head">
+    <span class="idx">Направление 1</span>
+    <h2>Полоса</h2>
+    <p class="thesis">Чёрно-бумажная афиша вратарской школы: страница листается полосами во всю ширину, первый экран — не фото, а стопка слов в край экрана, видео врезано встык как печатная вклейка.</p>
+  </div>
+  <div class="grid">
+    <div class="block wide"><h4>Собрано из</h4><ul class="based"><li>Raad Cycling — доминирующий: полосовой ритм без max-width и без градиентных стыков; герой без изображения, где героем работает типографический масштаб; 120px воздуха над и под каждой полосой; бинарная сетка 50/50 или одна колонка; ghost-контур как язык вторичной интерактивности; разрыв в шкале между 18px и дисплеем без промежуточных ступеней; один серый как единственная ступень вниз вместо opacity</li><li>Champions4good — стопка слов-плакатов с плотным интерлиньяжем и упором в край вьюпорта; служебные слова другим шрифтом внутри стопки; разнонаправленный трекинг; скачок в шкале отступов без промежуточных значений; смена цвета прозрачной навигации на границе полос; дуотон-дисциплина «один хроматический цвет на тёмной полосе»</li><li>WHOOP — единственный залитый CTA формой pill и правило «один хроматический акцент на весь сайт, только на первичном действии»; uppercase-лейблы 12px с трекингом +0.1em как третий типографический уровень без плашек; правило не центрировать абзацы</li><li>Nike.com — критерий приёмки «изображение и есть дизайн, а не элемент в рамке», медиа только full-bleed с radius 0, полный запрет box-shadow и единственная геометрия кнопки на весь сайт</li></ul></div>
+    <div class="block"><h4>Палитра</h4><div class="pal"><div class="tok"><i style="background:#0B0B0B"></i>
+        <div><code>--ink</code><b>#0B0B0B</b><span>Грунт тёмных полос (герой, блок метода, футер), основной текст на бумажных полосах, заливка вторичной кнопки на бумаге. Не чистый ноль: на #000000 видна граница компрессии телефонного видео</span></div></div><div class="tok"><i style="background:#F2F0EB"></i>
+        <div><code>--paper</code><b>#F2F0EB</b><span>Тёплая бумага светлых полос (форматы, вопросы родителей, расписание). Тёплый off-white вместо #ffffff — причина, по которой светлая полоса читается как печать, а не как дефолт браузера</span></div></div><div class="tok"><i style="background:#FFFFFF"></i>
+        <div><code>--chalk</code><b>#FFFFFF</b><span>Текст, дисплейные слова и волосяные контуры ghost-кнопок на тёмной полосе. На бумаге не используется вообще</span></div></div><div class="tok"><i style="background:#6E6E68"></i>
+        <div><code>--graphite</code><b>#6E6E68</b><span>Единственная ступень вниз в иерархии текста: подписи под видео, метаданные, второй абзац лида. Работает и на #0B0B0B, и на #F2F0EB — вместо opacity и вместо второго веса шрифта</span></div></div><div class="tok"><i style="background:#262624"></i>
+        <div><code>--rule-dark</code><b>#262624</b><span>Волосяная линия 1px внутри тёмных полос: разделение пунктов списка, letterbox-рамка видеоблока</span></div></div><div class="tok"><i style="background:#DAD6CB"></i>
+        <div><code>--rule-light</code><b>#DAD6CB</b><span>Волосяная линия 1px на бумаге: разделители строк форматов, нижняя граница инпута запасной формы</span></div></div><div class="tok"><i style="background:#CDFF47"></i>
+        <div><code>--glove</code><b>#CDFF47</b><span>Единственный хроматический токен на весь сайт — цвет вратарской перчатки. Только заливка кнопки «Написать в Telegram» (текст на ней --ink) и кольцо фокуса 2px. Никаких плашек, бейджей, иконок и подчёркиваний; суммарная площадь на экране ниже 2%</span></div></div></div></div>
+    <div class="block"><h4>Типографика</h4><div class="ty"><div class="ty-h"><b>Дисплей (слово-стопка героя)</b><code>Oswald 600, прописные</code></div>
+        <p>Замена Druk Condensed Super из Champions4good: у Druk кириллицы нет, у Bebas Neue официальной кириллицы нет (только сторонние форки), у Anton нет вовсе — подстановка сломала бы набор молча. Oswald — узкий гротеск с полноценной кириллицей. clamp(56px, 12vw, 168px), line-height 0.82, трекинг +0.005em (без лёгкой разрядки узкие прописные слепляют Ж, Щ, Ш, Ы). Вес 700 не использовать: закрываются просветы. Слово-герой не длиннее 9 знаков: «ВРАТАРЬ», «РЕАКЦИЯ», «РУКИ», «ВЫХОД». Выключка влево, отступ от края 24px на мобильном и 48px на десктопе. Платный апгрейд: TT Firs Neue Condensed (TypeType) или Nekst (Type.today) — кириллица родная, формы жёстче</p><p class="fb">fallback: &#x27;PT Sans Narrow&#x27;, &#x27;Arial Narrow&#x27;, sans-serif</p></div><div class="ty"><div class="ty-h"><b>Заголовок полосы</b><code>Oswald 500, прописные</code></div>
+        <p>clamp(32px, 5vw, 56px), line-height 0.95, трекинг +0.005em, максимум две строки. Между этим уровнем и лидом 21px промежуточных ступеней нет — этот разрыв и создаёт редакционный удар (приём Raad: между 18 и 50 пусто)</p><p class="fb">fallback: &#x27;PT Sans Narrow&#x27;, &#x27;Arial Narrow&#x27;, sans-serif</p></div><div class="ty"><div class="ty-h"><b>Лид / вводный абзац</b><code>Manrope 500</code></div>
+        <p>21px, line-height 1.4, трекинг -0.01em, max-width 620px, выключка влево. Manrope взят вместо запрещённого Inter: настоящая кириллица и более широкие овалы, которые держат читаемость белым по #0B0B0B</p><p class="fb">fallback: &#x27;Onest&#x27;, &#x27;Golos Text&#x27;, sans-serif</p></div><div class="ty"><div class="ty-h"><b>Основной текст</b><code>Manrope 400</code></div>
+        <p>17px, line-height 1.55, трекинг 0, max-width 560px. Ниже 17px прозу не опускать: аудитория читает с телефона. Абзацы никогда не центрировать</p><p class="fb">fallback: &#x27;Onest&#x27;, &#x27;Golos Text&#x27;, sans-serif</p></div><div class="ty"><div class="ty-h"><b>Служебное слово-мостик внутри дисплейной стопки</b><code>Manrope 500, строчные</code></div>
+        <p>24–28px, line-height 1.0, трекинг -0.02em. Приём Champions4good: слова «и», «для», «с» внутри стопки прописных набраны другим шрифтом строчными — единственное место на сайте, где гарнитура меняется внутри одного блока</p><p class="fb">fallback: &#x27;Onest&#x27;, &#x27;Golos Text&#x27;, sans-serif</p></div><div class="ty"><div class="ty-h"><b>Лейбл / микроподпись</b><code>Manrope 600, прописные</code></div>
+        <p>12px, line-height 1.4, трекинг +0.1em, цвет --graphite. Только 1–3 слова: «ИНДИВИДУАЛЬНО», «ЗАЛ», «РАЗБОР ИГРЫ». Разряженная кириллица работает только на прописных и коротких строках, на абзацах запрещена</p><p class="fb">fallback: &#x27;Onest&#x27;, &#x27;Golos Text&#x27;, sans-serif</p></div></div>
+    <div class="block wide"><h4>Композиция</h4><p>Страница — стопка full-bleed полос без общего контейнера, ритм ink → paper → ink, минимум шесть полос. Между полосами нет ни линий, ни градиентов, ни отступов: смена грунта и есть разделитель. Внутри полосы 120px воздуха сверху и снизу на десктопе, 64px на мобильном; текст живёт в колодце 1200px, медиа всегда идёт в край вьюпорта. Сетка бинарная: либо одна колонка, либо 50/50 («заголовок и два абзаца слева / один сильный кадр во всю высоту справа» под секции «Метод» и «Обо мне»). Первый экран без изображения вообще: тёмная полоса на 100vh, слово-стопка в левый край, под ней лид 21px и одна залитая кнопка. Радиусы 0px на всём — карточках, видеоблоках, инпутах; 100px только у главного CTA — он единственный округлённый объект на сайте. Ни одного box-shadow, ни одного градиента. Навигация прозрачная, без фона и границы, пункты меняют цвет на границе полос. На мобильном внизу закреплена полоса 64px с той же лаймовой кнопкой — сознательное нарушение оригинала Raad ради лид-гена.</p></div>
+    <div class="block wide sig"><h4>Сигнатура</h4><p>Слово-стопка первого экрана: два-три коротких русских слова Oswald 600 по 168px друг под другом с line-height 0.82, выносные элементы соседних строк налезают друг на друга, а между ними на своей строке лежит служебное слово Manrope 500 строчными 24px — единственное место, где шрифт меняется внутри блока. Плюс лайм #CDFF47, который на всей странице встречается ровно один раз.</p></div>
+    <div class="block"><h4>Движение</h4><p>Вход героя: слова стопки открываются по одному через clip-path inset(100% 0 0 0) → inset(0), 420ms, cubic-bezier(0.16, 1, 0.3, 1), stagger 80ms; служебное слово-мостик появляется последним через opacity 240ms. Смена цвета навигации на стыке полос — IntersectionObserver с порогом 0.5, переход color 200ms linear, без анимации фона (фона нет). Видео-полосы: muted, playsInline, loop, старт по входу в вьюпорт, первый кадр проявляется opacity 600ms из --ink, пауза при выходе. Ghost-кнопки: только border-color и color, 160ms, без transform. Главный CTA: заливка не меняется, сдвигается только глиф стрелки на 4px вправо, 180ms. Запрещены параллакс, счётчики-цифры, появление по буквам в body. При prefers-reduced-motion остаётся только opacity 200ms.</p></div>
+    <div class="block"><h4>Тон текстов</h4><p>Короткие глагольные фразы, командный, но не рекламный тон. Заголовки полос — действия и предметы: «Ловим то, что летит в угол», «Разбираем игру по кадрам», «Первое занятие — смотрим, что уже умеешь». Лейблы — фактические условия без оценок: «ИНДИВИДУАЛЬНО», «МАЛАЯ ГРУППА», «РАЗБОР ЗАПИСИ». Ни одной цифры-достижения, ни одного превосходного эпитета, ни слова «профессиональный». CTA одной формулировкой на всю страницу: «Написать в Telegram».</p></div>
+    <div class="block wide risk"><h4>Где развалится</h4><p>Медиазависимость низкая: первый экран и три из шести полос работают вообще без медиа, любую видеополосу можно заменить типографической. Правило: одна полоса — один сильный кадр в кропе 21:9, никаких сеток из слабых. Риски. Первый: лайм #CDFF47 на бумажной полосе ближе к маркеру-текстовыделителю, чем к премиуму; проверять именно на бумаге, страховка — заменить его на залитую --ink кнопку и оставить сайт полностью ахроматичным, композиция выдержит. Второй: Oswald на 168px беспощаден к длинным русским словам — «ИНДИВИДУАЛЬНАЯ» не влезет ни при каком vw, ограничение в 9 знаков — редакторское, а не техническое. Третий: полосовому ритму нужно минимум шесть полос реального содержания; при четырёх страница схлопнется в скучный лист. Четвёртый: нулевой радиус и отсутствие теней не прощают небрежных выравниваний — вёрстка должна быть точной до пикселя.</p></div>
+  </div>
+</section>
+<section class="dir" id="dir2">
+  <div class="dir-head">
+    <span class="idx">Направление 2</span>
+    <h2>Ночная монография</h2>
+    <p class="thesis">Вечерний зал как галерейный каталог: страница целиком тёмная, дисплей набран тонкой антиквой почти шёпотом, единственный источник света и цвета на всём сайте — видео тренировки.</p>
+  </div>
+  <div class="grid">
+    <div class="block wide"><h4>Собрано из</h4><ul class="based"><li>Athletics (athleticsnyc.com) — доминирующий: тотально тёмный монохром без светлого режима; дисплейная антиква весом 300 с интерлиньяжем 1.05 и трекингом, масштабируемым по кеглю; вертикальный индекс с одиночной буквой-аннотацией вместо карточек и иконок; пара «маленькая заглавная метка над огромным заголовком»; ровно две плоскости и волосяная линия вместо теней; тёплый off-white строго под структуру; ритм секций 128–144px; прозрачная шапка; принцип «весь цвет живёт внутри кадра»</li><li>Ferrari — акцент только в hover/focus/active, никогда как заливка фона и никогда как декор; волосяной разделитель 1px как единственный структурный элемент; бесшовные переходы без чередующихся полос; нулевые радиусы; критерий «интерфейс отступает, потому что объём создаёт снятый объект»</li><li>Peloton — дисплей лёгким весом вместо спортивного болда; правило «на тёмной сцене только текст и CTA, никаких белых карточек поверх кадра»; фокус поля через смену цвета границы плюс мягкое кольцо на 15% прозрачности</li><li>WHOOP — залитая светлая кнопка на тёмном как самый тяжёлый объект страницы — это закрывает дыру Athletics, где CTA отсутствует как класс; правило не опускать основной текст ниже 17–19px</li><li>Skillshare — единственная заимствованная уступка: градиентный скрим transparent → rgba(0,0,0,0.72) на нижние 40% кадра под текст поверх видео — у Athletics и Ferrari его нет, но там студийный свет</li></ul></div>
+    <div class="block"><h4>Палитра</h4><div class="pal"><div class="tok"><i style="background:#08090A"></i>
+        <div><code>--void</code><b>#08090A</b><span>Базовый холст всей страницы: герой, промежутки между секциями, фон под видео. Чуть светлее чистого чёрного — на #000000 у телефонного видео видна граница кадра и блочные артефакты</span></div></div><div class="tok"><i style="background:#131517"></i>
+        <div><code>--stage</code><b>#131517</b><span>Единственная приподнятая поверхность: секции «Форматы» и «Вопросы», блок стоимости, футер. Вся глубина сайта — один шаг между --void и --stage, ни одной тени</span></div></div><div class="tok"><i style="background:#EDE9E0"></i>
+        <div><code>--bone</code><b>#EDE9E0</b><span>Основной текст и дисплейные заголовки; он же — заливка главной кнопки (текст на ней --void). Тёплый костяной вместо #ffffff: на OLED меньше выжигает, на тонкой антикве держит штрих и читается как краска, а не как подсветка</span></div></div><div class="tok"><i style="background:#8B8A85"></i>
+        <div><code>--dust</code><b>#8B8A85</b><span>Вторичный текст: подписи под видео, метки разделов, буквы-маркеры индекса, плейсхолдеры. Единственная ступень вниз; opacity для затемнения текста не используется нигде</span></div></div><div class="tok"><i style="background:#2E3134"></i>
+        <div><code>--rule</code><b>#2E3134</b><span>Волосяная линия 1px — единственный структурный элемент: разделители строк индекса, нижняя граница инпута, letterbox-рамка видеоблока. Ни рамок вокруг карточек, ни заливок-плашек</span></div></div><div class="tok"><i style="background:#86B4D1"></i>
+        <div><code>--ice</code><b>#86B4D1</b><span>Единственный хроматический токен, выведенный из холодного света ламп над полем. По правилу Ferrari только состояния: hover строки индекса, кольцо фокуса 2px на 15% прозрачности, активная ссылка. Никогда не заливка фона, никогда не декор, никогда не бейдж</span></div></div></div></div>
+    <div class="block"><h4>Типографика</h4><div class="ty"><div class="ty-h"><b>Дисплей (герой, открывающие заголовки, строки индекса)</b><code>Cormorant Garamond Light 300</code></div>
+        <p>Замена Feature Deck и всех предложенных Athletics подстановок (GT Sectra Display Light, Canela, Domaine Display Thin) — ни у одной нет кириллицы. У Cormorant Garamond кириллица есть и есть настоящий вес 300, то есть сохраняется главный приём: авторитет через лёгкий вес, а не через болд. clamp(40px, 6.5vw, 104px), line-height 1.05, трекинг масштабируется по кеглю: -0.016em на 104px, -0.009em на 72px, 0 на 40px. Жёсткое ограничение: вес 300 только от 40px и выше, ниже — 500, иначе на мобильном OLED тонкая кириллица мерцает; знаки Ж, Щ, Ы тестировать до вёрстки. Платный апгрейд с родной кириллицей: Kazimir (Type.today)</p><p class="fb">fallback: &#x27;PT Serif&#x27;, Georgia, serif</p></div><div class="ty"><div class="ty-h"><b>Заголовок секции</b><code>Cormorant Garamond 500</code></div>
+        <p>clamp(28px, 3.6vw, 44px), line-height 1.15, трекинг -0.005em. Вес 500, а не 300, потому что этот кегль уже в опасной зоне для тонкого штриха на тёмном</p><p class="fb">fallback: &#x27;PT Serif&#x27;, Georgia, serif</p></div><div class="ty"><div class="ty-h"><b>Основной текст и весь интерфейс</b><code>Golos Text 400</code></div>
+        <p>Замена Söhne (кириллицы нет) и обход запрета на Inter: Golos Text спроектирован от кириллицы, а не адаптирован к ней, поэтому не спорит с антиквой. 18px, line-height 1.55, трекинг 0, max-width 620px, выключка влево; на мобильном 17px и ниже не опускать</p><p class="fb">fallback: &#x27;Onest&#x27;, &#x27;Manrope&#x27;, sans-serif</p></div><div class="ty"><div class="ty-h"><b>Вторичный текст и подписи под видео</b><code>Golos Text 400, цвет --dust</code></div>
+        <p>16px, line-height 1.5. Подпись под кадром всегда текстовая — место, название упражнения, возраст группы — и никогда число-достижение (закрывает ловушку Metric Overlay из WHOOP)</p><p class="fb">fallback: &#x27;Onest&#x27;, &#x27;Manrope&#x27;, sans-serif</p></div><div class="ty"><div class="ty-h"><b>Метка-аннотация над дисплеем и буквенные маркеры индекса</b><code>Golos Text 500, прописные</code></div>
+        <p>13px, line-height 1.4, трекинг +0.09em, цвет --dust. Приём Athletics в чистом виде: 13px стоит отдельной строкой над заголовком в 104px, и вся иерархия строится только этой разницей кегля — ни цвета, ни веса, ни плашки. Максимум три слова</p><p class="fb">fallback: &#x27;Onest&#x27;, &#x27;Manrope&#x27;, sans-serif</p></div><div class="ty"><div class="ty-h"><b>Подпись кнопки</b><code>Golos Text 500</code></div>
+        <p>16px, трекинг +0.02em, строчные с прописной. Капс на кнопке не использовать: он делает голос громким, а направление построено на шёпоте</p><p class="fb">fallback: &#x27;Onest&#x27;, &#x27;Manrope&#x27;, sans-serif</p></div></div>
+    <div class="block wide"><h4>Композиция</h4><p>Один режим на весь сайт — тёмный, светлой инверсии нет нигде. Ритм строится не чередованием полос, а сменой двух плоскостей и объёмом пустоты: 144px между секциями на десктопе, 72px на мобильном, контейнер 1280px, базовая сетка 8px. Секции стыкуются бесшовно, без разделительных линий. Опенер секции асимметричный: слева около 60% — метка 13px прописными и заголовок, справа около 35% — абзац 18px с max-width 480px. Центральный блок — вертикальный индекс форматов: четыре строки Cormorant 300 по 72px с интерлиньяжем 1.05, слева флашем одиночная буква А/Б/В/Г, между строками волосяная линия --rule; ни карточек, ни иконок, ни рамок. Видео вставляется полосами в край вьюпорта, всегда в едином letterbox-кропе 21:9 с волосяной рамкой 1px сверху и снизу — единая пропорция превращает разнородные телефонные съёмки в серию. Текст поверх видео только при скриме transparent → rgba(0,0,0,0.72) на нижние 40%. Радиусы 0px везде; главный CTA — прямоугольная залитая --bone кнопка с паддингом 18px/32px, без скругления, тени и градиента. На мобильном закреплённая нижняя панель --stage высотой 64px с той же кнопкой. Одна секция сознательно нарушает галерейный тон: «Как проходит занятие» набирается гротеском 18px обычными абзацами — она существует ради родителей, которым нужна конкретика, а не настроение.</p></div>
+    <div class="block wide sig"><h4>Сигнатура</h4><p>Индекс форматов: четыре строки антиквой 300 по 72px, почти касающиеся друг друга, с одиночной прописной буквой А / Б / В / Г слева в 13px гротеском — буква и есть вся аннотация. При наведении строка уходит в --ice, а буква-маркер сдвигается на 4px вправо. Это единственный интерактивный жест на странице, кроме кнопки.</p></div>
+    <div class="block"><h4>Движение</h4><p>Мало, медленно, один раз. Вход блока: opacity 0 → 1 плюс translateY 12px → 0, 700ms, cubic-bezier(0.22, 1, 0.36, 1), однократно по IntersectionObserver с порогом 0.35. Строки индекса проявляются с stagger 120ms. Hover строки: color 200ms и translateX(4px) у буквы-маркера, больше ничего. Кнопка: --bone уходит на 92% яркости за 160ms, без transform и без тени. Видеополосы: автозапуск по входу в вьюпорт, muted, playsInline, loop, первый кадр проявляется opacity 600ms из --void, пауза при выходе из вьюпорта. Фокус поля запасной формы: граница в --ice плюс кольцо rgba(134,180,209,0.15), 120ms. Запрещены параллакс, масштабирование кадра, появление по буквам, любые счётчики. При prefers-reduced-motion остаётся только opacity 200ms.</p></div>
+    <div class="block"><h4>Тон текстов</h4><p>Спокойно, от первого лица, предметно, без превосходных эпитетов. Заголовки — вопросы, на которые есть честный ответ: «Что происходит на тренировке», «Как я работаю с младшими», «Сколько длится занятие», «Где проходим». Индекс форматов — короткие имена без обещаний: «А — индивидуально», «Б — вдвоём», «В — разбор записи игры», «Г — работа с командой». Запрещены «профессиональный подход», «индивидуальный подход», «лучший» и любые числа в роли достижения; единственные цифры на сайте — длительность занятия и возраст групп, и только если клиент их подтвердит.</p></div>
+    <div class="block wide risk"><h4>Где развалится</h4><p>Медиазависимость средняя, и это главное отличие от «Полосы»: тёмный холст прощает шум и низкое разрешение, но не прощает плоского дневного света; нужны три-четыре фрагмента с направленным светом (лампы зала, закат, свет из окна). Без них страница становится чёрным листом с антиквой, и типографика одна его не вытянет. Второе: антиква 300 на чёрном — самое хрупкое место: ниже 40px её нельзя, а на дешёвых мобильных экранах даже 40px даст мерцание — тест на устройстве, а не в браузере на маке. Третье: галерейная холодность отталкивает платящую аудиторию — отсюда обязательная «неэлегантная» секция с прямой конкретикой и липкая кнопка на мобильном. Четвёртое: --ice живёт только в состояниях, то есть на статичном скриншоте сайт полностью ахроматичен — заказчику это нужно объяснить заранее, иначе он прочтёт отсутствие цвета как незаконченность.</p></div>
+  </div>
+</section>
+
+<footer>
+  <p><b>Дальше нужен твой выбор:</b> «Полоса» или «Ночная монография». После этого поднимаю проект и собираю первый экран на реальном коде, а не картинкой.</p>
+</footer>
+</div>
+</body>
+</html>
