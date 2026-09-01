@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E0F10">
+<title>Полоса или Ночная монография</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Manrope:wght@400;500;600&family=Cormorant+Garamond:wght@300;500&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box}
+:root{--bg:#0E0F10;--fg:#E8E7E3;--mute:#8A8D8F;--rule:#242628;--card:#17191B}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:"Golos Text",system-ui,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.w{max-width:1500px;margin:0 auto;padding:0 20px}
+h1,h2,h3,p{margin:0}
+
+/* ── шапка сравнения ─────────────────────────── */
+.top{padding:52px 0 26px}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:14px}
+h1{font-family:"Golos Text",sans-serif;font-weight:600;font-size:clamp(26px,4vw,40px);
+  line-height:1.1;letter-spacing:-.02em;text-wrap:balance;margin-bottom:14px}
+.sub{color:var(--mute);font-size:16.5px;max-width:70ch}
+.sub b{color:var(--fg);font-weight:500}
+
+table{width:100%;border-collapse:collapse;margin:26px 0 6px;font-size:14.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600}
+td:first-child{color:var(--mute);width:22%}
+tr:last-child td{border-bottom:0}
+tr.key td{color:var(--fg);font-weight:500}
+tr.key td:first-child{color:var(--mute);font-weight:400}
+
+/* ── панели с макетами ───────────────────────── */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:12px 0 60px}
+@media (max-width:1080px){.pair{grid-template-columns:1fr;gap:34px}}
+.panel{min-width:0}
+.plabel{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.plabel h2{font-family:"Golos Text",sans-serif;font-weight:600;font-size:19px;letter-spacing:-.01em}
+.plabel .tag{font-size:11.5px;color:var(--mute);border:1px solid var(--rule);padding:2px 9px}
+.pnote{color:var(--mute);font-size:14px;line-height:1.55;margin-bottom:14px;min-height:3.1em}
+.frame{position:relative;width:100%;overflow:hidden;border:1px solid var(--rule);background:#000}
+.stage{width:1440px;height:820px;transform-origin:top left;position:relative}
+
+/* ═══════════ ПОЛОСА ═══════════ */
+.pl{--ink:#0B0B0B;--paper:#F2F0EB;--chalk:#FFFFFF;--graphite:#6E6E68;
+    --rule-dark:#262624;--glove:#CDFF47;
+    background:var(--ink);color:var(--chalk);height:100%;
+    display:flex;flex-direction:column;font-family:"Manrope",sans-serif}
+.pl .nav{display:flex;align-items:center;justify-content:space-between;
+  padding:28px 48px;font-size:13px;color:var(--chalk)}
+.pl .nav .brand{font-family:"Oswald",sans-serif;font-weight:600;text-transform:uppercase;
+  font-size:15px;letter-spacing:.06em}
+.pl .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;color:#9A9A94;font-size:13px}
+.pl .hero{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 48px 60px}
+.pl .lbl{font-family:"Manrope",sans-serif;font-weight:600;font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--graphite);margin-bottom:26px}
+.pl .stack{margin-bottom:34px}
+.pl .word{font-family:"Oswald",sans-serif;font-weight:600;text-transform:uppercase;
+  font-size:168px;line-height:.82;letter-spacing:.005em;color:var(--chalk);display:block}
+.pl .bridge{font-family:"Manrope",sans-serif;font-weight:500;font-size:28px;line-height:1;
+  letter-spacing:-.02em;color:var(--graphite);display:block;padding:6px 0 6px 6px}
+.pl .lead{font-family:"Manrope",sans-serif;font-weight:500;font-size:21px;line-height:1.4;
+  letter-spacing:-.01em;color:#B9B9B4;max-width:620px;margin-bottom:34px}
+.pl .cta{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
+  background:var(--glove);color:var(--ink);border-radius:100px;padding:16px 30px;
+  font-family:"Manrope",sans-serif;font-weight:600;font-size:16px;text-decoration:none}
+.pl .cta svg{width:15px;height:15px}
+.pl .strip{border-top:1px solid var(--rule-dark);padding:16px 48px;display:flex;gap:34px;
+  font-family:"Manrope",sans-serif;font-weight:600;font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--graphite)}
+
+/* ═══════════ НОЧНАЯ МОНОГРАФИЯ ═══════════ */
+.nm{--void:#08090A;--stage2:#131517;--bone:#EDE9E0;--dust:#8B8A85;--rule2:#2E3134;--ice:#86B4D1;
+    background:var(--void);color:var(--bone);height:100%;
+    display:flex;flex-direction:column;font-family:"Golos Text",sans-serif}
+.nm .nav{display:flex;align-items:center;justify-content:space-between;
+  padding:30px 56px;font-size:13px}
+.nm .nav .brand{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:20px;
+  letter-spacing:.01em;color:var(--bone)}
+.nm .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;color:var(--dust);font-size:13.5px}
+.nm .hero{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 56px}
+.nm .meta{font-family:"Golos Text",sans-serif;font-weight:500;font-size:13px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--dust);margin-bottom:22px}
+.nm h3{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:104px;line-height:1.05;
+  letter-spacing:-.016em;color:var(--bone);max-width:15ch;margin-bottom:26px;text-wrap:balance}
+.nm .body{font-family:"Golos Text",sans-serif;font-weight:400;font-size:18px;line-height:1.55;
+  color:var(--dust);max-width:620px;margin-bottom:32px}
+.nm .cta{display:inline-flex;align-self:flex-start;background:var(--bone);color:var(--void);
+  padding:18px 32px;border-radius:0;text-decoration:none;
+  font-family:"Golos Text",sans-serif;font-weight:500;font-size:16px;letter-spacing:.02em}
+.nm .slot{border-top:1px solid var(--rule2);border-bottom:1px solid var(--rule2);
+  aspect-ratio:21/9;background:var(--stage2);display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:20px}
+.nm .slot span{font-family:"Golos Text",sans-serif;font-size:13.5px;line-height:1.55;
+  color:#5E6164;max-width:44ch}
+.nm .cap{padding:12px 56px 26px;font-size:13.5px;color:var(--dust)}
+
+/* ── низ ─────────────────────────── */
+.foot{border-top:1px solid var(--rule);padding:26px 0 64px;color:var(--mute);font-size:15px}
+.foot b{color:var(--fg);font-weight:500}
+</style>
+</head>
+<body>
+<div class="w">
+
+<header class="top">
+  <p class="kicker">Сайт вратарского тренера · выбор направления</p>
+  <h1>Полоса или Ночная монография</h1>
+  <p class="sub">Один и тот же первый экран, собранный двумя разными способами. Оба построены на реальных дизайн-системах: слева — <b>Raad Cycling</b>, справа — <b>Athletics</b>. Показаны в настоящем размере 1440×820 и уменьшены целиком, поэтому пропорции честные.</p>
+
+  <table>
+    <thead><tr><th>&nbsp;</th><th>Полоса</th><th>Ночная монография</th></tr></thead>
+    <tbody>
+      <tr><td>Голос</td><td>громко</td><td>шёпотом</td></tr>
+      <tr><td>Шрифт</td><td>узкий гротеск прописными, 168px</td><td>тонкая антиква, вес 300</td></tr>
+      <tr><td>Фон</td><td>чередуется чёрный и бумажный</td><td>только тёмный, всегда</td></tr>
+      <tr><td>Цвет</td><td>один лайм, только на кнопке</td><td>цвета нет — светит только видео</td></tr>
+      <tr class="key"><td>Нужны фото?</td><td>Нет. Первый экран без картинки</td><td>Да. Нужен направленный свет в кадре</td></tr>
+      <tr><td>Ощущение</td><td>спортивная афиша</td><td>каталог галереи</td></tr>
+    </tbody>
+  </table>
+</header>
+
+<div class="pair">
+
+  <!-- ПОЛОСА -->
+  <section class="panel">
+    <div class="plabel"><h2>Полоса</h2><span class="tag">Raad Cycling</span><span class="tag">медиа: низкая</span></div>
+    <p class="pnote">Героем работает шрифт, а не кадр. Если у Николы не будет ни одной хорошей фотографии — этот экран всё равно выглядит дорого.</p>
+    <div class="frame" data-frame>
+      <div class="stage pl" data-stage>
+        <nav class="nav">
+          <span class="brand">Никола · вратари</span>
+          <ul><li>Метод</li><li>Форматы</li><li>Видео</li><li>Контакты</li></ul>
+        </nav>
+        <div class="hero">
+          <p class="lbl">Тренер вратарей</p>
+          <div class="stack">
+            <span class="word">Вратарь</span>
+            <span class="bridge">начинается с</span>
+            <span class="word">Позиции</span>
+          </div>
+          <p class="lead">Реакция спасает один мяч. Позиция снимает вопрос до того, как по воротам ударили.</p>
+          <a class="cta" href="#">Написать в Telegram
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="strip"><span>Индивидуально</span><span>Малая группа</span><span>Разбор записи</span><span>Дети и взрослые</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- НОЧНАЯ МОНОГРАФИЯ -->
+  <section class="panel">
+    <div class="plabel"><h2>Ночная монография</h2><span class="tag">Athletics</span><span class="tag">медиа: средняя</span></div>
+    <p class="pnote">Экран построен вокруг кадра: полоса видео — единственный источник света и цвета на всём сайте. Без хорошего материала останется чёрный лист.</p>
+    <div class="frame" data-frame>
+      <div class="stage nm" data-stage>
+        <nav class="nav">
+          <span class="brand">Никола</span>
+          <ul><li>Занятие</li><li>Форматы</li><li>Записи</li><li>Контакты</li></ul>
+        </nav>
+        <div class="hero">
+          <p class="meta">Тренер вратарей</p>
+          <h3>Вратарь на поле один. На тренировке — нет.</h3>
+          <p class="body">Индивидуальная работа с вратарями: дети, подростки, взрослые. Каждое занятие снимается и разбирается.</p>
+          <a class="cta" href="#">Написать в Telegram</a>
+        </div>
+        <div class="slot"><span>Полоса видео 21:9 в край экрана. Вечер, направленный свет, работа в воротах. Единый кроп превращает разные съёмки в серию.</span></div>
+        <p class="cap">Работа на выходах · разбор после занятия</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="foot">
+  <p><b>Что выбрать.</b> Если не уверен, что будет хорошая съёмка — бери «Полосу»: она не зависит от кадра. Если уверен, что видео с нормальным светом будет — «Ночная монография» тише и дороже, но держится на нём.</p>
+</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var W = 1440, H = 820;
+  function fit(){
+    document.querySelectorAll('[data-frame]').forEach(function(f){
+      var s = f.clientWidth / W;
+      var st = f.querySelector('[data-stage]');
+      st.style.transform = 'scale(' + s + ')';
+      f.style.height = Math.round(H * s) + 'px';
+    });
+  }
+  fit();
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(document.body);
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+</body>
+</html>
