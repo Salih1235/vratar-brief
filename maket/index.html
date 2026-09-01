@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#000000">
-<title>Никола Бигкет — тренер вратарей</title>
+<title>Nikola Bigket — тренер вратарей</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400&family=Golos+Text:wght@400;500;600&display=swap">
@@ -131,27 +131,24 @@ section{padding:var(--gap) 0}
 .sec-head{margin-bottom:56px}
 .sec-head .label{display:block;margin-bottom:18px}
 
-/* индекс форматов — сигнатурный приём Athletics */
-.index li{
-  display:grid;grid-template-columns:64px 1fr 300px;gap:24px;align-items:baseline;
-  padding:26px 0;border-top:1px solid rgba(214,213,208,.16);
+/* плитки форматов — приём Raad: кадры без зазора, заголовок поверх */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:0;list-style:none;margin:0;padding:0}
+.tiles li{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--raised)}
+.tiles img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:brightness(.62) saturate(.55);transition:filter .3s ease,transform .5s ease;
 }
-.index li:last-child{border-bottom:1px solid rgba(214,213,208,.16)}
-.index .mark{
-  font-family:"Golos Text",sans-serif;font-weight:500;font-size:13px;
-  letter-spacing:.09em;color:var(--dim);
-}
-.index .name{
-  font-family:"Onest",sans-serif;font-weight:300;
-  font-size:clamp(26px,3.6vw,52px);line-height:1.05;letter-spacing:-.025em;
-  transition:opacity .2s ease;
-}
-.index .about{font-size:15.5px;line-height:1.5;color:var(--dim)}
-.index li:hover .name{opacity:.62}
-@media (max-width:860px){
-  .index li{grid-template-columns:38px 1fr;gap:14px}
-  .index .about{grid-column:2}
-}
+.tiles li:hover img{filter:brightness(.78) saturate(.7);transform:scale(1.03)}
+@media (prefers-reduced-motion:reduce){.tiles img{transition:none}.tiles li:hover img{transform:none}}
+.tiles .cap{position:absolute;inset:auto 0 0 0;padding:22px 20px;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.72))}
+.tiles .mark{display:block;font-family:"Golos Text",sans-serif;font-weight:500;font-size:12px;
+  letter-spacing:.11em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:8px}
+.tiles .name{display:block;font-family:"Onest",sans-serif;font-weight:300;
+  font-size:clamp(20px,1.9vw,27px);line-height:1.1;letter-spacing:-.025em;margin-bottom:7px}
+.tiles .about{display:block;font-size:14px;line-height:1.45;color:rgba(255,255,255,.68)}
+@media (max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.tiles li{aspect-ratio:4/3}.tiles .about{display:none}}
 
 /* 50/50 — текст слева, тайтовый кроп справа */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
@@ -197,7 +194,7 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
 
 <nav>
   <div class="nav-in">
-    <span class="brand">Никола Бигкет</span>
+    <span class="brand">Nikola Bigket</span>
     <ul>
       <li><a href="#formaty">Форматы</a></li>
       <li><a href="#zanyatie">Занятие</a></li>
@@ -228,26 +225,22 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
       <span class="label">Форматы</span>
       <h2 class="h2">Четыре способа работать</h2>
     </div>
-    <ul class="index">
+    <ul class="tiles">
       <li>
-        <span class="mark">А</span>
-        <span class="name">Индивидуально</span>
-        <span class="about">Один вратарь, вся тренировка под его задачу.</span>
+        <img src="img/f1.jpg" alt="Тренер объясняет вратарю упражнение" style="object-position:50% 35%">
+        <span class="cap"><span class="mark">А</span><span class="name">Индивидуально</span><span class="about">Один вратарь, вся тренировка под его задачу.</span></span>
       </li>
       <li>
-        <span class="mark">Б</span>
-        <span class="name">Вдвоём</span>
-        <span class="about">Два вратаря в паре: соперничество и упражнения, которые в одиночку не сделать.</span>
+        <img src="img/f2.jpg" alt="Разбор в воротах" style="object-position:50% 40%">
+        <span class="cap"><span class="mark">Б</span><span class="name">Вдвоём</span><span class="about">Пара вратарей: упражнения, которые в одиночку не сделать.</span></span>
       </li>
       <li>
-        <span class="mark">В</span>
-        <span class="name">Малая группа</span>
-        <span class="about">До четырёх человек. Дешевле, чем индивидуально, при сохранении внимания к каждому.</span>
+        <img src="img/f3.jpg" alt="Тренер у кромки поля" style="object-position:50% 40%">
+        <span class="cap"><span class="mark">В</span><span class="name">Малая группа</span><span class="about">До четырёх человек, внимание остаётся к каждому.</span></span>
       </li>
       <li>
-        <span class="mark">Г</span>
-        <span class="name">Разбор записи</span>
-        <span class="about">Смотрим запись матча и разбираем эпизоды. Можно удалённо.</span>
+        <img src="img/f4.jpg" alt="Колено вратаря в грунте после падения" style="object-position:50% 50%">
+        <span class="cap"><span class="mark">Г</span><span class="name">Разбор записи</span><span class="about">Смотрим матч и разбираем эпизоды. Можно удалённо.</span></span>
       </li>
     </ul>
   </div>
@@ -293,7 +286,7 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
     <div class="grid3">
       <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t1.jpg" alt="Сейв в нижний угол" style="object-position:40% 50%"></figure>
       <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t2.jpg" alt="Приём мяча в перчатку" style="object-position:60% 50%"></figure>
-      <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t1.jpg" alt="Работа в воротах" style="object-position:75% 45%"></figure>
+      <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t3.jpg" alt="Колено в грунте после падения" style="object-position:50% 50%"></figure>
     </div>
   </div>
 </section>
@@ -302,14 +295,13 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
 <section id="trener">
   <div class="w">
     <div class="split">
-      <figure class="slot" style="aspect-ratio:3/4">
-        <span class="tag">Портрет</span>
-        <p>Один кадр в воротах или на кромке поля. Не студия, рабочая обстановка.</p>
+      <figure class="shotbox" style="aspect-ratio:3/4">
+        <img src="img/portrait.jpg" alt="Тренер на кромке поля вечером, смотрит на поле" style="object-position:38% 40%">
       </figure>
       <div>
         <div class="sec-head" style="margin-bottom:28px">
           <span class="label">О тренере</span>
-          <h2 class="h2">Никола Бигкет</h2>
+          <h2 class="h2">Nikola Bigket</h2>
         </div>
         <p class="body">Здесь встанет реальная биография: где играл, с какого года тренирует, какая лицензия и образование. Всё это придёт из анкеты — выдумывать не будем.</p>
         <p class="body" style="margin-top:18px">Этот блок держится на фактах, а не на эпитетах. Одна строка подтверждённой карьеры работает сильнее абзаца про «индивидуальный подход».</p>
@@ -365,7 +357,7 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
 
 <div class="w">
   <footer>
-    <span>Никола Бигкет · тренер вратарей</span>
+    <span>Nikola Bigket · тренер вратарей</span>
     <span>Макет. Тексты и фото подставляются из анкеты.</span>
   </footer>
 </div>
