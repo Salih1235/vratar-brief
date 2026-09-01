@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#000000">
-<title>Никола — тренер вратарей</title>
+<title>Никола Бигкет — тренер вратарей</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400&family=Golos+Text:wght@400;500;600&display=swap">
@@ -101,6 +101,9 @@ a{color:inherit;text-decoration:none}
   padding:14px 18px;
 }
 
+.shotbox{position:relative;overflow:hidden;background:var(--raised);display:block}
+.shotbox img{width:100%;height:100%;object-fit:cover;display:block}
+
 /* ── навигация ─────────────────────────────── */
 nav{position:absolute;top:0;left:0;right:0;z-index:10}
 .nav-in{max-width:1440px;margin:0 auto;padding:26px 56px;
@@ -115,9 +118,7 @@ nav{position:absolute;top:0;left:0;right:0;z-index:10}
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
   padding-top:118px;background:var(--raised);overflow:hidden}
 @media (max-width:760px){.hero{padding-top:92px}}
-.hero .shot{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;
-  text-align:center;padding:118px 40px 40px}
-.hero .shot p{font-size:13.5px;color:#5E5E5A;max-width:44ch;line-height:1.55}
+.hero .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 42%}
 .hero .scrim{position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 40%,rgba(0,0,0,.88) 100%)}
 .hero-in{position:relative;z-index:2;width:100%;padding-bottom:64px}
@@ -196,7 +197,7 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
 
 <nav>
   <div class="nav-in">
-    <span class="brand">Никола</span>
+    <span class="brand">Никола Бигкет</span>
     <ul>
       <li><a href="#formaty">Форматы</a></li>
       <li><a href="#zanyatie">Занятие</a></li>
@@ -208,7 +209,7 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
 </nav>
 
 <header class="hero">
-  <div class="shot"><p>Кадр в край экрана: вратарь в воротах, вечер, направленный свет. Тайтовый кроп — часть фигуры выходит за рамку.</p></div>
+  <img class="shot" src="img/hero.jpg" alt="Вратарь в прыжке вытягивается за мячом в тёмных воротах при свете прожекторов">
   <div class="scrim"></div>
   <div class="w hero-in">
     <p class="label">Тренер вратарей</p>
@@ -269,9 +270,8 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
           <li><span class="n">05</span><div><b>Разбор</b><span>Что получилось, что нет, над чем работать до следующего раза.</span></div></li>
         </ul>
       </div>
-      <figure class="slot">
-        <span class="tag">Слот под фото</span>
-        <p>Тайтовый кроп: перчатка на мяче, сетка, колено в грунте. Деталь, а не общий план.</p>
+      <figure class="shotbox" style="aspect-ratio:4/5">
+        <img src="img/glove.jpg" alt="Крупный план: перчатка вратаря на мяче в момент касания">
       </figure>
     </div>
   </div>
@@ -287,14 +287,13 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
     </div>
   </div>
   <div class="w strip">
-    <figure class="slot">
-      <span class="tag">Видео 21:9</span>
-      <p>Полоса в край экрана, единый кроп. Одна пропорция превращает разные съёмки в серию.</p>
+    <figure class="shotbox" style="aspect-ratio:21/9">
+      <img src="img/hero.jpg" alt="Кадр тренировки: сейв в воротах" style="object-position:52% 38%">
     </figure>
     <div class="grid3">
-      <figure class="slot"><span class="tag">Ролик</span><p>Работа на выходах</p></figure>
-      <figure class="slot"><span class="tag">Ролик</span><p>Игра ногами</p></figure>
-      <figure class="slot"><span class="tag">Ролик</span><p>Один в один</p></figure>
+      <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t1.jpg" alt="Сейв в нижний угол" style="object-position:40% 50%"></figure>
+      <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t2.jpg" alt="Приём мяча в перчатку" style="object-position:60% 50%"></figure>
+      <figure class="shotbox" style="aspect-ratio:16/10"><img src="img/t1.jpg" alt="Работа в воротах" style="object-position:75% 45%"></figure>
     </div>
   </div>
 </section>
@@ -310,7 +309,7 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
       <div>
         <div class="sec-head" style="margin-bottom:28px">
           <span class="label">О тренере</span>
-          <h2 class="h2">Никола</h2>
+          <h2 class="h2">Никола Бигкет</h2>
         </div>
         <p class="body">Здесь встанет реальная биография: где играл, с какого года тренирует, какая лицензия и образование. Всё это придёт из анкеты — выдумывать не будем.</p>
         <p class="body" style="margin-top:18px">Этот блок держится на фактах, а не на эпитетах. Одна строка подтверждённой карьеры работает сильнее абзаца про «индивидуальный подход».</p>
@@ -366,7 +365,7 @@ footer{padding:34px 0 44px;border-top:1px solid rgba(214,213,208,.16);
 
 <div class="w">
   <footer>
-    <span>Никола · тренер вратарей</span>
+    <span>Никола Бигкет · тренер вратарей</span>
     <span>Макет. Тексты и фото подставляются из анкеты.</span>
   </footer>
 </div>
