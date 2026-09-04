@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E0F10">
+<title>Три языка на реальных кадрах</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+*{box-sizing:border-box}
+:root{--bg:#0E0F10;--fg:#E8E7E3;--mute:#8A8D8F;--rule:#242628}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:"Golos Text",system-ui,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+.w{max-width:1180px;margin:0 auto;padding:0 20px}
+
+.top{padding:48px 0 24px}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:12px}
+h1{font-family:"Golos Text",sans-serif;font-weight:600;font-size:clamp(24px,4vw,36px);
+  line-height:1.12;letter-spacing:-.02em;margin-bottom:12px;text-wrap:balance}
+.sub{color:var(--mute);font-size:16px;max-width:72ch}
+.sub b{color:var(--fg);font-weight:500}
+
+.v{border-top:1px solid var(--rule);padding:34px 0 8px}
+.vh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.vh h2{font-family:"Golos Text",sans-serif;font-weight:600;font-size:20px;letter-spacing:-.01em}
+.tag{font-size:11.5px;color:var(--mute);border:1px solid var(--rule);padding:2px 9px}
+.vnote{color:var(--mute);font-size:14.5px;line-height:1.55;margin-bottom:14px;max-width:80ch}
+.vnote b{color:var(--fg);font-weight:500}
+.frame{position:relative;width:100%;overflow:hidden;border:1px solid var(--rule);background:#000}
+.stage{width:1440px;height:820px;overflow:hidden;transform-origin:top left;position:relative}
+
+/* ═══ A · СДЕРЖАННЫЙ ТЁМНЫЙ (текущий) ═══ */
+.A{--ink:#000;--txt:#fff;--dim:#8A8A85;background:var(--ink);color:var(--txt);
+  display:flex;flex-direction:column;font-family:"Golos Text",sans-serif}
+.A .ph{position:absolute;inset:0}
+.A .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 32%;
+  filter:grayscale(.55) brightness(.62) contrast(1.05)}
+.A .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.1) 45%,rgba(0,0,0,.9))}
+.A .in{position:relative;z-index:2;margin-top:auto;padding:0 56px 60px}
+.A .lbl{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:#B9B8B3;margin-bottom:18px}
+.A h3{font-family:"Onest",sans-serif;font-weight:200;font-size:76px;line-height:1.05;
+  letter-spacing:-.03em;margin-bottom:18px;max-width:17ch}
+.A p{font-size:19px;color:#C6C5C0;max-width:52ch;margin-bottom:28px}
+.A .btn{display:inline-block;background:#fff;color:#000;border-radius:100px;padding:15px 30px;
+  font-weight:500;font-size:16px}
+
+/* ═══ B · ЕГО ЦВЕТ ═══ */
+.B{--ink:#07090E;--txt:#F2F5F8;--acc:#2E6BFF;background:var(--ink);color:var(--txt);
+  display:flex;flex-direction:column;font-family:"Golos Text",sans-serif}
+.B .ph{position:absolute;inset:0}
+.B .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.B .scrim{position:absolute;inset:0;
+  background:linear-gradient(105deg,rgba(7,9,14,.94) 0%,rgba(7,9,14,.72) 38%,rgba(7,9,14,.12) 70%),
+             linear-gradient(180deg,transparent 55%,rgba(7,9,14,.86))}
+.B .glow{position:absolute;left:-8%;top:8%;width:52%;height:84%;pointer-events:none;
+  background:radial-gradient(60% 50% at 40% 50%,rgba(46,107,255,.30),transparent 70%)}
+.B .in{position:relative;z-index:2;margin-top:auto;padding:0 56px 60px;max-width:60%}
+.B .lbl{display:inline-block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--acc);border:1px solid rgba(46,107,255,.5);padding:5px 12px;margin-bottom:20px}
+.B h3{font-family:"Onest",sans-serif;font-weight:600;font-size:74px;line-height:1.02;
+  letter-spacing:-.035em;margin-bottom:18px}
+.B h3 em{font-style:normal;color:var(--acc)}
+.B p{font-size:19px;color:#A9B4C4;max-width:46ch;margin-bottom:28px}
+.B .btn{display:inline-block;background:var(--acc);color:#fff;border-radius:8px;padding:16px 30px;
+  font-weight:600;font-size:16px}
+
+/* ═══ C · СВЕТЛЫЙ ═══ */
+.C{--paper:#F4F5F3;--ink:#101211;--dim:#6C716E;background:var(--paper);color:var(--ink);
+  display:grid;grid-template-columns:1fr 1fr;font-family:"Golos Text",sans-serif}
+.C .txt{display:flex;flex-direction:column;justify-content:center;padding:0 56px}
+.C .lbl{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+.C h3{font-family:"Onest",sans-serif;font-weight:300;font-size:62px;line-height:1.06;
+  letter-spacing:-.03em;margin-bottom:18px}
+.C p{font-size:18px;color:var(--dim);max-width:40ch;margin-bottom:28px}
+.C .btn{display:inline-block;align-self:flex-start;background:var(--ink);color:var(--paper);
+  border-radius:100px;padding:15px 30px;font-weight:500;font-size:16px}
+.C .ph{position:relative;overflow:hidden}
+.C .ph img{width:100%;height:100%;object-fit:cover;object-position:52% 30%}
+
+.foot{border-top:1px solid var(--rule);margin-top:36px;padding:26px 0 60px;color:var(--mute);font-size:15px}
+.foot b{color:var(--fg);font-weight:500}
+</style>
+</head>
+<body>
+<div class="w">
+<header class="top">
+  <p class="kicker">Сайт Николая · выбор визуального языка</p>
+  <h1>Один экран, три языка — на его настоящих кадрах</h1>
+  <p class="sub">Кадр один и тот же во всех трёх. Меняется только оформление вокруг него. Показано в размере 1440×820 и уменьшено целиком, поэтому пропорции честные. <b>Логотипы лиги и спонсоров в отбор не берём</b> — сайт личный.</p>
+</header>
+
+<section class="v">
+  <div class="vh"><h2>А. Сдержанный тёмный</h2><span class="tag">то, что сейчас</span></div>
+  <p class="vnote">Фото приглушено и обесцвечено, ноль акцентного цвета, всё держится на типографике. <b>Проблема видна сразу:</b> его кадры яркие и дневные, а оформление их гасит — работа в воротах превращается в тёмное пятно.</p>
+  <div class="frame" data-frame>
+    <div class="stage A" data-stage>
+      <div class="ph"><img src="img/hero.jpg" alt="Николай в прыжке в воротах"></div>
+      <div class="scrim"></div>
+      <div class="in">
+        <p class="lbl">Тренер вратарей</p>
+        <h3>Индивидуальные тренировки вратарей</h3>
+        <p>Дети, подростки и взрослые. Каждое занятие снимается на видео и разбирается после.</p>
+        <span class="btn">Написать в Telegram</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v">
+  <div class="vh"><h2>Б. Его цвет</h2><span class="tag">синий из формы</span></div>
+  <p class="vnote">Тёмная база остаётся, но кадр идёт в полном цвете, а акцент взят из его же экипировки. Текст уходит влево, справа работает фотография. <b>Ближе всего к тому, как он выглядит на самом деле</b>, и держит энергию — но это уже не «тихая галерея».</p>
+  <div class="frame" data-frame>
+    <div class="stage B" data-stage>
+      <div class="ph"><img src="img/hero.jpg" alt="Николай в прыжке в воротах"></div>
+      <div class="scrim"></div>
+      <div class="glow"></div>
+      <div class="in">
+        <p class="lbl">Тренер вратарей</p>
+        <h3>Тренировки вратарей <em>один на один</em></h3>
+        <p>Дети, подростки и взрослые. Каждое занятие снимается и разбирается после.</p>
+        <span class="btn">Написать в Telegram</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v">
+  <div class="vh"><h2>В. Светлый</h2><span class="tag">фото как единственный цвет</span></div>
+  <p class="vnote">Светлая бумага, текст слева, кадр справа во всю высоту и в полном цвете. Зелень поля и синяя форма становятся единственным цветом на странице. <b>Самый спокойный и самый «дорогой» из трёх</b>, но энергии в нём меньше всего.</p>
+  <div class="frame" data-frame>
+    <div class="stage C" data-stage>
+      <div class="txt">
+        <p class="lbl">Тренер вратарей</p>
+        <h3>Индивидуальные тренировки вратарей</h3>
+        <p>Дети, подростки и взрослые. Каждое занятие снимается на видео и разбирается после.</p>
+        <span class="btn">Написать в Telegram</span>
+      </div>
+      <div class="ph"><img src="img/hero.jpg" alt="Николай в прыжке в воротах"></div>
+    </div>
+  </div>
+</section>
+
+<div class="foot">
+  <p><b>Скажи букву — и я перекрою весь макет под неё</b> на настоящих кадрах: герой, плитки форматов, блок занятия, видео и портрет. Сейчас на сайте ещё стоят сгенерированные картинки, их уберу.</p>
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var W=1440,H=820;
+  function fit(){
+    document.querySelectorAll('[data-frame]').forEach(function(f){
+      var s=f.clientWidth/W, st=f.querySelector('[data-stage]');
+      st.style.transform='scale('+s+')';
+      f.style.height=Math.round(H*s)+'px';
+    });
+  }
+  fit();
+  if(window.ResizeObserver) new ResizeObserver(fit).observe(document.body);
+  window.addEventListener('resize',fit);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+</body>
+</html>
