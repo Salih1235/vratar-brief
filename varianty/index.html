@@ -33,6 +33,12 @@ h1{font-family:"Golos Text",sans-serif;font-weight:600;font-size:clamp(24px,4vw,
 .vnote{color:var(--mute);font-size:14.5px;line-height:1.55;margin-bottom:14px;max-width:80ch}
 .vnote b{color:var(--fg);font-weight:500}
 .frame{position:relative;width:100%;overflow:hidden;border:1px solid var(--rule);background:#000}
+.frame.big{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.zoom{background:none;border:1px solid var(--rule);color:var(--mute);font:inherit;font-size:11.5px;
+  padding:2px 9px;cursor:pointer;border-radius:0;margin-left:auto}
+.zoom:hover{color:var(--fg);border-color:var(--mute)}
+.zoom:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.zoom[aria-pressed="true"]{color:var(--fg);border-color:var(--fg)}
 .stage{width:1440px;height:820px;overflow:hidden;transform-origin:top left;position:relative}
 
 /* ═══ A · СДЕРЖАННЫЙ ТЁМНЫЙ (текущий) ═══ */
@@ -96,7 +102,7 @@ h1{font-family:"Golos Text",sans-serif;font-weight:600;font-size:clamp(24px,4vw,
 </header>
 
 <section class="v">
-  <div class="vh"><h2>А. Сдержанный тёмный</h2><span class="tag">то, что сейчас</span></div>
+  <div class="vh"><h2>А. Сдержанный тёмный</h2><span class="tag">то, что сейчас</span><button class="zoom" type="button" aria-pressed="false">Крупно</button></div>
   <p class="vnote">Фото приглушено и обесцвечено, ноль акцентного цвета, всё держится на типографике. <b>Проблема видна сразу:</b> его кадры яркие и дневные, а оформление их гасит — работа в воротах превращается в тёмное пятно.</p>
   <div class="frame" data-frame>
     <div class="stage A" data-stage>
@@ -113,7 +119,7 @@ h1{font-family:"Golos Text",sans-serif;font-weight:600;font-size:clamp(24px,4vw,
 </section>
 
 <section class="v">
-  <div class="vh"><h2>Б. Его цвет</h2><span class="tag">синий из формы</span></div>
+  <div class="vh"><h2>Б. Его цвет</h2><span class="tag">синий из формы</span><button class="zoom" type="button" aria-pressed="false">Крупно</button></div>
   <p class="vnote">Тёмная база остаётся, но кадр идёт в полном цвете, а акцент взят из его же экипировки. Текст уходит влево, справа работает фотография. <b>Ближе всего к тому, как он выглядит на самом деле</b>, и держит энергию — но это уже не «тихая галерея».</p>
   <div class="frame" data-frame>
     <div class="stage B" data-stage>
@@ -131,7 +137,7 @@ h1{font-family:"Golos Text",sans-serif;font-weight:600;font-size:clamp(24px,4vw,
 </section>
 
 <section class="v">
-  <div class="vh"><h2>В. Светлый</h2><span class="tag">фото как единственный цвет</span></div>
+  <div class="vh"><h2>В. Светлый</h2><span class="tag">фото как единственный цвет</span><button class="zoom" type="button" aria-pressed="false">Крупно</button></div>
   <p class="vnote">Светлая бумага, текст слева, кадр справа во всю высоту и в полном цвете. Зелень поля и синяя форма становятся единственным цветом на странице. <b>Самый спокойный и самый «дорогой» из трёх</b>, но энергии в нём меньше всего.</p>
   <div class="frame" data-frame>
     <div class="stage C" data-stage>
@@ -155,13 +161,26 @@ h1{font-family:"Golos Text",sans-serif;font-weight:600;font-size:clamp(24px,4vw,
 (function(){
   "use strict";
   var W=1440,H=820;
+  var BIG=0.62;
   function fit(){
     document.querySelectorAll('[data-frame]').forEach(function(f){
-      var s=f.clientWidth/W, st=f.querySelector('[data-stage]');
+      var big=f.classList.contains('big');
+      var s=big?Math.max(f.clientWidth/W,BIG):f.clientWidth/W;
+      var st=f.querySelector('[data-stage]');
       st.style.transform='scale('+s+')';
       f.style.height=Math.round(H*s)+'px';
+      f.scrollLeft=big?Math.max(0,(W*s-f.clientWidth)/2):0;
     });
   }
+  document.querySelectorAll('.zoom').forEach(function(b){
+    b.addEventListener('click',function(){
+      var f=b.closest('.v').querySelector('[data-frame]');
+      var on=f.classList.toggle('big');
+      b.setAttribute('aria-pressed',on?'true':'false');
+      b.textContent=on?'Вписать':'Крупно';
+      fit();
+    });
+  });
   fit();
   if(window.ResizeObserver) new ResizeObserver(fit).observe(document.body);
   window.addEventListener('resize',fit);
