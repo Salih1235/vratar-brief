@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow">
+<title>Nikola BIG cat — тренер вратарей</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Inter:wght@400;500&display=swap">
+<style>
+/* Система Nike.com: монохромная галерея, интерфейс почти невидим,
+   всю страницу несёт фотография. Ноль акцентного цвета, ноль теней,
+   ноль градиентов. Ритм строится контрастом белых и тёмных полос. */
+*{box-sizing:border-box}
+
+:root{
+  --obsidian:#111111;   /* текст, иконки, тёмные полосы. НЕ повышать до цвета CTA */
+  --steel:#707072;      /* вторичный текст, подписи */
+  --faint:#9e9ea0;      /* третичное, слабые границы */
+  --concrete:#e5e5e5;   /* границы, разделители, хайрлайны */
+  --mist:#f5f5f5;       /* вторичные поверхности */
+  --paper:#ffffff;      /* холст */
+
+  --maxw:1440px;
+  --unit:4px;
+  --gap-sec:48px;       /* шаг секций */
+  --gap-el:8px;
+  --pad-card:12px;
+  --edge:48px;          /* рельс страницы */
+  --nav-h:96px;
+  --r-nav:24px;
+  --r-btn:30px;
+}
+@media (max-width:760px){:root{--edge:20px;--nav-h:64px;--gap-sec:32px}}
+
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--obsidian);
+  font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;font-weight:400;line-height:1.75;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul,ol,figure{margin:0;padding:0}
+li{list-style:none}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:auto;border-radius:0}
+
+/* ── шкала Minor Third 1.2 от 16px, как у Nike ── */
+.display{font-family:"Jost","Futura","Inter",sans-serif;font-weight:500;
+  font-size:clamp(40px,7.2vw,76px);line-height:1;letter-spacing:-.015em;text-wrap:balance}
+.h-sm{font-family:"Jost","Inter",sans-serif;font-weight:500;font-size:24px;line-height:1.2;letter-spacing:-.005em}
+.sub{font-weight:500;font-size:20px;line-height:1.5}
+.body{font-weight:400;font-size:16px;line-height:1.75;color:var(--steel)}
+.body-sm{font-weight:500;font-size:14px;line-height:1.5}
+.cap{font-weight:500;font-size:12px;line-height:1.5;color:var(--steel)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--edge)}
+.bleed{width:100%}
+
+/* единственная геометрия кнопки на весь сайт */
+.btn{display:inline-flex;align-items:center;gap:8px;
+  background:var(--obsidian);color:var(--paper);
+  border:0;border-radius:var(--r-btn);padding:14px 26px;
+  font-family:inherit;font-weight:500;font-size:16px;line-height:1;cursor:pointer;
+  transition:opacity .16s ease}
+.btn:hover{opacity:.85}
+.btn:focus-visible{outline:2px solid var(--obsidian);outline-offset:3px}
+.btn.inv{background:var(--paper);color:var(--obsidian)}
+.btn.inv:focus-visible{outline-color:var(--paper)}
+
+/* ── навигация: белая полоса, кадр начинается от её низа ── */
+nav{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--concrete)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:0 var(--edge);height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-family:"Jost","Inter",sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-.01em}
+.nav-in ul{display:flex;gap:24px}
+.nav-in ul a{font-weight:500;font-size:16px;line-height:1.5}
+.nav-in ul a:hover{color:var(--steel)}
+@media (max-width:900px){.nav-in ul{display:none}}
+.nav-act{font-weight:500;font-size:16px;border-radius:var(--r-nav);
+  padding:8px 18px;background:var(--mist)}
+.nav-act:hover{background:var(--concrete)}
+
+section{margin-top:var(--gap-sec)}
+
+/* ── герой: кадр в оба края, под ним дисплейный момент ── */
+.hero figure{width:100%}
+.hero .under{max-width:var(--maxw);margin:0 auto;padding:32px var(--edge) 0;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end}
+.hero .display{max-width:14ch}
+.hero .meta{display:flex;flex-direction:column;gap:0;min-width:min(320px,42vw)}
+.hero .meta div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;
+  border-top:1px solid var(--concrete);font-size:14px;font-weight:500;line-height:1.5}
+.hero .meta div:last-child{border-bottom:1px solid var(--concrete)}
+.hero .meta span{color:var(--steel);font-weight:400}
+.hero .go{margin-top:24px}
+@media (max-width:900px){.hero .under{grid-template-columns:1fr;gap:24px;padding-top:24px}
+  .hero .meta{min-width:0}}
+
+/* ── сетка категорий: фото + подпись под ним, как у Nike ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+.tile figcaption{padding:12px 0 0}
+.tile .h-sm{margin-bottom:4px}
+
+/* ── тёмная редакционная полоса ── */
+.dark{background:var(--obsidian);color:var(--paper)}
+.dark .body{color:var(--faint)}
+.dark .cap{color:var(--faint)}
+.editorial{max-width:var(--maxw);margin:0 auto;padding:var(--edge);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(300px,38vw,560px));
+  gap:clamp(32px,5vw,64px);align-items:center}
+@media (max-width:900px){.editorial{grid-template-columns:1fr;padding:32px var(--edge)}}
+.editorial .h-sm{margin-bottom:12px}
+.editorial .go{margin-top:24px}
+
+/* ── список ── */
+.rows{border-top:1px solid var(--concrete)}
+.rows li{display:flex;justify-content:space-between;gap:24px;
+  padding:16px 0;border-bottom:1px solid var(--concrete)}
+.rows b{font-weight:500;font-size:20px;line-height:1.5}
+.rows span{font-size:14px;font-weight:500;line-height:1.5;color:var(--steel);text-align:right}
+
+/* ── форма ── */
+.formwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(32px,5vw,64px);align-items:start}
+@media (max-width:860px){.formwrap{grid-template-columns:1fr;gap:32px}}
+.form{display:flex;flex-direction:column;gap:16px}
+.f-row{display:flex;flex-direction:column;gap:6px}
+.f-row label{font-weight:500;font-size:14px;line-height:1.5}
+.form input,.form textarea{font:inherit;font-size:16px;color:var(--obsidian);
+  background:var(--paper);border:1px solid var(--concrete);border-radius:0;padding:12px 14px;
+  transition:border-color .16s ease}
+.form textarea{resize:none;min-height:64px;line-height:1.5;overflow:hidden}
+.form input::placeholder,.form textarea::placeholder{color:var(--faint)}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--obsidian)}
+.form .btn{align-self:flex-start}
+.f-note{font-size:12px;font-weight:500;line-height:1.5;color:var(--steel)}
+.f-note b{color:var(--obsidian)}
+
+footer{margin-top:var(--gap-sec);border-top:1px solid var(--concrete)}
+.foot-in{max-width:var(--maxw);margin:0 auto;padding:24px var(--edge) 48px;
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:12px;font-weight:500;color:var(--steel)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <span class="brand">Nikola BIG cat</span>
+    <ul>
+      <li><a href="#formaty">Форматы</a></li>
+      <li><a href="#trener">О тренере</a></li>
+      <li><a href="#stoimost">Стоимость</a></li>
+      <li><a href="#rabota">Работа</a></li>
+    </ul>
+    <a class="nav-act" href="#zapis">Написать</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <figure class="bleed">
+    <picture>
+      <source media="(max-width:760px)" srcset="img/hero-m.jpg" width="1023" height="1280">
+      <img src="img/hero.jpg" width="1280" height="854" alt="Николай в прыжке вытягивается за мячом в воротах">
+    </picture>
+  </figure>
+  <div class="under">
+    <div>
+      <h1 class="display">Тренировки вратарей</h1>
+      <a class="btn go" href="#zapis">Написать в Telegram</a>
+    </div>
+    <div class="meta">
+      <div><span>Форматы</span>Индивидуально, малая группа</div>
+      <div><span>Возраст</span>Дети, подростки, взрослые</div>
+      <div><span>Специализация</span>Только вратари</div>
+    </div>
+  </div>
+</header>
+
+<section id="formaty">
+  <div class="wrap">
+    <div class="grid2">
+      <figure class="tile">
+        <img src="img/w1.jpg" width="960" height="1280" loading="lazy" alt="Николай в прыжке за мячом">
+        <figcaption>
+          <h2 class="h-sm">Индивидуально</h2>
+          <p class="body">Один вратарь, вся тренировка под его задачу.</p>
+        </figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="img/g2.jpg" width="960" height="1280" loading="lazy" alt="Николай в воротах на тренировке">
+        <figcaption>
+          <h2 class="h-sm">Малая группа</h2>
+          <p class="body">Несколько вратарей, короткие серии.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="trener" class="dark">
+  <div class="editorial">
+    <div>
+      <p class="cap">О тренере</p>
+      <h2 class="h-sm" style="margin-top:8px">Nikola BIG cat</h2>
+      <p class="body">Тренирую только вратарей. Не совмещаю с полевыми: у вратаря другая техника, другая нагрузка и другие ошибки — разбирать их нужно отдельно.</p>
+      <a class="btn inv go" href="#zapis">Написать в Telegram</a>
+    </div>
+    <figure>
+      <img src="img/portrait.jpg" width="853" height="1280" loading="lazy" alt="Николай с мячом на вечерней тренировке под дождём">
+    </figure>
+  </div>
+</section>
+
+<section id="stoimost">
+  <div class="wrap">
+    <p class="cap">Стоимость</p>
+    <h2 class="h-sm" style="margin:8px 0 24px">Сколько стоит занятие</h2>
+    <ul class="rows">
+      <li><b>Индивидуально</b><span>Один вратарь</span></li>
+      <li><b>Малая группа</b><span>Цена за каждого</span></li>
+    </ul>
+    <p class="body" style="margin-top:16px;max-width:56ch">Стоимость зависит от формата и площадки. Напишите — назову точную и скажу, с чего лучше начать.</p>
+  </div>
+</section>
+
+<section id="rabota">
+  <figure class="bleed">
+    <img src="img/w4.jpg" width="1200" height="899" loading="lazy" alt="Николай в игре на поле">
+  </figure>
+  <div class="wrap" style="margin-top:24px">
+    <div class="grid2">
+      <div>
+        <p class="cap">Работа</p>
+        <h2 class="h-sm" style="margin-top:8px">Как это выглядит</h2>
+      </div>
+      <ul class="rows">
+        <li><b>Выход один на один</b></li>
+        <li><b>Ловля верхом</b></li>
+        <li><b>Игра в створе</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="zapis">
+  <div class="wrap">
+    <div class="formwrap">
+      <div>
+        <p class="cap">Запись</p>
+        <h2 class="display" style="font-size:clamp(32px,4.6vw,52px);margin:8px 0 12px">Напишите, подберём формат</h2>
+        <p class="body" style="max-width:44ch">Три строки — и сообщение соберётся само.</p>
+      </div>
+      <form class="form" id="leadForm" novalidate>
+        <div class="f-row"><label for="f-age">Возраст вратаря</label>
+          <input id="f-age" type="text" inputmode="numeric" autocomplete="off" placeholder="например, 11"></div>
+        <div class="f-row"><label for="f-club">Где сейчас играет</label>
+          <input id="f-club" type="text" autocomplete="off" placeholder="школа, секция или пока нигде"></div>
+        <div class="f-row"><label for="f-pain">Что не получается</label>
+          <textarea id="f-pain" rows="2" placeholder="боится выходить на верховые, пропускает между ног…"></textarea></div>
+        <button class="btn" type="submit">Отправить в Telegram</button>
+        <p class="f-note" id="fNote">Ничего не отправляется автоматически: сообщение откроется у вас в Telegram, вы прочитаете и нажмёте отправить сами.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <span>Nikola BIG cat · тренер вратарей</span>
+    <span>Сборка в системе Nike</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var TELEGRAM = "";
+  var f = document.getElementById('leadForm');
+  if (!f) return;
+  var note = document.getElementById('fNote');
+  var ta = f.querySelector('textarea');
+  ta.addEventListener('input', function(){ ta.style.height='auto'; ta.style.height=Math.max(64,ta.scrollHeight)+'px'; });
+  function compose(){
+    var age=document.getElementById('f-age').value.trim(),
+        club=document.getElementById('f-club').value.trim(),
+        pain=document.getElementById('f-pain').value.trim();
+    var L=['Здравствуйте! Пишу по поводу тренировок вратаря.'];
+    if(age) L.push('Возраст: '+age);
+    if(club) L.push('Где играет: '+club);
+    if(pain) L.push('Что не получается: '+pain);
+    if(!age&&!club&&!pain) L.push('Расскажите, пожалуйста, как записаться.');
+    return L.join('\n');
+  }
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text=compose();
+    if(TELEGRAM){ window.open('https://t.me/'+TELEGRAM+'?text='+encodeURIComponent(text),'_blank','noopener'); return; }
+    function fallback(){ note.innerHTML='Скопируйте сообщение вручную:<br><b>'+text.replace(/\n/g,'<br>')+'</b>'; }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ note.innerHTML='<b>Сообщение скопировано.</b> Откройте Telegram и вставьте его в переписку.'; }, fallback);
+    } else fallback();
+  });
+})();
+</script>
+</body>
+</html>
