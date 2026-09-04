@@ -146,33 +146,40 @@ nav:focus-within{transform:none}
     align-self:auto}
 }
 
-/* ── полоса-сплит (пока используется в «Форматах» и «Работе») ── */
-.band{display:grid;grid-template-columns:1fr 1fr;gap:0;width:100%;min-height:clamp(560px,82vh,780px)}
-.band figure{position:relative;overflow:hidden}
-.band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  object-position:var(--pos-d,50% 50%)}
-.band .plane{background:var(--raised);display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(64px,12vh,144px) 80px}
-.band.photo-left .plane{padding-right:var(--rail)}
-.band .plane .label{display:block;margin-bottom:14px}
-.band .plane .h2{margin-bottom:8px}
+/* ── 01 ФОРМАТЫ: узкая вертикальная врезка у левого края + индекс ── */
+.slice{display:grid;grid-template-columns:clamp(260px,26vw,420px) minmax(0,1fr);gap:0;
+  align-items:start}
+.slice figure{position:relative;aspect-ratio:960/1280;overflow:hidden;background:var(--bg)}
+.slice figure img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.slice .col{padding:0 var(--rail) 0 clamp(40px,6vw,96px)}
+.slice .label{display:block;margin-bottom:14px}
+.slice .h2{margin-bottom:8px}
 @media (max-width:900px){
-  .band{grid-template-columns:1fr;min-height:0}
-  .band figure{order:-1;height:auto;aspect-ratio:3/4}
-  .band.wide figure{aspect-ratio:4/5}
-  .band img{object-position:var(--pos-m,50% 50%)}
-  .band .plane{padding:48px var(--gutter)}
-  .band.photo-left .plane{padding-right:var(--gutter)}
+  .slice{grid-template-columns:1fr}
+  .slice figure{aspect-ratio:16/11}
+  .slice .col{padding:clamp(28px,6vw,40px) var(--gutter) 0}
 }
 
-.index{margin-top:40px}
+/* ── 04 РАБОТА: горизонтальная полоса в оба края + индекс под ней ── */
+.reel figure{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--bg)}
+.reel figure img{width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.reel .under{max-width:var(--maxw);margin:0 auto;padding:40px var(--gutter) 0;
+  display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(40px,6vw,96px);
+  align-items:start}
+.reel .under .label{display:block;margin-bottom:14px}
+@media (max-width:900px){
+  .reel figure{aspect-ratio:4/3}
+  .reel .under{grid-template-columns:1fr;gap:24px;padding-top:28px}
+}
+
+.index{margin-top:36px}
 .index li{padding:22px 0;border-top:1px solid var(--rule)}
 .index li:last-child{border-bottom:1px solid var(--rule)}
 .index b{display:block;font-family:"Onest",sans-serif;font-weight:var(--disp-w);
   font-size:clamp(28px,3.4vw,44px);line-height:1.1;letter-spacing:-.028em;margin-bottom:6px}
 .index span{display:block;font-size:15px;line-height:1.5;color:var(--dim);max-width:44ch}
 
-.idx{margin-top:40px}
+.idx{margin-top:0}
 .idx li{display:grid;grid-template-columns:40px 1fr;align-items:baseline;padding:20px 0;
   border-top:1px solid var(--rule);font-family:"Onest",sans-serif;font-weight:300;
   font-size:clamp(28px,3.6vw,52px);line-height:1.05;letter-spacing:-.03em}
@@ -253,9 +260,11 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
 </header>
 
 <section id="formaty">
-  <div class="band photo-left">
-    <figure><img src="img/w1.jpg" width="900" height="1200" loading="lazy" alt="Николай в воротах на тренировке" style="--pos-d:50% 30%;--pos-m:50% 45%"></figure>
-    <div class="plane">
+  <div class="slice">
+    <figure>
+      <img src="img/w1.jpg" width="960" height="1280" loading="lazy" alt="Николай в прыжке за мячом">
+    </figure>
+    <div class="col">
       <span class="label"><i>01</i>Форматы</span>
       <h2 class="h2">Как можно заниматься</h2>
       <ul class="index">
@@ -296,11 +305,15 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
 </section>
 
 <section id="rabota">
-  <div class="band photo-left wide">
-    <figure><img src="img/w4.jpg" width="1200" height="899" loading="lazy" alt="Николай в игре" style="--pos-d:50% 45%;--pos-m:50% 50%"></figure>
-    <div class="plane">
-      <span class="label"><i>04</i>Работа</span>
-      <h2 class="h2">Как это выглядит</h2>
+  <div class="reel">
+    <figure>
+      <img src="img/w4.jpg" width="1200" height="899" loading="lazy" alt="Николай в игре на поле">
+    </figure>
+    <div class="under">
+      <div>
+        <span class="label"><i>04</i>Работа</span>
+        <h2 class="h2">Как это выглядит</h2>
+      </div>
       <ol class="idx">
         <li><i>01</i>Выход один на один</li>
         <li><i>02</i>Ловля верхом</li>
