@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ru" data-skin="b">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow">
+<title>Nikola BIG cat — тренер вратарей</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box}
+
+/* ═══ А · сдержанный тёмный ═══ */
+[data-skin="a"]{
+  --bg:#000000; --raised:#141414; --fg:#FFFFFF; --dim:#8C8C88;
+  --rule:rgba(255,255,255,.14); --acc:#FFFFFF; --acc-fg:#000000;
+  --btn-r:100px; --card-r:0px; --disp-w:200; --glow:0;
+}
+/* ═══ Б · его цвет ═══ */
+[data-skin="b"]{
+  --bg:#07090E; --raised:#101521; --fg:#F2F5F8; --dim:#8E9AAC;
+  --rule:rgba(140,165,200,.20); --acc:#2E6BFF; --acc-fg:#FFFFFF;
+  --btn-r:8px; --card-r:10px; --disp-w:600; --glow:1;
+}
+
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:"Golos Text",system-ui,sans-serif;font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;transition:background .3s ease,color .3s ease}
+h1,h2,h3,p,ul,figure{margin:0;padding:0}
+li{list-style:none}
+a{color:inherit;text-decoration:none}
+img{display:block}
+.w{max-width:1280px;margin:0 auto;padding:0 40px}
+@media (max-width:760px){.w{padding:0 20px}}
+
+.label{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.display{font-family:"Onest",sans-serif;font-weight:var(--disp-w);
+  font-size:clamp(32px,5.4vw,72px);line-height:1.04;letter-spacing:-.032em;text-wrap:balance}
+.h2{font-family:"Onest",sans-serif;font-weight:calc(var(--disp-w) + 100);
+  font-size:clamp(24px,3.2vw,40px);line-height:1.1;letter-spacing:-.028em;text-wrap:balance}
+.lead{font-size:19px;line-height:1.5;color:var(--dim);max-width:50ch}
+.body{font-size:17px;line-height:1.6;color:var(--dim);max-width:60ch}
+
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--acc);color:var(--acc-fg);
+  border:0;border-radius:var(--btn-r);padding:16px 30px;
+  font-family:"Golos Text",sans-serif;font-weight:600;font-size:16px;cursor:pointer;
+  transition:opacity .16s ease}
+.cta:hover{opacity:.9}
+.cta:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+.ghost{display:inline-flex;align-items:center;border:1px solid var(--rule);border-radius:var(--btn-r);
+  padding:12px 22px;font-size:15px;transition:border-color .16s ease}
+.ghost:hover{border-color:var(--fg)}
+
+/* переключатель сборок */
+.switch{position:fixed;top:12px;right:12px;z-index:200;display:flex;gap:3px;
+  background:rgba(10,12,16,.85);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.16);border-radius:9px;padding:3px}
+.switch button{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;border:0;
+  background:none;color:rgba(255,255,255,.6);padding:6px 13px;border-radius:6px}
+.switch button[aria-pressed="true"]{background:#fff;color:#000}
+
+nav{position:absolute;top:0;left:0;right:0;z-index:10}
+.nav-in{max-width:1280px;margin:0 auto;padding:24px 40px;display:flex;align-items:center;
+  justify-content:space-between;gap:20px}
+@media (max-width:760px){.nav-in{padding:18px 20px}}
+.brand{font-family:"Onest",sans-serif;font-weight:600;font-size:18px;letter-spacing:-.02em}
+.nav-in ul{display:flex;gap:26px;font-size:14.5px;color:var(--dim)}
+.nav-in ul a:hover{color:var(--fg)}
+@media (max-width:900px){.nav-in ul{display:none}}
+
+/* герой */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
+  padding-top:110px;background:var(--raised);overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+[data-skin="a"] .hero img{filter:grayscale(.25) brightness(.78)}
+.hero .scrim{position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(4,6,10,.62) 0%,rgba(4,6,10,.10) 42%,rgba(4,6,10,.90) 100%)}
+[data-skin="b"] .hero .scrim{background:
+  linear-gradient(100deg,rgba(7,9,14,.93) 0%,rgba(7,9,14,.66) 40%,rgba(7,9,14,.05) 74%),
+  linear-gradient(180deg,transparent 52%,rgba(7,9,14,.9))}
+.hero .glow{position:absolute;left:-10%;top:6%;width:56%;height:86%;pointer-events:none;
+  opacity:var(--glow);
+  background:radial-gradient(58% 50% at 42% 50%,rgba(46,107,255,.28),transparent 70%)}
+.hero-in{position:relative;z-index:2;width:100%;padding-bottom:56px}
+.hero .label{display:block;margin-bottom:18px;color:var(--fg);opacity:.72}
+[data-skin="b"] .hero .label{display:inline-block;color:var(--acc);opacity:1;
+  border:1px solid rgba(46,107,255,.5);border-radius:6px;padding:5px 12px}
+.hero .display{margin-bottom:20px;max-width:16ch}
+.hero .lead{color:rgba(255,255,255,.82);margin-bottom:30px}
+
+section{padding-block:calc(var(--gap,104px)/2)}
+@media (max-width:760px){section{padding-block:32px}}
+.sec-head{margin-bottom:30px}
+.sec-head .label{display:block;margin-bottom:14px}
+
+/* форматы */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:var(--tile-gap,0)}
+[data-skin="b"] .tiles{--tile-gap:14px}
+@media (max-width:700px){.tiles{grid-template-columns:1fr;--tile-gap:12px}}
+.tiles li{position:relative;aspect-ratio:16/11;overflow:hidden;background:var(--raised);
+  border-radius:var(--card-r)}
+.tiles img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .5s ease}
+[data-skin="a"] .tiles img{filter:grayscale(.3) brightness(.72)}
+[data-skin="b"] .tiles img{filter:brightness(.82)}
+.tiles li:hover img{transform:scale(1.03)}
+@media (prefers-reduced-motion:reduce){.tiles img{transition:none}.tiles li:hover img{transform:none}}
+.tiles .cap{position:absolute;inset:auto 0 0 0;padding:22px 22px;
+  background:linear-gradient(180deg,transparent,rgba(4,6,10,.82))}
+.tiles .name{display:block;font-family:"Onest",sans-serif;
+  font-weight:calc(var(--disp-w) + 100);font-size:clamp(21px,2.3vw,30px);
+  line-height:1.1;letter-spacing:-.026em;margin-bottom:6px}
+.tiles .about{display:block;font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.72)}
+
+/* работа — лента кадров */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--tile-gap,0)}
+@media (max-width:760px){.strip{grid-template-columns:1fr 1fr;--tile-gap:10px}}
+.strip figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--raised);
+  border-radius:var(--card-r)}
+.strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+[data-skin="a"] .strip img{filter:grayscale(.3) brightness(.8)}
+
+/* о тренере */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+@media (max-width:900px){.split{grid-template-columns:1fr;gap:26px}}
+.split figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--raised);
+  border-radius:var(--card-r)}
+.split img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+[data-skin="a"] .split img{filter:grayscale(.3) brightness(.82)}
+
+/* стоимость */
+.price li{padding:18px 0;border-top:1px solid var(--rule)}
+.price li:last-child{border-bottom:1px solid var(--rule)}
+.price b{display:block;font-weight:600;font-size:19px;margin-bottom:4px}
+.price span{font-size:15.5px;color:var(--dim)}
+
+/* форма */
+.end{background:var(--raised)}
+.lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+@media (max-width:860px){.lead-grid{grid-template-columns:1fr;gap:28px}}
+.form{display:flex;flex-direction:column;gap:14px}
+.f-row{display:flex;flex-direction:column;gap:7px}
+.f-row label{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+.form input,.form textarea{font:inherit;font-size:16.5px;color:var(--fg);background:transparent;
+  border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:9px 0;
+  transition:border-color .18s ease}
+.form textarea{resize:none;min-height:58px;line-height:1.5;overflow:hidden}
+.form input::placeholder,.form textarea::placeholder{color:var(--dim);opacity:.7}
+.form input:focus,.form textarea:focus{outline:none;border-bottom-color:var(--acc)}
+.form .cta{align-self:flex-start;margin-top:6px}
+.f-note{font-size:13.5px;line-height:1.5;color:var(--dim)}
+.f-note b{color:var(--fg);font-weight:500}
+
+footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color:var(--dim);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="switch" role="group" aria-label="Сборка">
+  <button type="button" data-skin-btn="a" aria-pressed="false">А</button>
+  <button type="button" data-skin-btn="b" aria-pressed="true">Б</button>
+</div>
+
+<nav>
+  <div class="nav-in">
+    <span class="brand">Nikola BIG cat</span>
+    <ul>
+      <li><a href="#formaty">Форматы</a></li>
+      <li><a href="#rabota">Работа</a></li>
+      <li><a href="#stoimost">Стоимость</a></li>
+    </ul>
+    <a class="ghost" href="#zapis">Написать</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <img src="img/hero.jpg" alt="Николай в прыжке в воротах">
+  <div class="scrim"></div>
+  <div class="glow"></div>
+  <div class="w hero-in">
+    <span class="label">Тренер вратарей</span>
+    <h1 class="display">Индивидуальные тренировки вратарей</h1>
+    <p class="lead">Дети, подростки и взрослые.</p>
+    <a class="cta" href="#zapis">Написать в Telegram
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<section id="formaty">
+  <div class="w">
+    <div class="sec-head">
+      <span class="label">Форматы</span>
+      <h2 class="h2">Как можно заниматься</h2>
+    </div>
+    <ul class="tiles">
+      <li>
+        <img src="img/w1.jpg" alt="Николай в прыжке за мячом">
+        <span class="cap"><span class="name">Индивидуально</span><span class="about">Один вратарь, вся тренировка под его задачу.</span></span>
+      </li>
+      <li>
+        <img src="img/w2.jpg" alt="Николай в воротах">
+        <span class="cap"><span class="name">Малая группа</span><span class="about">Несколько вратарей, короткие серии.</span></span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="rabota">
+  <div class="w">
+    <div class="sec-head">
+      <span class="label">Работа</span>
+      <h2 class="h2">Как это выглядит</h2>
+    </div>
+    <div class="strip">
+      <figure><img src="img/w3.jpg" alt="Николай на поле"></figure>
+      <figure><img src="img/w4.jpg" alt="Николай в игре"></figure>
+      <figure><img src="img/w5.jpg" alt="Николай в воротах"></figure>
+    </div>
+  </div>
+</section>
+
+<section id="trener">
+  <div class="w">
+    <div class="split">
+      <figure><img src="img/portrait.jpg" alt="Николай"></figure>
+      <div>
+        <div class="sec-head" style="margin-bottom:22px">
+          <span class="label">О тренере</span>
+          <h2 class="h2">Nikola BIG cat</h2>
+        </div>
+        <p class="body">Тренирую только вратарей. Не совмещаю с полевыми: у вратаря другая техника, другая нагрузка и другие ошибки — разбирать их нужно отдельно.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stoimost">
+  <div class="w">
+    <div class="sec-head">
+      <span class="label">Стоимость</span>
+      <h2 class="h2">Сколько стоит занятие</h2>
+    </div>
+    <ul class="price">
+      <li><b>Индивидуально</b><span>Один вратарь</span></li>
+      <li><b>Малая группа</b><span>Цена за каждого</span></li>
+    </ul>
+    <p class="body" style="margin-top:20px">Стоимость зависит от формата и площадки. Напишите — назову точную и скажу, с чего лучше начать.</p>
+  </div>
+</section>
+
+<section id="zapis" class="end">
+  <div class="w">
+    <div class="lead-grid">
+      <div>
+        <span class="label" style="display:block;margin-bottom:16px">Запись</span>
+        <h2 class="display" style="font-size:clamp(28px,4vw,52px);margin-bottom:16px">Напишите, подберём формат</h2>
+        <p class="lead">Три строки — и сообщение соберётся само.</p>
+      </div>
+      <form class="form" id="leadForm" novalidate>
+        <div class="f-row"><label for="f-age">Возраст вратаря</label>
+          <input id="f-age" type="text" inputmode="numeric" autocomplete="off" placeholder="например, 11"></div>
+        <div class="f-row"><label for="f-club">Где сейчас играет</label>
+          <input id="f-club" type="text" autocomplete="off" placeholder="школа, секция или пока нигде"></div>
+        <div class="f-row"><label for="f-pain">Что не получается</label>
+          <textarea id="f-pain" rows="2" placeholder="боится выходить на верховые, пропускает между ног…"></textarea></div>
+        <button class="cta" type="submit">Отправить в Telegram
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="f-note" id="fNote">Ничего не отправляется автоматически: сообщение откроется у вас в Telegram, вы прочитаете и нажмёте отправить сами.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="w"><footer>
+  <span>Nikola BIG cat · тренер вратарей</span>
+  <span>Сборка для сравнения</span>
+</footer></div>
+
+<script>
+(function(){
+  "use strict";
+  var TELEGRAM = "";           // ник появится, когда Николай его назовёт
+  var root = document.documentElement;
+
+  /* переключатель сборок */
+  var btns = [].slice.call(document.querySelectorAll('[data-skin-btn]'));
+  function setSkin(s){
+    root.setAttribute('data-skin', s);
+    btns.forEach(function(b){
+      b.setAttribute('aria-pressed', b.dataset.skinBtn === s ? 'true' : 'false');
+    });
+    try { localStorage.setItem('skin', s); } catch(e){}
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ setSkin(b.dataset.skinBtn); }); });
+  try { var saved = localStorage.getItem('skin'); if (saved) setSkin(saved); } catch(e){}
+
+  /* форма заявки */
+  var f = document.getElementById('leadForm');
+  if (!f) return;
+  var note = document.getElementById('fNote');
+  var ta = f.querySelector('textarea');
+
+  ta.addEventListener('input', function(){
+    ta.style.height = 'auto';
+    ta.style.height = Math.max(58, ta.scrollHeight) + 'px';
+  });
+
+  function compose(){
+    var age  = document.getElementById('f-age').value.trim();
+    var club = document.getElementById('f-club').value.trim();
+    var pain = document.getElementById('f-pain').value.trim();
+    var L = ['Здравствуйте! Пишу по поводу тренировок вратаря.'];
+    if (age)  L.push('Возраст: ' + age);
+    if (club) L.push('Где играет: ' + club);
+    if (pain) L.push('Что не получается: ' + pain);
+    if (!age && !club && !pain) L.push('Расскажите, пожалуйста, как записаться.');
+    return L.join('\n');
+  }
+
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text = compose();
+    if (TELEGRAM){
+      window.open('https://t.me/' + TELEGRAM + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+      return;
+    }
+    function fallback(){
+      note.innerHTML = 'Скопируйте сообщение вручную:<br><b>' + text.replace(/\n/g,'<br>') + '</b>';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        note.innerHTML = '<b>Сообщение скопировано.</b> Откройте Telegram и вставьте его в переписку.';
+      }, fallback);
+    } else fallback();
+  });
+})();
+</script>
+</body>
+</html>
