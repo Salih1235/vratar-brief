@@ -10,40 +10,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700&family=Golos+Text:wght@400;500;600&display=swap">
 <style>
+/* Принцип: фото касается края экрана и перетекает только в плоскость страницы —
+   в её цвет (герой) или стык в стык в плоскость с текстом. Фото в фото не перетекает,
+   ни одна маска не касается кадра. */
 *{box-sizing:border-box}
 
-/* ═══ А · сдержанный тёмный ═══ */
-[data-skin="a"]{
-  --bg:#000000; --bg-rgb:0,0,0; --raised:#141414; --fg:#FFFFFF; --dim:#8C8C88;
-  --rule:rgba(255,255,255,.14); --acc:#FFFFFF; --acc-fg:#000000;
-  --btn-r:100px; --card-r:0px; --disp-w:200; --glow:0;
-}
-/* ═══ Б · его цвет ═══ */
-[data-skin="b"]{
-  --bg:#07090E; --bg-rgb:7,9,14; --raised:#101521; --fg:#F2F5F8; --dim:#8E9AAC;
-  --rule:rgba(140,165,200,.20); --acc:#2E6BFF; --acc-fg:#FFFFFF;
-  --btn-r:8px; --card-r:10px; --disp-w:600; --glow:1;
-}
+[data-skin="a"]{--bg:#000000;--bg-rgb:0,0,0;--raised:#141414;--fg:#FFFFFF;--dim:#8C8C88;
+  --rule:rgba(255,255,255,.14);--acc:#FFFFFF;--acc-fg:#000000;--btn-r:100px;--disp-w:200}
+[data-skin="b"]{--bg:#07090E;--bg-rgb:7,9,14;--raised:#101521;--fg:#F2F5F8;--dim:#8E9AAC;
+  --rule:rgba(140,165,200,.20);--acc:#2E6BFF;--acc-fg:#FFFFFF;--btn-r:8px;--disp-w:600}
+
+:root{--inset:max(40px,calc((100vw - 1200px)/2));--pause:128px;--band-h:clamp(560px,88vh,820px)}
+@media (max-width:760px){:root{--inset:20px;--pause:64px}}
 
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--fg);
+body{margin:0;background:var(--bg);color:var(--fg);overflow-x:clip;
   font-family:"Golos Text",system-ui,sans-serif;font-size:17px;line-height:1.55;
   -webkit-font-smoothing:antialiased;transition:background .3s ease,color .3s ease}
-h1,h2,h3,p,ul,figure{margin:0;padding:0}
+h1,h2,h3,p,ul,ol,figure{margin:0;padding:0}
 li{list-style:none}
 a{color:inherit;text-decoration:none}
-img{display:block}
+img{display:block;border-radius:0}
 .w{max-width:1280px;margin:0 auto;padding:0 40px}
 @media (max-width:760px){.w{padding:0 20px}}
-
-/* растворение краёв: кадр не наклеен, а проступает из фона */
-.strip img{-webkit-mask-image:radial-gradient(115% 105% at 50% 42%,#000 52%,rgba(0,0,0,.35) 82%,transparent 100%);
-  mask-image:radial-gradient(115% 105% at 50% 42%,#000 52%,rgba(0,0,0,.35) 82%,transparent 100%)}
-.tiles img{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 100%);
-  mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 100%)}
-.split img{-webkit-mask-image:radial-gradient(120% 100% at 50% 38%,#000 55%,rgba(0,0,0,.4) 84%,transparent 100%);
-  mask-image:radial-gradient(120% 100% at 50% 38%,#000 55%,rgba(0,0,0,.4) 84%,transparent 100%)}
 
 .label{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 .display{font-family:"Onest",sans-serif;font-weight:var(--disp-w);
@@ -63,6 +53,9 @@ img{display:block}
   padding:12px 22px;font-size:15px;transition:border-color .16s ease}
 .ghost:hover{border-color:var(--fg)}
 
+/* один грейд на все кадры, без исключений по секциям и шкурам */
+.hero img,.band img{filter:saturate(.88) contrast(1.03)}
+
 /* переключатель сборок */
 .switch{position:fixed;top:12px;right:12px;z-index:200;display:flex;gap:3px;
   background:rgba(10,12,16,.85);backdrop-filter:blur(12px);
@@ -81,20 +74,14 @@ nav{position:absolute;top:0;left:0;right:0;z-index:10}
 .nav-in ul a:hover{color:var(--fg)}
 @media (max-width:900px){.nav-in ul{display:none}}
 
-/* герой */
+/* ── герой: единственный кадр на 100vw и единственное растворение ── */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
-  padding-top:110px;background:var(--raised);overflow:hidden}
+  padding-top:110px;background:var(--bg);overflow:hidden}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
-[data-skin="a"] .hero img{filter:grayscale(.25) brightness(.78)}
+@media (max-width:760px){.hero img{object-position:18% 30%}}
 .hero .scrim{position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(var(--bg-rgb),.55) 0%,rgba(var(--bg-rgb),.06) 40%,
-    rgba(var(--bg-rgb),.72) 78%,rgb(var(--bg-rgb)) 100%)}
-[data-skin="b"] .hero .scrim{background:
-  linear-gradient(100deg,rgba(var(--bg-rgb),.93) 0%,rgba(var(--bg-rgb),.62) 42%,rgba(var(--bg-rgb),0) 76%),
-  linear-gradient(180deg,transparent 50%,rgba(var(--bg-rgb),.75) 84%,rgb(var(--bg-rgb)) 100%)}
-.hero .glow{position:absolute;left:-10%;top:6%;width:56%;height:86%;pointer-events:none;
-  opacity:var(--glow);
-  background:radial-gradient(58% 50% at 42% 50%,rgba(46,107,255,.28),transparent 70%)}
+  background:linear-gradient(180deg,rgba(var(--bg-rgb),.45) 0%,rgba(var(--bg-rgb),0) 30%,
+    rgba(var(--bg-rgb),0) 48%,rgba(var(--bg-rgb),.72) 80%,rgb(var(--bg-rgb)) 100%)}
 .hero-in{position:relative;z-index:2;width:100%;padding-bottom:56px}
 .hero .label{display:block;margin-bottom:18px;color:var(--fg);opacity:.72}
 [data-skin="b"] .hero .label{display:inline-block;color:var(--acc);opacity:1;
@@ -102,47 +89,42 @@ nav{position:absolute;top:0;left:0;right:0;z-index:10}
 .hero .display{margin-bottom:20px;max-width:16ch}
 .hero .lead{color:rgba(255,255,255,.82);margin-bottom:30px}
 
-section{padding-block:calc(var(--gap,104px)/2)}
-@media (max-width:760px){section{padding-block:32px}}
+/* ── ритм: полосы отделены паузой плоского фона ── */
+section{padding:var(--pause) 0 0}
+section.text{padding-block:var(--pause)}
+#stoimost{padding-block:calc(var(--pause)*1.25)}
 .sec-head{margin-bottom:30px}
 .sec-head .label{display:block;margin-bottom:14px}
 
-/* форматы */
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:var(--tile-gap,0)}
-[data-skin="b"] .tiles{--tile-gap:0}
-@media (max-width:700px){.tiles{grid-template-columns:1fr;--tile-gap:12px}}
-.tiles li{position:relative;aspect-ratio:16/11;overflow:hidden;background:transparent}
-.tiles img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  transition:transform .5s ease}
-[data-skin="a"] .tiles img{filter:grayscale(.3) brightness(.72)}
-[data-skin="b"] .tiles img{filter:brightness(.82)}
-.tiles li:hover img{transform:scale(1.03)}
-@media (prefers-reduced-motion:reduce){.tiles img{transition:none}.tiles li:hover img{transform:none}}
-.tiles .cap{position:absolute;inset:auto 0 0 0;padding:22px 22px;
-  background:linear-gradient(180deg,transparent,rgba(4,6,10,.82))}
-.tiles .name{display:block;font-family:"Onest",sans-serif;
-  font-weight:calc(var(--disp-w) + 100);font-size:clamp(21px,2.3vw,30px);
-  line-height:1.1;letter-spacing:-.026em;margin-bottom:6px}
-.tiles .about{display:block;font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.72)}
+/* ── полоса-сплит: кадр в край экрана + плоскость с текстом, стык в стык ── */
+.band{display:grid;grid-template-columns:1fr 1fr;gap:0;width:100%;min-height:var(--band-h)}
+.band.photo-right{grid-template-columns:1fr minmax(0,640px)}
+.band figure{position:relative;overflow:hidden}
+.band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:var(--pos-d,50% 50%)}
+.band .plane{background:var(--raised);display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(64px,12vh,144px) 80px}
+.band.photo-left .plane{padding-right:var(--inset)}
+.band.photo-right .plane{padding-left:var(--inset)}
+.band .plane .label{display:block;margin-bottom:14px}
+.band .plane .h2{margin-bottom:8px}
+.band .plane .body{margin-top:18px}
 
-/* работа — лента кадров */
-.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--tile-gap,0)}
-@media (max-width:760px){.strip{grid-template-columns:1fr 1fr}}
-.strip figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:transparent}
-.strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.strip figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 16px 14px;
-  font-size:14px;line-height:1.35;color:rgba(255,255,255,.9);
-  background:linear-gradient(180deg,transparent,rgba(var(--bg-rgb),.85))}
-.after-strip{display:flex;align-items:center;justify-content:space-between;gap:22px;
-  flex-wrap:wrap;margin-top:26px}
-[data-skin="a"] .strip img{filter:grayscale(.3) brightness(.8)}
+/* индекс форматов */
+.index{margin-top:40px}
+.index li{padding:22px 0;border-top:1px solid var(--rule)}
+.index li:last-child{border-bottom:1px solid var(--rule)}
+.index b{display:block;font-family:"Onest",sans-serif;font-weight:var(--disp-w);
+  font-size:clamp(28px,3.4vw,44px);line-height:1.1;letter-spacing:-.028em;margin-bottom:6px}
+.index span{display:block;font-size:15px;line-height:1.5;color:var(--dim);max-width:44ch}
 
-/* о тренере */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
-@media (max-width:900px){.split{grid-template-columns:1fr;gap:26px}}
-.split figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:transparent}
-.split img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
-[data-skin="a"] .split img{filter:grayscale(.3) brightness(.82)}
+/* типографический индекс работы */
+.idx{margin-top:40px}
+.idx li{display:grid;grid-template-columns:40px 1fr;align-items:baseline;padding:20px 0;
+  border-top:1px solid var(--rule);font-family:"Onest",sans-serif;font-weight:300;
+  font-size:clamp(28px,3.6vw,52px);line-height:1.05;letter-spacing:-.03em}
+.idx li:last-child{border-bottom:1px solid var(--rule)}
+.idx i{font:500 13px/1 "Golos Text",sans-serif;letter-spacing:.08em;color:var(--dim)}
 
 /* стоимость */
 .price li{padding:18px 0;border-top:1px solid var(--rule)}
@@ -151,7 +133,6 @@ section{padding-block:calc(var(--gap,104px)/2)}
 .price span{font-size:15.5px;color:var(--dim)}
 
 /* форма */
-.end{background:transparent}
 .lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
 @media (max-width:860px){.lead-grid{grid-template-columns:1fr;gap:28px}}
 .form{display:flex;flex-direction:column;gap:14px}
@@ -169,6 +150,16 @@ section{padding-block:calc(var(--gap,104px)/2)}
 
 footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color:var(--dim);
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ── мобильный: сплит становится стеком, шов — прямая линия ── */
+@media (max-width:900px){
+  .band,.band.photo-right{grid-template-columns:1fr;min-height:0}
+  .band figure{order:-1;height:auto;aspect-ratio:3/4}
+  .band.wide figure{aspect-ratio:4/5}
+  .band img{object-position:var(--pos-m,50% 50%)}
+  .band .plane{padding:48px 20px}
+  .band.photo-left .plane,.band.photo-right .plane{padding-left:20px;padding-right:20px}
+}
 </style>
 </head>
 <body>
@@ -193,7 +184,6 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
 <header class="hero">
   <img src="img/hero.jpg" alt="Николай в прыжке в воротах">
   <div class="scrim"></div>
-  <div class="glow"></div>
   <div class="w hero-in">
     <span class="label">Тренер вратарей</span>
     <h1 class="display">Индивидуальные тренировки вратарей</h1>
@@ -204,42 +194,32 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   </div>
 </header>
 
-<section id="formaty">
-  <div class="w">
-    <div class="sec-head">
+<section id="formaty" class="bleed">
+  <div class="band photo-left">
+    <figure><img src="img/knee.jpg" alt="Николай на одном колене рядом с юным вратарём" style="--pos-d:60% 50%;--pos-m:45% 50%"></figure>
+    <div class="plane">
       <span class="label">Форматы</span>
       <h2 class="h2">Как можно заниматься</h2>
-    </div>
-    <ul class="tiles">
-      <li>
-        <img src="img/w1.jpg" alt="Николай в прыжке за мячом">
-        <span class="cap"><span class="name">Индивидуально</span><span class="about">Один вратарь, вся тренировка под его задачу.</span></span>
-      </li>
-      <li>
-        <img src="img/group.jpg" alt="Николай с группой юных вратарей" style="object-position:50% 40%">
-        <span class="cap"><span class="name">Малая группа</span><span class="about">Несколько вратарей, короткие серии.</span></span>
-      </li>
-    </ul>
-  </div>
-</section>
-
-
-<section id="trener">
-  <div class="w">
-    <div class="split">
-      <figure><img src="img/portrait.jpg" alt="Николай"></figure>
-      <div>
-        <div class="sec-head" style="margin-bottom:22px">
-          <span class="label">О тренере</span>
-          <h2 class="h2">Nikola BIG cat</h2>
-        </div>
-        <p class="body">Тренирую только вратарей. Не совмещаю с полевыми: у вратаря другая техника, другая нагрузка и другие ошибки — разбирать их нужно отдельно.</p>
-      </div>
+      <ul class="index">
+        <li><b>Индивидуально</b><span>Один вратарь, вся тренировка под его задачу.</span></li>
+        <li><b>Малая группа</b><span>Несколько вратарей, короткие серии.</span></li>
+      </ul>
     </div>
   </div>
 </section>
 
-<section id="stoimost">
+<section id="trener" class="bleed">
+  <div class="band photo-right">
+    <div class="plane">
+      <span class="label">О тренере</span>
+      <h2 class="h2">Nikola BIG cat</h2>
+      <p class="body">Тренирую только вратарей. Не совмещаю с полевыми: у вратаря другая техника, другая нагрузка и другие ошибки — разбирать их нужно отдельно.</p>
+    </div>
+    <figure><img src="img/portrait.jpg" alt="Николай" style="--pos-d:50% 100%;--pos-m:50% 80%"></figure>
+  </div>
+</section>
+
+<section id="stoimost" class="text">
   <div class="w">
     <div class="sec-head">
       <span class="label">Стоимость</span>
@@ -253,26 +233,22 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   </div>
 </section>
 
-<section id="rabota">
-  <div class="w">
-    <div class="sec-head">
+<section id="rabota" class="bleed">
+  <div class="band photo-left wide">
+    <figure><img src="img/w4.jpg" alt="Николай в игре" style="--pos-d:50% 45%;--pos-m:50% 50%"></figure>
+    <div class="plane">
       <span class="label">Работа</span>
       <h2 class="h2">Как это выглядит</h2>
-    </div>
-    <div class="strip">
-      <figure><img src="img/w3.jpg" alt="Работа на выходах"><figcaption>Выход один на один</figcaption></figure>
-      <figure><img src="img/w4.jpg" alt="Ловля верхового мяча"><figcaption>Ловля верхом</figcaption></figure>
-      <figure><img src="img/w5.jpg" alt="Работа в створе ворот"><figcaption>Игра в створе</figcaption></figure>
-    </div>
-    <div class="after-strip">
-      <p class="body" style="margin:0">Так проходит занятие. Напишите — разберём задачу вашего вратаря.</p>
-      <a class="cta" href="#zapis">Написать в Telegram
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <ol class="idx">
+        <li><i>01</i>Выход один на один</li>
+        <li><i>02</i>Ловля верхом</li>
+        <li><i>03</i>Игра в створе</li>
+      </ol>
     </div>
   </div>
 </section>
-<section id="zapis" class="end">
+
+<section id="zapis" class="text">
   <div class="w">
     <div class="lead-grid">
       <div>
@@ -304,58 +280,36 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
 <script>
 (function(){
   "use strict";
-  var TELEGRAM = "";           // ник появится, когда Николай его назовёт
+  var TELEGRAM = "";
   var root = document.documentElement;
-
-  /* переключатель сборок */
   var btns = [].slice.call(document.querySelectorAll('[data-skin-btn]'));
   function setSkin(s){
     root.setAttribute('data-skin', s);
-    btns.forEach(function(b){
-      b.setAttribute('aria-pressed', b.dataset.skinBtn === s ? 'true' : 'false');
-    });
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.skinBtn === s ? 'true' : 'false'); });
     try { localStorage.setItem('skin', s); } catch(e){}
   }
   btns.forEach(function(b){ b.addEventListener('click', function(){ setSkin(b.dataset.skinBtn); }); });
   try { var saved = localStorage.getItem('skin'); if (saved) setSkin(saved); } catch(e){}
 
-  /* форма заявки */
   var f = document.getElementById('leadForm');
   if (!f) return;
   var note = document.getElementById('fNote');
   var ta = f.querySelector('textarea');
-
-  ta.addEventListener('input', function(){
-    ta.style.height = 'auto';
-    ta.style.height = Math.max(58, ta.scrollHeight) + 'px';
-  });
-
+  ta.addEventListener('input', function(){ ta.style.height='auto'; ta.style.height=Math.max(58,ta.scrollHeight)+'px'; });
   function compose(){
-    var age  = document.getElementById('f-age').value.trim();
-    var club = document.getElementById('f-club').value.trim();
-    var pain = document.getElementById('f-pain').value.trim();
-    var L = ['Здравствуйте! Пишу по поводу тренировок вратаря.'];
-    if (age)  L.push('Возраст: ' + age);
-    if (club) L.push('Где играет: ' + club);
-    if (pain) L.push('Что не получается: ' + pain);
-    if (!age && !club && !pain) L.push('Расскажите, пожалуйста, как записаться.');
+    var age=document.getElementById('f-age').value.trim(), club=document.getElementById('f-club').value.trim(), pain=document.getElementById('f-pain').value.trim();
+    var L=['Здравствуйте! Пишу по поводу тренировок вратаря.'];
+    if(age) L.push('Возраст: '+age); if(club) L.push('Где играет: '+club); if(pain) L.push('Что не получается: '+pain);
+    if(!age&&!club&&!pain) L.push('Расскажите, пожалуйста, как записаться.');
     return L.join('\n');
   }
-
   f.addEventListener('submit', function(e){
     e.preventDefault();
-    var text = compose();
-    if (TELEGRAM){
-      window.open('https://t.me/' + TELEGRAM + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
-      return;
-    }
-    function fallback(){
-      note.innerHTML = 'Скопируйте сообщение вручную:<br><b>' + text.replace(/\n/g,'<br>') + '</b>';
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(function(){
-        note.innerHTML = '<b>Сообщение скопировано.</b> Откройте Telegram и вставьте его в переписку.';
-      }, fallback);
+    var text=compose();
+    if(TELEGRAM){ window.open('https://t.me/'+TELEGRAM+'?text='+encodeURIComponent(text),'_blank','noopener'); return; }
+    function fallback(){ note.innerHTML='Скопируйте сообщение вручную:<br><b>'+text.replace(/\n/g,'<br>')+'</b>'; }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ note.innerHTML='<b>Сообщение скопировано.</b> Откройте Telegram и вставьте его в переписку.'; }, fallback);
     } else fallback();
   });
 })();
