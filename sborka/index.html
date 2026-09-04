@@ -10,20 +10,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700&family=Golos+Text:wght@400;500;600&display=swap">
 <style>
-/* Принцип: фото касается края экрана и перетекает только в плоскость страницы —
-   в её цвет (герой) или стык в стык в плоскость с текстом. Фото в фото не перетекает,
-   ни одна маска не касается кадра. */
+/* Механика: расстояние бывает только 0px или --pause. Паддинг принадлежит стыку,
+   а не секции. Линия смены плоскости не совпадает с кромкой кадра. Через все блоки
+   идёт один рельс и один непрерывающийся хайрлайн. */
 *{box-sizing:border-box}
 
-[data-skin="a"]{--bg:#000000;--bg-rgb:0,0,0;--raised:#141414;--fg:#FFFFFF;--dim:#8C8C88;
-  --rule:rgba(255,255,255,.14);--acc:#FFFFFF;--acc-fg:#000000;--btn-r:100px;--disp-w:200}
-[data-skin="b"]{--bg:#07090E;--bg-rgb:7,9,14;--raised:#101521;--fg:#F2F5F8;--dim:#8E9AAC;
-  --rule:rgba(140,165,200,.20);--acc:#2E6BFF;--acc-fg:#FFFFFF;--btn-r:8px;--disp-w:600}
+[data-skin="a"]{--bg:#000000;--bg-rgb:0,0,0;--raised:#141414;--fg:#FFFFFF;--dim:#9A9A96;
+  --rule:rgba(255,255,255,.16);--acc:#FFFFFF;--acc-fg:#000000;--btn-r:100px;--disp-w:200}
+[data-skin="b"]{--bg:#07090E;--bg-rgb:7,9,14;--raised:#101521;--fg:#F2F5F8;--dim:#93A0B2;
+  --rule:rgba(140,165,200,.22);--acc:#2E6BFF;--acc-fg:#FFFFFF;--btn-r:8px;--disp-w:600}
 
-:root{--inset:max(40px,calc((100vw - 1200px)/2));--pause:128px;--band-h:clamp(560px,88vh,820px)}
-@media (max-width:760px){:root{--inset:20px;--pause:64px}}
+:root{
+  --maxw:1280px; --gutter:40px;
+  --rail:max(var(--gutter), calc((100vw - var(--maxw))/2 + var(--gutter)));
+  --nav-h:84px; --pause:128px;
+  --hero-shot-h:clamp(360px,56svh,620px);
+  --hero-tail:184px;
+}
+@media (max-width:760px){:root{--gutter:20px;--nav-h:64px;--pause:72px;--hero-tail:96px}}
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--bg);color:var(--fg);overflow-x:clip;
   font-family:"Golos Text",system-ui,sans-serif;font-size:17px;line-height:1.55;
@@ -31,11 +37,13 @@ body{margin:0;background:var(--bg);color:var(--fg);overflow-x:clip;
 h1,h2,h3,p,ul,ol,figure{margin:0;padding:0}
 li{list-style:none}
 a{color:inherit;text-decoration:none}
-img{display:block;border-radius:0}
-.w{max-width:1280px;margin:0 auto;padding:0 40px}
-@media (max-width:760px){.w{padding:0 20px}}
+img{display:block;border-radius:0;filter:url(#grade)}
+.w{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
 
+/* один микро-регистр на всю страницу: пункты, лейблы, номера, действия */
 .label{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.label i{font-style:normal;margin-right:14px;color:var(--acc)}
+[data-skin="a"] .label i{color:var(--fg)}
 .display{font-family:"Onest",sans-serif;font-weight:var(--disp-w);
   font-size:clamp(32px,5.4vw,72px);line-height:1.04;letter-spacing:-.032em;text-wrap:balance}
 .h2{font-family:"Onest",sans-serif;font-weight:calc(var(--disp-w) + 100);
@@ -43,20 +51,29 @@ img{display:block;border-radius:0}
 .lead{font-size:19px;line-height:1.5;color:var(--dim);max-width:50ch}
 .body{font-size:17px;line-height:1.6;color:var(--dim);max-width:60ch}
 
+/* типографическое действие — один рецепт на шапку и на блоки */
+.nav-act,.say-act span{font:600 13px/1 "Golos Text",sans-serif;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--fg);
+  border-bottom:1px solid var(--acc);padding-bottom:5px;
+  transition:color .16s ease,border-color .16s ease}
+[data-skin="a"] .nav-act,[data-skin="a"] .say-act span{border-bottom-color:var(--fg)}
+.nav-act:hover,.say-act:hover span{color:var(--acc)}
+[data-skin="a"] .nav-act:hover,[data-skin="a"] .say-act:hover span{color:var(--fg);opacity:.75}
+.nav-act:focus-visible,.say-act:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+
 .cta{display:inline-flex;align-items:center;gap:10px;background:var(--acc);color:var(--acc-fg);
   border:0;border-radius:var(--btn-r);padding:16px 30px;
   font-family:"Golos Text",sans-serif;font-weight:600;font-size:16px;cursor:pointer;
   transition:opacity .16s ease}
 .cta:hover{opacity:.9}
 .cta:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
-.ghost{display:inline-flex;align-items:center;border:1px solid var(--rule);border-radius:var(--btn-r);
-  padding:12px 22px;font-size:15px;transition:border-color .16s ease}
-.ghost:hover{border-color:var(--fg)}
 
-/* один грейд на все кадры, без исключений по секциям и шкурам */
-.hero img,.band img{filter:saturate(.88) contrast(1.03)}
+/* ── стык: воздух принадлежит границе, секция своего паддинга не носит ── */
+section{padding:0}
+section + section{padding-top:var(--pause)}
+header.hero + section{padding-top:0}
+section:last-of-type{padding-bottom:var(--pause)}
 
-/* переключатель сборок */
 .switch{position:fixed;top:12px;right:12px;z-index:200;display:flex;gap:3px;
   background:rgba(10,12,16,.85);backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,.16);border-radius:9px;padding:3px}
@@ -65,52 +82,89 @@ img{display:block;border-radius:0}
 .switch button[aria-pressed="true"]{background:#fff;color:#000}
 @media (max-width:760px){.switch{top:auto;bottom:12px;right:12px}}
 
-nav{position:absolute;top:0;left:0;right:0;z-index:10}
-.nav-in{max-width:1280px;margin:0 auto;padding:24px 40px;display:flex;align-items:center;
-  justify-content:space-between;gap:20px}
-@media (max-width:760px){.nav-in{padding:18px 20px}}
-.brand{font-family:"Onest",sans-serif;font-weight:600;font-size:18px;letter-spacing:-.02em}
-.nav-in ul{display:flex;gap:26px;font-size:14.5px;color:var(--dim)}
-.nav-in ul a:hover{color:var(--fg)}
-@media (max-width:900px){.nav-in ul{display:none}}
+/* ═══ ШАПКА: собственная плоскость, кадр начинается от её линии ═══ */
+nav{position:sticky;top:0;z-index:50;background:var(--bg)}
+nav.is-armed{transition:transform .22s ease-in-out}
+nav.is-hidden{transform:translateY(-100%)}
+nav:focus-within{transform:none}
+@media (prefers-reduced-motion:reduce){nav.is-armed{transition:none}}
+@media (max-width:900px){nav.is-hidden{transform:none}}
 
-/* ── герой: единственный кадр на 100vw и единственное растворение ── */
-.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
-  padding-top:110px;background:var(--bg);overflow:hidden}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
-@media (max-width:760px){.hero img{object-position:18% 30%}}
-.hero .scrim{position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(var(--bg-rgb),.45) 0%,rgba(var(--bg-rgb),0) 30%,
-    rgba(var(--bg-rgb),0) 48%,rgba(var(--bg-rgb),.72) 80%,rgb(var(--bg-rgb)) 100%)}
-.hero-in{position:relative;z-index:2;width:100%;padding-bottom:56px}
-.hero .label{display:block;margin-bottom:18px;color:var(--fg);opacity:.72}
-[data-skin="b"] .hero .label{display:inline-block;color:var(--acc);opacity:1;
-  border:1px solid rgba(46,107,255,.5);border-radius:6px;padding:5px 12px}
-.hero .display{margin-bottom:20px;max-width:16ch}
-.hero .lead{color:rgba(255,255,255,.82);margin-bottom:30px}
+.nav-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);
+  height:var(--nav-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.nav-in::after{content:"";position:absolute;left:var(--gutter);right:var(--gutter);bottom:0;
+  height:1px;background:var(--rule)}
+.brand{display:flex;flex-direction:column;gap:4px;line-height:1}
+.brand b{font-family:"Onest",sans-serif;font-weight:600;font-size:23px;letter-spacing:-.025em}
+.brand span{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.nav-in ul{display:flex;gap:30px;justify-self:center}
+.nav-in ul a{font:600 13px/1 "Golos Text",sans-serif;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim);transition:color .16s ease}
+.nav-in ul a:hover,.nav-in ul a[aria-current="true"]{color:var(--fg)}
+.nav-act{justify-self:end}
+.nav-mark{position:absolute;bottom:0;left:var(--gutter);height:1px;background:var(--acc);
+  width:0;transform-origin:left;transition:transform .28s ease,width .28s ease;pointer-events:none}
+[data-skin="a"] .nav-mark{background:var(--fg)}
+@media (max-width:900px){.nav-in{grid-template-columns:1fr auto}.nav-in ul{display:none}.nav-mark{display:none}}
 
-/* ── ритм: полосы отделены паузой плоского фона ── */
-section{padding:var(--pause) 0 0}
-section.text{padding-block:var(--pause)}
-#stoimost{padding-block:calc(var(--pause)*1.25)}
-.sec-head{margin-bottom:30px}
-.sec-head .label{display:block;margin-bottom:14px}
+/* ═══ ГЕРОЙ: полоса кадра → плоскость с текстом встык → хвост ═══ */
+.hero{background:var(--bg);padding-bottom:var(--hero-tail)}
+.hero .shot{position:relative;width:100%;height:var(--hero-shot-h);overflow:hidden}
+.hero .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+.hero-in{max-width:var(--maxw);margin:0 auto;padding:44px var(--gutter) 0;
+  display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end}
+.hero .display{max-width:15ch}
+.hero-meta{display:flex;flex-direction:column;gap:0;min-width:min(300px,40vw)}
+.hero-meta div{display:flex;justify-content:space-between;gap:20px;
+  padding:13px 0;border-top:1px solid var(--rule);font-size:14.5px;color:var(--dim)}
+.hero-meta div:last-child{border-bottom:1px solid var(--rule)}
+.hero-meta b{font-weight:500;color:var(--fg)}
+@media (max-width:900px){
+  .hero-in{grid-template-columns:1fr;gap:28px;padding-top:32px}
+  .hero-meta{min-width:0}
+}
 
-/* ── полоса-сплит: кадр в край экрана + плоскость с текстом, стык в стык ── */
-.band{display:grid;grid-template-columns:1fr 1fr;gap:0;width:100%;min-height:var(--band-h)}
-.band.photo-right{grid-template-columns:1fr minmax(0,640px)}
+/* ═══ БЛОК «О ТРЕНЕРЕ»: высоту диктует кадр, CSS не режет ничего ═══ */
+.about{display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,clamp(340px,42vw,620px));
+  gap:0;align-items:stretch;padding-left:var(--rail)}
+.about .say{position:relative;display:flex;flex-direction:column;
+  padding:34px clamp(40px,6vw,96px) 0 0}
+.about .say::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--rule)}
+.about .say .label{display:block;margin-bottom:16px}
+.about .say .h2{margin-bottom:16px}
+.about .say .body{max-width:46ch}
+.about .say-act{align-self:stretch;margin-top:auto;border-top:1px solid var(--rule);
+  padding:22px 0 0}
+.about figure{position:relative;aspect-ratio:854/1280;overflow:hidden;background:var(--bg)}
+.about figure img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+@media (max-width:900px){
+  .about{grid-template-columns:1fr;padding-left:0}
+  .about .say{padding:0 var(--gutter) clamp(28px,6vw,40px)}
+  .about .say::before{display:none}
+  .about .say-act{margin-top:32px;padding-top:20px;margin-inline:var(--gutter);
+    align-self:auto}
+}
+
+/* ── полоса-сплит (пока используется в «Форматах» и «Работе») ── */
+.band{display:grid;grid-template-columns:1fr 1fr;gap:0;width:100%;min-height:clamp(560px,82vh,780px)}
 .band figure{position:relative;overflow:hidden}
 .band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   object-position:var(--pos-d,50% 50%)}
 .band .plane{background:var(--raised);display:flex;flex-direction:column;justify-content:center;
   padding:clamp(64px,12vh,144px) 80px}
-.band.photo-left .plane{padding-right:var(--inset)}
-.band.photo-right .plane{padding-left:var(--inset)}
+.band.photo-left .plane{padding-right:var(--rail)}
 .band .plane .label{display:block;margin-bottom:14px}
 .band .plane .h2{margin-bottom:8px}
-.band .plane .body{margin-top:18px}
+@media (max-width:900px){
+  .band{grid-template-columns:1fr;min-height:0}
+  .band figure{order:-1;height:auto;aspect-ratio:3/4}
+  .band.wide figure{aspect-ratio:4/5}
+  .band img{object-position:var(--pos-m,50% 50%)}
+  .band .plane{padding:48px var(--gutter)}
+  .band.photo-left .plane{padding-right:var(--gutter)}
+}
 
-/* индекс форматов */
 .index{margin-top:40px}
 .index li{padding:22px 0;border-top:1px solid var(--rule)}
 .index li:last-child{border-bottom:1px solid var(--rule)}
@@ -118,7 +172,6 @@ section.text{padding-block:var(--pause)}
   font-size:clamp(28px,3.4vw,44px);line-height:1.1;letter-spacing:-.028em;margin-bottom:6px}
 .index span{display:block;font-size:15px;line-height:1.5;color:var(--dim);max-width:44ch}
 
-/* типографический индекс работы */
 .idx{margin-top:40px}
 .idx li{display:grid;grid-template-columns:40px 1fr;align-items:baseline;padding:20px 0;
   border-top:1px solid var(--rule);font-family:"Onest",sans-serif;font-weight:300;
@@ -126,13 +179,14 @@ section.text{padding-block:var(--pause)}
 .idx li:last-child{border-bottom:1px solid var(--rule)}
 .idx i{font:500 13px/1 "Golos Text",sans-serif;letter-spacing:.08em;color:var(--dim)}
 
-/* стоимость */
 .price li{padding:18px 0;border-top:1px solid var(--rule)}
 .price li:last-child{border-bottom:1px solid var(--rule)}
 .price b{display:block;font-weight:600;font-size:19px;margin-bottom:4px}
 .price span{font-size:15.5px;color:var(--dim)}
 
-/* форма */
+.sec-head{margin-bottom:30px}
+.sec-head .label{display:block;margin-bottom:14px}
+
 .lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
 @media (max-width:860px){.lead-grid{grid-template-columns:1fr;gap:28px}}
 .form{display:flex;flex-direction:column;gap:14px}
@@ -150,55 +204,59 @@ section.text{padding-block:var(--pause)}
 
 footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color:var(--dim);
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-
-/* ── мобильный: сплит становится стеком, шов — прямая линия ── */
-@media (max-width:900px){
-  .band,.band.photo-right{grid-template-columns:1fr;min-height:0}
-  .band figure{order:-1;height:auto;aspect-ratio:3/4}
-  .band.wide figure{aspect-ratio:4/5}
-  .band img{object-position:var(--pos-m,50% 50%)}
-  .band .plane{padding:48px 20px}
-  .band.photo-left .plane,.band.photo-right .plane{padding-left:20px;padding-right:20px}
-}
 </style>
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="grade" color-interpolation-filters="sRGB">
+    <!-- сводит температуру пула (R/B 0.82..1.59) и уводит тени в холод плоскости -->
+    <feColorMatrix type="matrix" values="
+      0.90 0.06 0.02 0 0.004
+      0.02 0.94 0.03 0 0.004
+      0.02 0.07 0.97 0 0.010
+      0    0    0    1 0"/>
+  </filter>
+</svg>
 
 <div class="switch" role="group" aria-label="Сборка">
   <button type="button" data-skin-btn="a" aria-pressed="false">А</button>
   <button type="button" data-skin-btn="b" aria-pressed="true">Б</button>
 </div>
 
-<nav>
+<nav id="nav">
   <div class="nav-in">
-    <span class="brand">Nikola BIG cat</span>
+    <span class="brand"><b>Nikola BIG cat</b><span>Тренер вратарей</span></span>
     <ul>
       <li><a href="#formaty">Форматы</a></li>
-      <li><a href="#rabota">Работа</a></li>
+      <li><a href="#trener">О тренере</a></li>
       <li><a href="#stoimost">Стоимость</a></li>
+      <li><a href="#rabota">Работа</a></li>
     </ul>
-    <a class="ghost" href="#zapis">Написать</a>
+    <a class="nav-act" href="#zapis">Написать</a>
+    <span class="nav-mark" aria-hidden="true"></span>
   </div>
 </nav>
 
 <header class="hero">
-  <img src="img/hero.jpg" alt="Николай в прыжке в воротах">
-  <div class="scrim"></div>
-  <div class="w hero-in">
-    <span class="label">Тренер вратарей</span>
+  <div class="shot">
+    <img src="img/hero.jpg" width="1280" height="854" alt="Николай в прыжке вытягивается за мячом в воротах">
+  </div>
+  <div class="hero-in">
     <h1 class="display">Индивидуальные тренировки вратарей</h1>
-    <p class="lead">Дети, подростки и взрослые.</p>
-    <a class="cta" href="#zapis">Написать в Telegram
-      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
+    <div class="hero-meta">
+      <div><span>Форматы</span><b>Индивидуально, малая группа</b></div>
+      <div><span>Возраст</span><b>Дети, подростки, взрослые</b></div>
+      <div><span>Специализация</span><b>Только вратари</b></div>
+    </div>
   </div>
 </header>
 
-<section id="formaty" class="bleed">
+<section id="formaty">
   <div class="band photo-left">
-    <figure><img src="img/knee.jpg" alt="Николай на одном колене рядом с юным вратарём" style="--pos-d:60% 50%;--pos-m:45% 50%"></figure>
+    <figure><img src="img/w1.jpg" width="900" height="1200" loading="lazy" alt="Николай в воротах на тренировке" style="--pos-d:50% 30%;--pos-m:50% 45%"></figure>
     <div class="plane">
-      <span class="label">Форматы</span>
+      <span class="label"><i>01</i>Форматы</span>
       <h2 class="h2">Как можно заниматься</h2>
       <ul class="index">
         <li><b>Индивидуально</b><span>Один вратарь, вся тренировка под его задачу.</span></li>
@@ -208,21 +266,25 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   </div>
 </section>
 
-<section id="trener" class="bleed">
-  <div class="band photo-right">
-    <div class="plane">
-      <span class="label">О тренере</span>
+<section id="trener">
+  <div class="about">
+    <div class="say">
+      <span class="label"><i>02</i>О тренере</span>
       <h2 class="h2">Nikola BIG cat</h2>
       <p class="body">Тренирую только вратарей. Не совмещаю с полевыми: у вратаря другая техника, другая нагрузка и другие ошибки — разбирать их нужно отдельно.</p>
+      <a class="say-act" href="#zapis"><span>Написать в Telegram</span></a>
     </div>
-    <figure><img src="img/portrait.jpg" alt="Николай" style="--pos-d:50% 100%;--pos-m:50% 80%"></figure>
+    <figure>
+      <img src="img/portrait.jpg" width="854" height="1280" loading="lazy"
+           alt="Николай с мячом в руках на вечерней тренировке под дождём">
+    </figure>
   </div>
 </section>
 
-<section id="stoimost" class="text">
+<section id="stoimost">
   <div class="w">
     <div class="sec-head">
-      <span class="label">Стоимость</span>
+      <span class="label"><i>03</i>Стоимость</span>
       <h2 class="h2">Сколько стоит занятие</h2>
     </div>
     <ul class="price">
@@ -233,11 +295,11 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   </div>
 </section>
 
-<section id="rabota" class="bleed">
+<section id="rabota">
   <div class="band photo-left wide">
-    <figure><img src="img/w4.jpg" alt="Николай в игре" style="--pos-d:50% 45%;--pos-m:50% 50%"></figure>
+    <figure><img src="img/w4.jpg" width="1200" height="899" loading="lazy" alt="Николай в игре" style="--pos-d:50% 45%;--pos-m:50% 50%"></figure>
     <div class="plane">
-      <span class="label">Работа</span>
+      <span class="label"><i>04</i>Работа</span>
       <h2 class="h2">Как это выглядит</h2>
       <ol class="idx">
         <li><i>01</i>Выход один на один</li>
@@ -248,7 +310,7 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   </div>
 </section>
 
-<section id="zapis" class="text">
+<section id="zapis">
   <div class="w">
     <div class="lead-grid">
       <div>
@@ -282,6 +344,7 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   "use strict";
   var TELEGRAM = "";
   var root = document.documentElement;
+
   var btns = [].slice.call(document.querySelectorAll('[data-skin-btn]'));
   function setSkin(s){
     root.setAttribute('data-skin', s);
@@ -290,6 +353,50 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   }
   btns.forEach(function(b){ b.addEventListener('click', function(){ setSkin(b.dataset.skinBtn); }); });
   try { var saved = localStorage.getItem('skin'); if (saved) setSkin(saved); } catch(e){}
+
+  /* шапка прячется вниз, возвращается вверх; на мобильном не прячется никогда */
+  var nav = document.getElementById('nav');
+  var last = window.scrollY, armed = false;
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    if (!armed && y > 4){ nav.classList.add('is-armed'); armed = true; }
+    if (y > last && y > 240) nav.classList.add('is-hidden');
+    else nav.classList.remove('is-hidden');
+    last = y;
+  }, {passive:true});
+
+  /* активный раздел — закрашенный отрезок той же нижней линии шапки */
+  var links = [].slice.call(document.querySelectorAll('.nav-in ul a'));
+  var mark = document.querySelector('.nav-mark');
+  var ul = document.querySelector('.nav-in ul');
+  function place(a){
+    if (!a || !mark || !ul || window.innerWidth <= 900){ if(mark) mark.style.width='0'; return; }
+    var navRect = document.querySelector('.nav-in').getBoundingClientRect();
+    var r = a.getBoundingClientRect();
+    var gutter = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gutter')) || 40;
+    mark.style.width = Math.round(r.width) + 'px';
+    mark.style.transform = 'translateX(' + Math.round(r.left - navRect.left - gutter) + 'px)';
+  }
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var id = e.target.id;
+        links.forEach(function(a){
+          var on = a.getAttribute('href') === '#' + id;
+          a.setAttribute('aria-current', on ? 'true' : 'false');
+          if (on) place(a);
+        });
+      });
+    }, {rootMargin:'-50% 0px -50% 0px'});
+    ['formaty','trener','stoimost','rabota'].forEach(function(id){
+      var el = document.getElementById(id); if (el) obs.observe(el);
+    });
+  }
+  window.addEventListener('resize', function(){
+    var cur = links.filter(function(a){ return a.getAttribute('aria-current')==='true'; })[0];
+    place(cur);
+  }, {passive:true});
 
   var f = document.getElementById('leadForm');
   if (!f) return;
