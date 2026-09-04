@@ -14,13 +14,13 @@
 
 /* ═══ А · сдержанный тёмный ═══ */
 [data-skin="a"]{
-  --bg:#000000; --raised:#141414; --fg:#FFFFFF; --dim:#8C8C88;
+  --bg:#000000; --bg-rgb:0,0,0; --raised:#141414; --fg:#FFFFFF; --dim:#8C8C88;
   --rule:rgba(255,255,255,.14); --acc:#FFFFFF; --acc-fg:#000000;
   --btn-r:100px; --card-r:0px; --disp-w:200; --glow:0;
 }
 /* ═══ Б · его цвет ═══ */
 [data-skin="b"]{
-  --bg:#07090E; --raised:#101521; --fg:#F2F5F8; --dim:#8E9AAC;
+  --bg:#07090E; --bg-rgb:7,9,14; --raised:#101521; --fg:#F2F5F8; --dim:#8E9AAC;
   --rule:rgba(140,165,200,.20); --acc:#2E6BFF; --acc-fg:#FFFFFF;
   --btn-r:8px; --card-r:10px; --disp-w:600; --glow:1;
 }
@@ -36,6 +36,14 @@ a{color:inherit;text-decoration:none}
 img{display:block}
 .w{max-width:1280px;margin:0 auto;padding:0 40px}
 @media (max-width:760px){.w{padding:0 20px}}
+
+/* растворение краёв: кадр не наклеен, а проступает из фона */
+.strip img{-webkit-mask-image:radial-gradient(115% 105% at 50% 42%,#000 52%,rgba(0,0,0,.35) 82%,transparent 100%);
+  mask-image:radial-gradient(115% 105% at 50% 42%,#000 52%,rgba(0,0,0,.35) 82%,transparent 100%)}
+.tiles img{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 100%);
+  mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 100%)}
+.split img{-webkit-mask-image:radial-gradient(120% 100% at 50% 38%,#000 55%,rgba(0,0,0,.4) 84%,transparent 100%);
+  mask-image:radial-gradient(120% 100% at 50% 38%,#000 55%,rgba(0,0,0,.4) 84%,transparent 100%)}
 
 .label{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 .display{font-family:"Onest",sans-serif;font-weight:var(--disp-w);
@@ -79,10 +87,11 @@ nav{position:absolute;top:0;left:0;right:0;z-index:10}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
 [data-skin="a"] .hero img{filter:grayscale(.25) brightness(.78)}
 .hero .scrim{position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(4,6,10,.62) 0%,rgba(4,6,10,.10) 42%,rgba(4,6,10,.90) 100%)}
+  background:linear-gradient(180deg,rgba(var(--bg-rgb),.55) 0%,rgba(var(--bg-rgb),.06) 40%,
+    rgba(var(--bg-rgb),.72) 78%,rgb(var(--bg-rgb)) 100%)}
 [data-skin="b"] .hero .scrim{background:
-  linear-gradient(100deg,rgba(7,9,14,.93) 0%,rgba(7,9,14,.66) 40%,rgba(7,9,14,.05) 74%),
-  linear-gradient(180deg,transparent 52%,rgba(7,9,14,.9))}
+  linear-gradient(100deg,rgba(var(--bg-rgb),.93) 0%,rgba(var(--bg-rgb),.62) 42%,rgba(var(--bg-rgb),0) 76%),
+  linear-gradient(180deg,transparent 50%,rgba(var(--bg-rgb),.75) 84%,rgb(var(--bg-rgb)) 100%)}
 .hero .glow{position:absolute;left:-10%;top:6%;width:56%;height:86%;pointer-events:none;
   opacity:var(--glow);
   background:radial-gradient(58% 50% at 42% 50%,rgba(46,107,255,.28),transparent 70%)}
@@ -100,10 +109,9 @@ section{padding-block:calc(var(--gap,104px)/2)}
 
 /* форматы */
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:var(--tile-gap,0)}
-[data-skin="b"] .tiles{--tile-gap:14px}
+[data-skin="b"] .tiles{--tile-gap:0}
 @media (max-width:700px){.tiles{grid-template-columns:1fr;--tile-gap:12px}}
-.tiles li{position:relative;aspect-ratio:16/11;overflow:hidden;background:var(--raised);
-  border-radius:var(--card-r)}
+.tiles li{position:relative;aspect-ratio:16/11;overflow:hidden;background:transparent}
 .tiles img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   transition:transform .5s ease}
 [data-skin="a"] .tiles img{filter:grayscale(.3) brightness(.72)}
@@ -119,17 +127,15 @@ section{padding-block:calc(var(--gap,104px)/2)}
 
 /* работа — лента кадров */
 .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--tile-gap,0)}
-@media (max-width:760px){.strip{grid-template-columns:1fr 1fr;--tile-gap:10px}}
-.strip figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--raised);
-  border-radius:var(--card-r)}
+@media (max-width:760px){.strip{grid-template-columns:1fr 1fr}}
+.strip figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:transparent}
 .strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 [data-skin="a"] .strip img{filter:grayscale(.3) brightness(.8)}
 
 /* о тренере */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
 @media (max-width:900px){.split{grid-template-columns:1fr;gap:26px}}
-.split figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--raised);
-  border-radius:var(--card-r)}
+.split figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:transparent}
 .split img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
 [data-skin="a"] .split img{filter:grayscale(.3) brightness(.82)}
 
@@ -140,7 +146,7 @@ section{padding-block:calc(var(--gap,104px)/2)}
 .price span{font-size:15.5px;color:var(--dim)}
 
 /* форма */
-.end{background:var(--raised)}
+.end{background:transparent}
 .lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
 @media (max-width:860px){.lead-grid{grid-template-columns:1fr;gap:28px}}
 .form{display:flex;flex-direction:column;gap:14px}
