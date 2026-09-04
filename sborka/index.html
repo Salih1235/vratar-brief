@@ -130,6 +130,11 @@ section{padding-block:calc(var(--gap,104px)/2)}
 @media (max-width:760px){.strip{grid-template-columns:1fr 1fr}}
 .strip figure{position:relative;aspect-ratio:3/4;overflow:hidden;background:transparent}
 .strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.strip figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 16px 14px;
+  font-size:14px;line-height:1.35;color:rgba(255,255,255,.9);
+  background:linear-gradient(180deg,transparent,rgba(var(--bg-rgb),.85))}
+.after-strip{display:flex;align-items:center;justify-content:space-between;gap:22px;
+  flex-wrap:wrap;margin-top:26px}
 [data-skin="a"] .strip img{filter:grayscale(.3) brightness(.8)}
 
 /* о тренере */
@@ -218,19 +223,6 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   </div>
 </section>
 
-<section id="rabota">
-  <div class="w">
-    <div class="sec-head">
-      <span class="label">Работа</span>
-      <h2 class="h2">Как это выглядит</h2>
-    </div>
-    <div class="strip">
-      <figure><img src="img/w3.jpg" alt="Николай на поле"></figure>
-      <figure><img src="img/w4.jpg" alt="Николай в игре"></figure>
-      <figure><img src="img/w5.jpg" alt="Николай в воротах"></figure>
-    </div>
-  </div>
-</section>
 
 <section id="trener">
   <div class="w">
@@ -261,6 +253,25 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
   </div>
 </section>
 
+<section id="rabota">
+  <div class="w">
+    <div class="sec-head">
+      <span class="label">Работа</span>
+      <h2 class="h2">Как это выглядит</h2>
+    </div>
+    <div class="strip">
+      <figure><img src="img/w3.jpg" alt="Работа на выходах"><figcaption>Выход один на один</figcaption></figure>
+      <figure><img src="img/w4.jpg" alt="Ловля верхового мяча"><figcaption>Ловля верхом</figcaption></figure>
+      <figure><img src="img/w5.jpg" alt="Работа в створе ворот"><figcaption>Игра в створе</figcaption></figure>
+    </div>
+    <div class="after-strip">
+      <p class="body" style="margin:0">Так проходит занятие. Напишите — разберём задачу вашего вратаря.</p>
+      <a class="cta" href="#zapis">Написать в Telegram
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
 <section id="zapis" class="end">
   <div class="w">
     <div class="lead-grid">
