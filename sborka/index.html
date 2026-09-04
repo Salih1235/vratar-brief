@@ -24,7 +24,6 @@
   --maxw:1280px; --gutter:40px;
   --rail:max(var(--gutter), calc((100vw - var(--maxw))/2 + var(--gutter)));
   --nav-h:84px; --pause:128px;
-  --hero-shot-h:clamp(360px,56svh,620px);
   --hero-tail:184px;
 }
 @media (max-width:760px){:root{--gutter:20px;--nav-h:64px;--pause:72px;--hero-tail:96px}}
@@ -109,8 +108,9 @@ nav:focus-within{transform:none}
 
 /* ═══ ГЕРОЙ: полоса кадра → плоскость с текстом встык → хвост ═══ */
 .hero{background:var(--bg);padding-bottom:var(--hero-tail)}
-.hero .shot{position:relative;width:100%;height:var(--hero-shot-h);overflow:hidden}
-.hero .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+.hero .shot{position:relative;width:100%;aspect-ratio:1280/854;overflow:hidden}
+@media (max-width:760px){.hero .shot{aspect-ratio:1023/1280}}
+.hero .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 .hero-in{max-width:var(--maxw);margin:0 auto;padding:44px var(--gutter) 0;
   display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end}
 .hero .display{max-width:15ch}
@@ -136,8 +136,8 @@ nav:focus-within{transform:none}
 .about .say .body{max-width:46ch}
 .about .say-act{align-self:stretch;margin-top:auto;border-top:1px solid var(--rule);
   padding:22px 0 0}
-.about figure{position:relative;aspect-ratio:854/1280;overflow:hidden;background:var(--bg)}
-.about figure img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.about figure{position:relative;aspect-ratio:853/1280;overflow:hidden;background:var(--bg)}
+.about figure img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 @media (max-width:900px){
   .about{grid-template-columns:1fr;padding-left:0}
   .about .say{padding:0 var(--gutter) clamp(28px,6vw,40px)}
@@ -150,25 +150,23 @@ nav:focus-within{transform:none}
 .slice{display:grid;grid-template-columns:clamp(260px,26vw,420px) minmax(0,1fr);gap:0;
   align-items:start}
 .slice figure{position:relative;aspect-ratio:960/1280;overflow:hidden;background:var(--bg)}
-.slice figure img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.slice figure img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 .slice .col{padding:0 var(--rail) 0 clamp(40px,6vw,96px)}
 .slice .label{display:block;margin-bottom:14px}
 .slice .h2{margin-bottom:8px}
 @media (max-width:900px){
   .slice{grid-template-columns:1fr}
-  .slice figure{aspect-ratio:16/11}
   .slice .col{padding:clamp(28px,6vw,40px) var(--gutter) 0}
 }
 
 /* ── 04 РАБОТА: горизонтальная полоса в оба края + индекс под ней ── */
-.reel figure{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--bg)}
-.reel figure img{width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.reel figure{position:relative;width:100%;aspect-ratio:1200/899;overflow:hidden;background:var(--bg)}
+.reel figure img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 .reel .under{max-width:var(--maxw);margin:0 auto;padding:40px var(--gutter) 0;
   display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(40px,6vw,96px);
   align-items:start}
 .reel .under .label{display:block;margin-bottom:14px}
 @media (max-width:900px){
-  .reel figure{aspect-ratio:4/3}
   .reel .under{grid-template-columns:1fr;gap:24px;padding-top:28px}
 }
 
@@ -247,7 +245,10 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
 
 <header class="hero">
   <div class="shot">
-    <img src="img/hero.jpg" width="1280" height="854" alt="Николай в прыжке вытягивается за мячом в воротах">
+    <picture>
+      <source media="(max-width:760px)" srcset="img/hero-m.jpg" width="1023" height="1280">
+      <img src="img/hero.jpg" width="1280" height="854" alt="Николай в прыжке вытягивается за мячом в воротах">
+    </picture>
   </div>
   <div class="hero-in">
     <h1 class="display">Индивидуальные тренировки вратарей</h1>
@@ -284,7 +285,7 @@ footer{padding:28px 0 44px;border-top:1px solid var(--rule);font-size:14px;color
       <a class="say-act" href="#zapis"><span>Написать в Telegram</span></a>
     </div>
     <figure>
-      <img src="img/portrait.jpg" width="854" height="1280" loading="lazy"
+      <img src="img/portrait.jpg" width="853" height="1280" loading="lazy"
            alt="Николай с мячом в руках на вечерней тренировке под дождём">
     </figure>
   </div>
